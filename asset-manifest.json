@@ -1,0 +1,42 @@
+{
+  "files": {
+    "main.css": "/search-app-demo/static/css/main.5ab28b98.css",
+    "main.js": "/search-app-demo/static/js/main.e08e07e0.js",
+    "static/js/453.918e1538.chunk.js": "/search-app-demo/static/js/453.918e1538.chunk.js",
+    "static/media/montserrat-latin-400-italic.woff": "/search-app-demo/static/media/montserrat-latin-400-italic.dbde806dd2fc6a983483.woff",
+    "static/media/montserrat-latin-ext-400-italic.woff": "/search-app-demo/static/media/montserrat-latin-ext-400-italic.4bccb0ebcfb55cc84087.woff",
+    "static/media/montserrat-latin-400-normal.woff": "/search-app-demo/static/media/montserrat-latin-400-normal.b48c3d9a8c0a49c1c7b4.woff",
+    "static/media/montserrat-latin-ext-400-normal.woff": "/search-app-demo/static/media/montserrat-latin-ext-400-normal.cf42d14e809c6fdc0929.woff",
+    "static/media/montserrat-latin-400-italic.woff2": "/search-app-demo/static/media/montserrat-latin-400-italic.67959d2366cf37258cab.woff2",
+    "static/media/montserrat-latin-400-normal.woff2": "/search-app-demo/static/media/montserrat-latin-400-normal.9ef09180105730e3cb92.woff2",
+    "static/media/montserrat-latin-ext-400-italic.woff2": "/search-app-demo/static/media/montserrat-latin-ext-400-italic.638ef7d8c8a22679fa24.woff2",
+    "static/media/montserrat-latin-ext-400-normal.woff2": "/search-app-demo/static/media/montserrat-latin-ext-400-normal.83d2d15dd908a3cf998f.woff2",
+    "static/media/montserrat-cyrillic-ext-400-italic.woff": "/search-app-demo/static/media/montserrat-cyrillic-ext-400-italic.d1417f66bd6a5a55331e.woff",
+    "static/media/montserrat-cyrillic-ext-400-normal.woff": "/search-app-demo/static/media/montserrat-cyrillic-ext-400-normal.183f43730b586802d1a0.woff",
+    "static/media/montserrat-cyrillic-400-italic.woff": "/search-app-demo/static/media/montserrat-cyrillic-400-italic.94e6c1c9f4963c3bc5d1.woff",
+    "static/media/montserrat-cyrillic-400-normal.woff": "/search-app-demo/static/media/montserrat-cyrillic-400-normal.439a7e91c905d22b3543.woff",
+    "static/media/montserrat-cyrillic-ext-400-italic.woff2": "/search-app-demo/static/media/montserrat-cyrillic-ext-400-italic.7e0c1912d1cce1602e30.woff2",
+    "static/media/montserrat-cyrillic-ext-400-normal.woff2": "/search-app-demo/static/media/montserrat-cyrillic-ext-400-normal.32618c7b62b4ab3c0aff.woff2",
+    "static/media/montserrat-cyrillic-400-italic.woff2": "/search-app-demo/static/media/montserrat-cyrillic-400-italic.f1f9b5499a50c8deecc0.woff2",
+    "static/media/montserrat-cyrillic-400-normal.woff2": "/search-app-demo/static/media/montserrat-cyrillic-400-normal.4f7a9c3142f9879900c9.woff2",
+    "static/media/montserrat-vietnamese-400-italic.woff": "/search-app-demo/static/media/montserrat-vietnamese-400-italic.46995a93c56dd15f2b57.woff",
+    "static/media/montserrat-vietnamese-400-normal.woff": "/search-app-demo/static/media/montserrat-vietnamese-400-normal.44e6450ead6330cb0b77.woff",
+    "static/media/montserrat-vietnamese-400-normal.woff2": "/search-app-demo/static/media/montserrat-vietnamese-400-normal.176348415471f3e062e6.woff2",
+    "static/media/montserrat-vietnamese-400-italic.woff2": "/search-app-demo/static/media/montserrat-vietnamese-400-italic.bc1e3ae9cbfe88134bcc.woff2",
+    "static/media/logo.svg": "/search-app-demo/static/media/logo.7d3d9229ca5f074c812ddd64ea19c147.svg",
+    "static/media/vk.svg": "/search-app-demo/static/media/vk.35b774aba67c51103a5f35aaf1cbe85c.svg",
+    "static/media/check.svg": "/search-app-demo/static/media/check.9f678ef7917b85e9d09d.svg",
+    "static/media/youtube.svg": "/search-app-demo/static/media/youtube.ec587f26b39d10e18934e741d7b9e4e5.svg",
+    "index.html": "/search-app-demo/index.html",
+    "static/media/tg.svg": "/search-app-demo/static/media/tg.198660a58a4eba41748a05d2d95465e6.svg",
+    "static/media/breadcrumb-icon.svg": "/search-app-demo/static/media/breadcrumb-icon.0e6d797035c535bb2e41.svg",
+    "static/media/Menu_Alt_04.svg": "/search-app-demo/static/media/Menu_Alt_04.c23a73ccabd5a15a0b1d7629f0e9ee91.svg",
+    "main.5ab28b98.css.map": "/search-app-demo/static/css/main.5ab28b98.css.map",
+    "main.e08e07e0.js.map": "/search-app-demo/static/js/main.e08e07e0.js.map",
+    "453.918e1538.chunk.js.map": "/search-app-demo/static/js/453.918e1538.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5ab28b98.css",
+    "static/js/main.e08e07e0.js"
+  ]
+}
