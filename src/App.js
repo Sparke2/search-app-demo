@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
     <Routes>
-      <Route path="/search" element={<Home />} />
+      <Route path="/search-app-demo" element={<Home />} />
     </Routes>
   </Router>
   );
