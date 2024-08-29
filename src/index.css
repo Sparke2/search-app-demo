@@ -93,6 +93,10 @@ h5 {
   padding-bottom: 1.063rem;
   border-radius: 1rem;
 }
+.input-group.search .btn {
+  border: none !important;
+  z-index: 100;
+}
 .input-group.search .search-main:focus {
   border-radius: 1rem;
   padding-top: 1.426rem;
@@ -219,9 +223,28 @@ h5 {
 .color-grey {
   color: #94989B;
 }
-
-
-
+.badge-filter {
+  border: 1px solid #747A7E;
+  background-color: #747A7E;
+  border-radius: 10rem;
+}
+.badge-filter span {
+  font-size: 14px;
+  color: #fff;
+}
+.badge-filter .badge-filter-reset {
+  background-color: #fff;
+  border-radius: 100rem;
+  font-size: 14px;
+  color: #FF8906;
+}
+.badge-outline {
+  border: 1px solid #FF8906;
+  color: #FF8906;
+  background-color: transparent;
+  font-size: 14px;
+  border-radius: 10rem;
+}
 
 
 
