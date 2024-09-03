@@ -34,6 +34,7 @@ function Home() {
             <div className="row mt-1 g-4">
               <div className="col-lg-9">
                 <SearchForm />
+                <CheckboxFilterShow />
                 <ResultsAccordion />
               </div>
               <div className="col-lg-3 filter-field">

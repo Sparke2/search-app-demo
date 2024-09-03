@@ -1,26 +1,100 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-function CheckboxFilterShow({ checkboxes, removeFilter, clearAllFilters }) {
+function CheckboxFilterShow() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [checkboxes, setCheckboxes] = useState({
+        searchBooks: false,
+        searchPeriodicals: false,
+        searchAudio: false,
+        searchVideo: false,
+        searchArchives: false,
+        searchAuthor: false,
+        searchTitle: false,
+        searchInText: false,
+    });
+
+    // Парсим URL и обновляем состояние чекбоксов
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const newCheckboxes = { ...checkboxes };
+
+        Object.keys(newCheckboxes).forEach(key => {
+            newCheckboxes[key] = params.get(key) === 'true';
+        });
+
+        setCheckboxes(newCheckboxes);
+    }, [location.search]);
+
+    const updateURLParams = (updatedCheckboxes) => {
+        const params = new URLSearchParams(location.search);
+        Object.keys(updatedCheckboxes).forEach(key => {
+            if (updatedCheckboxes[key]) {
+                params.set(key, 'true');
+            } else {
+                params.delete(key);
+            }
+        });
+        navigate({ search: params.toString() });
+    };
+
+    const removeFilter = (filterKey) => {
+        const updatedCheckboxes = { ...checkboxes, [filterKey]: false };
+        setCheckboxes(updatedCheckboxes);
+        updateURLParams(updatedCheckboxes);
+    };
+
+    const clearAllFilters = () => {
+        const params = new URLSearchParams(location.search);
+
+        // Удаляем только определенные параметры
+        const filterKeysToClear = [
+            'searchBooks',
+            'searchPeriodicals',
+            'searchAudio',
+            'searchVideo',
+            'searchArchives',
+            'searchAuthor',
+            'searchTitle',
+            'searchInText',
+        ];
+
+        filterKeysToClear.forEach(key => {
+            params.delete(key);
+        });
+
+        setCheckboxes({
+            searchBooks: false,
+            searchPeriodicals: false,
+            searchAudio: false,
+            searchVideo: false,
+            searchArchives: false,
+            searchAuthor: false,
+            searchTitle: false,
+            searchInText: false,
+        });
+
+        navigate({ search: params.toString() });
+    };
+
     const activeFilters = Object.keys(checkboxes).filter(key => checkboxes[key]);
 
     if (activeFilters.length === 0) return null;
 
     return (
-        <div className='d-flex flex-wrap gap-3 mt-3'>
+        <div className="d-flex flex-wrap gap-3 mt-3">
             {activeFilters.map(filterKey => (
                 <button
                     key={filterKey}
-                    className='badge-filter'
+                    className="badge-filter"
                     onClick={() => removeFilter(filterKey)}
                 >
                     <span>{getLabelById(filterKey)}</span>
-                    <span className='badge-filter-reset'>x</span>
+                    <span className="badge-filter-reset">x</span>
                 </button>
             ))}
-            <button
-                className='badge-outline'
-                onClick={clearAllFilters}
-            >
+            <button className="badge-outline" onClick={clearAllFilters}>
                 Очистить все x
             </button>
         </div>
