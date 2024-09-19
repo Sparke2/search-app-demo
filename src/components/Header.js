@@ -34,14 +34,14 @@ function Header() {
                   </button>
                 </div>
               </form>
-              <a className="btn btn-link text-left" href="/sveden/common/">Сведения об<br />образовательной организации</a>
+              <a className="btn btn-link text-left" href="https://www.iprbookshop.ru/sveden/common/">Сведения об<br />образовательной организации</a>
               <a className="btn" href="/special">
                 <FontAwesomeIcon icon={faEye} />
               </a>
-              <a className="btn btn-link btn-test-access" href="/134697.html">
+              <a className="btn btn-link btn-test-access" href="https://www.iprbookshop.ru/134697.html">
                 <p className="m-0">Тестовый доступ</p>
               </a>
-              <a href="/auth" className="btn btn-link text-bold">Вход</a>
+              <a href="https://www.iprbookshop.ru/auth" className="btn btn-link text-bold">Вход</a>
             </div>
           </div>
           <div className="collapse" id="collapseMenu">
@@ -52,7 +52,7 @@ function Header() {
                   <button className="nav-link" id="v-pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#v-pills-disabled" type="button" role="tab" aria-controls="v-pills-disabled" aria-selected="false"><span>Альтернативные виды обучения</span></button>
                   <button className="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false"><span>Экосистема IPR SMART</span></button>
                   <button className="nav-link" id="v-pills-integration-tab" data-bs-toggle="pill" data-bs-target="#v-pills-integration" type="button" role="tab" aria-controls="v-pills-integration" aria-selected="false"><span>Интеграция в ЭИОС</span></button>
-                  <a className="nav-link" href="/educational-center.html" target="_blank"><span>Учебный центр</span></a>
+                  <a className="nav-link" href="https://www.iprbookshop.ru/educational-center.html" target="_blank"><span>Учебный центр</span></a>
                   <button className="nav-link" id="v-pills-info-tab" data-bs-toggle="pill" data-bs-target="#v-pills-holders" type="button" role="tab" aria-controls="v-pills-holders" aria-selected="false"><span>Правообладателям</span></button>
                   <button className="nav-link" id="v-pills-info-tab" data-bs-toggle="pill" data-bs-target="#v-pills-info" type="button" role="tab" aria-controls="v-pills-info" aria-selected="false"><span>Информация</span></button>
                   <button className="nav-link" id="v-pills-mobile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-mobile" type="button" role="tab" aria-controls="v-pills-mobile" aria-selected="false"><span>Мобильное приложение IPR SMART Mobile Reader</span></button>
@@ -64,47 +64,47 @@ function Header() {
                     <div className="row px-md-5">
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/586.html">Книги</a>
+                          <a href="https://www.iprbookshop.ru/586.html">Книги</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="moduli_smart.html">Образовательные модули</a>
+                          <a href="https://www.iprbookshop.ru/moduli_smart.html">Образовательные модули</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/6951.html">Журналы</a>
+                          <a href="https://www.iprbookshop.ru/6951.html">Журналы</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/586.html?ref_type=2">Новинки</a>
+                          <a href="https://www.iprbookshop.ru/586.html?ref_type=2">Новинки</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/136738.html">Печатные книги</a>
+                          <a href="https://www.iprbookshop.ru/136738.html">Печатные книги</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/25405.html">Аудиоиздания</a>
+                          <a href="https://www.iprbookshop.ru/25405.html">Аудиоиздания</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/95074.html">Видеоресурсы</a>
+                          <a href="https://www.iprbookshop.ru/95074.html">Видеоресурсы</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137780.html">Научно-образовательные платформы (НОПы)</a>
+                          <a href="https://www.iprbookshop.ru/137780.html">Научно-образовательные платформы (НОПы)</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/35446.html">Архивные фонды</a>
+                          <a href="https://www.iprbookshop.ru/35446.html">Архивные фонды</a>
                         </div>
                       </div>
                       <div className="col-12">
@@ -132,7 +132,7 @@ function Header() {
                     <div className="row px-md-5">
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/133548.html"><span>Модуль бесшовной интеграции</span></a>
+                          <a href="https://www.iprbookshop.ru/133548.html"><span>Модуль бесшовной интеграции</span></a>
                         </div>
                       </div>
                       <div className="col-12">
@@ -146,37 +146,37 @@ function Header() {
                     <div className="row px-md-5">
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137512.html">ЭБС IPR SMART</a>
+                          <a href="https://www.iprbookshop.ru/137512.html">ЭБС IPR SMART</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137466.html">Платформа онлайн-обучения DataLIB</a>
+                          <a href="https://www.iprbookshop.ru/137466.html">Платформа онлайн-обучения DataLIB</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137467.html">ЭОР «Русский как иностранный»</a>
+                          <a href="https://www.iprbookshop.ru/137467.html">ЭОР «Русский как иностранный»</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137469.html">ЭР «PROFобразование»</a>
+                          <a href="https://www.iprbookshop.ru/137469.html">ЭР «PROFобразование»</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137470.html">Платформа ВКР СМАРТ</a>
+                          <a href="https://www.iprbookshop.ru/137470.html">Платформа ВКР СМАРТ</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137471.html">Мобильное приложение IPR SMART Mobile Reader</a>
+                          <a href="https://www.iprbookshop.ru/137471.html">Мобильное приложение IPR SMART Mobile Reader</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/137472.html">Мобильное приложение для лиц с ОВЗ по зрению IPR BOOKS WV-Reader</a>
+                          <a href="https://www.iprbookshop.ru/137472.html">Мобильное приложение для лиц с ОВЗ по зрению IPR BOOKS WV-Reader</a>
                         </div>
                       </div>
                     </div>
@@ -185,37 +185,37 @@ function Header() {
                     <div className="row px-md-5">
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/4.html">О компании</a>
+                          <a href="https://www.iprbookshop.ru/4.html">О компании</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/72362.html">Новости</a>
+                          <a href="https://www.iprbookshop.ru/72362.html">Новости</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/68943.html">Адаптивные технологии</a>
+                          <a href="https://www.iprbookshop.ru/68943.html">Адаптивные технологии</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/132587.html">Шаблоны и документы</a>
+                          <a href="https://www.iprbookshop.ru/132587.html">Шаблоны и документы</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/1184.html">Контакты</a>
+                          <a href="https://www.iprbookshop.ru/1184.html">Контакты</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/92965.html">Инструкции</a>
+                          <a href="https://www.iprbookshop.ru/92965.html">Инструкции</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/132588.html">Часто задаваемые вопросы</a>
+                          <a href="https://www.iprbookshop.ru/132588.html">Часто задаваемые вопросы</a>
                         </div>
                       </div>
                     </div>
@@ -224,22 +224,22 @@ function Header() {
                     <div className="row px-md-5">
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/1733.html">Авторам</a>
+                          <a href="https://www.iprbookshop.ru/1733.html">Авторам</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/557.html">Издательствам</a>
+                          <a href="https://www.iprbookshop.ru/557.html">Издательствам</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/6390.html">Сотрудничество для кафедр</a>
+                          <a href="https://www.iprbookshop.ru/6390.html">Сотрудничество для кафедр</a>
                         </div>
                       </div>
                       <div className="col-12">
                         <div className="link-tab">
-                          <a href="/50860.html">Конкурсы и продвижение изданий</a>
+                          <a href="https://www.iprbookshop.ru/50860.html">Конкурсы и продвижение изданий</a>
                         </div>
                       </div>
                     </div>

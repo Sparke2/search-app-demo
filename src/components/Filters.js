@@ -1,26 +1,31 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReactSelect from './ReactSelect';
 import Checkbox from './Checkbox';
+import ReactSelectWithLabel from './ReactSelectWithLabel';
 import OptionsForEditions from '../filterdata/OptionsForEditions';
 import OptionsForPublishers from '../filterdata/OptionsForPublishers';
 import OptionsForAvailability from '../filterdata/OptionsForAvailability';
 import OptionsForYears from '../filterdata/OptionsForYears';
 import OptionsForTarget from '../filterdata/OptionsForTarget';
-import ReactSelectWithLabel from './ReactSelectWithLabel';
 
 function Filters() {
-  const defaultSelectedOptionsForAvailability = OptionsForAvailability.filter(option => option.selected);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [selectedFromYear, setSelectedFromYear] = useState(null);
   const [selectedToYear, setSelectedToYear] = useState(null);
+  const searchParams = new URLSearchParams(location.search);
+  const availabilityValueFromURL = searchParams.get('availability');
 
+  const defaultSelectedOptionsForAvailability = availabilityValueFromURL
+    ? OptionsForAvailability.find(option => option.value === availabilityValueFromURL)
+    : OptionsForAvailability.find(option => option.selected);
+  const [selectedOptionsForAvailability, setSelectedOptionsForAvailability] = useState(defaultSelectedOptionsForAvailability);
+  console.log(selectedOptionsForAvailability)
   const filteredToYearOptions = useMemo(() => {
     if (!selectedFromYear) return OptionsForYears;
     return OptionsForYears.filter(option => option.value >= selectedFromYear.value);
   }, [selectedFromYear]);
-
-  const location = useLocation();
-  const navigate = useNavigate();
 
   const [checkboxes, setCheckboxes] = useState({
     searchBooks: false,
@@ -43,22 +48,35 @@ function Filters() {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const updatedCheckboxes = { ...checkboxes };
-
     for (const key in updatedCheckboxes) {
       updatedCheckboxes[key] = searchParams.get(key) === 'true';
     }
-
     setCheckboxes(updatedCheckboxes);
+
+    const availabilityValue = searchParams.get('availability');
+    if (availabilityValue) {
+      const availabilityOption = OptionsForAvailability.find(option => option.value === availabilityValue);
+      if (availabilityOption) {
+        setSelectedOptionsForAvailability(availabilityOption);
+        console.log(selectedOptionsForAvailability)
+      }
+    }
   }, [location.search]);
 
   const applyFilters = () => {
     const searchParams = new URLSearchParams();
-
     for (const key in checkboxes) {
       if (checkboxes[key]) {
         searchParams.set(key, 'true');
       }
     }
+    if (selectedFromYear) {
+      searchParams.set('fromYear', selectedFromYear.value);
+    }
+    if (selectedToYear) {
+      searchParams.set('toYear', selectedToYear.value);
+    }
+    searchParams.set('availability', selectedOptionsForAvailability.value);
 
     navigate({ search: searchParams.toString() });
   };
@@ -150,7 +168,12 @@ function Filters() {
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Доступность изданий</h6>
-        <ReactSelect options={OptionsForAvailability} placeholder="Выберите из списка" defaultValue={defaultSelectedOptionsForAvailability} />
+        <ReactSelect 
+          options={OptionsForAvailability} 
+          placeholder="Выберите из списка" 
+          defaultValue={selectedOptionsForAvailability} 
+          onChange={setSelectedOptionsForAvailability}
+        />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Издательство</h6>

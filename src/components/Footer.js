@@ -46,9 +46,9 @@ function Footer() {
                                     <img src={tg} alt=""/>
                                 </a>
                             </div>
-                            <p className="mb-2"><a className="fw-600" href="/user_agreement.html">Пользовательское соглашение</a></p>
-                            <p className="mb-2"><a className="fw-600" href="/101619.html">Политика конфиденциальности</a></p>
-                            <p><a className="fw-600" href="/sveden/common">Сведения об организации</a></p>
+                            <p className="mb-2"><a className="fw-600" href="https://www.iprbookshop.ru/user_agreement.html">Пользовательское соглашение</a></p>
+                            <p className="mb-2"><a className="fw-600" href="https://www.iprbookshop.ru/101619.html">Политика конфиденциальности</a></p>
+                            <p><a className="fw-600" href="https://www.iprbookshop.ru/sveden/common">Сведения об организации</a></p>
                         </div>
                     </div>
                 </div>

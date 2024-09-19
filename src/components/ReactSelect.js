@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
-function ReactSelect({ options, placeholder, isMulti, defaultValue }) {
+function ReactSelect({ options, placeholder, isMulti, defaultValue, onChange }) {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
 
     return (
@@ -16,10 +16,11 @@ function ReactSelect({ options, placeholder, isMulti, defaultValue }) {
                 classNamePrefix="react-select"
                 onMenuOpen={() => setMenuIsOpen(true)}
                 onMenuClose={() => setMenuIsOpen(false)}
+                onChange={onChange}
                 components={{
                     DropdownIndicator: () => (
                         <div className="react-select__dropdown-indicator">
-                            {menuIsOpen ? <FontAwesomeIcon icon={faChevronUp} className='color-grey' />: <FontAwesomeIcon icon={faChevronDown} className='color-grey' />}
+                            {menuIsOpen ? <FontAwesomeIcon icon={faChevronUp} className='color-grey' /> : <FontAwesomeIcon icon={faChevronDown} className='color-grey' />}
                         </div>
                     ),
                 }}
