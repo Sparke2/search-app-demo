@@ -1,8 +1,13 @@
 {
   "files": {
-    "main.css": "/search-app-demo/static/css/main.354be3a8.css",
-    "main.js": "/search-app-demo/static/js/main.91698f3a.js",
+    "main.css": "/search-app-demo/static/css/main.6f497a59.css",
+    "main.js": "/search-app-demo/static/js/main.331ac11d.js",
     "static/js/453.918e1538.chunk.js": "/search-app-demo/static/js/453.918e1538.chunk.js",
+    "static/media/primeicons.svg": "/search-app-demo/static/media/primeicons.6ed59f962963a4a73af2.svg",
+    "static/media/primeicons.eot": "/search-app-demo/static/media/primeicons.ff0c4cd79b2ffca2de54.eot",
+    "static/media/primeicons.woff": "/search-app-demo/static/media/primeicons.8931fda1930c3bd21e96.woff",
+    "static/media/primeicons.ttf": "/search-app-demo/static/media/primeicons.a5c2a53d1ff7a9ff5933.ttf",
+    "static/media/primeicons.woff2": "/search-app-demo/static/media/primeicons.024b32cc7bf399b1a847.woff2",
     "static/media/montserrat-latin-400-italic.woff": "/search-app-demo/static/media/montserrat-latin-400-italic.dbde806dd2fc6a983483.woff",
     "static/media/montserrat-latin-ext-400-italic.woff": "/search-app-demo/static/media/montserrat-latin-ext-400-italic.4bccb0ebcfb55cc84087.woff",
     "static/media/montserrat-latin-400-normal.woff": "/search-app-demo/static/media/montserrat-latin-400-normal.b48c3d9a8c0a49c1c7b4.woff",
@@ -31,12 +36,12 @@
     "static/media/tg.svg": "/search-app-demo/static/media/tg.198660a58a4eba41748a05d2d95465e6.svg",
     "static/media/breadcrumb-icon.svg": "/search-app-demo/static/media/breadcrumb-icon.0e6d797035c535bb2e41.svg",
     "static/media/Menu_Alt_04.svg": "/search-app-demo/static/media/Menu_Alt_04.c23a73ccabd5a15a0b1d7629f0e9ee91.svg",
-    "main.354be3a8.css.map": "/search-app-demo/static/css/main.354be3a8.css.map",
-    "main.91698f3a.js.map": "/search-app-demo/static/js/main.91698f3a.js.map",
+    "main.6f497a59.css.map": "/search-app-demo/static/css/main.6f497a59.css.map",
+    "main.331ac11d.js.map": "/search-app-demo/static/js/main.331ac11d.js.map",
     "453.918e1538.chunk.js.map": "/search-app-demo/static/js/453.918e1538.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.354be3a8.css",
-    "static/js/main.91698f3a.js"
+    "static/css/main.6f497a59.css",
+    "static/js/main.331ac11d.js"
   ]
 }
