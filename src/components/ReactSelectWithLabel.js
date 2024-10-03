@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
-function ReactSelectWithLabel({ options, placeholder, value, onChange }) {
+function ReactSelectWithLabel({ options, placeholder, value, onChange, defaultValue }) {
   const [isLabelVisible, setLabelVisible] = useState(false);
   const [menuIsOpen, setMenuIsOpen] = useState(false);
 
@@ -24,6 +24,7 @@ function ReactSelectWithLabel({ options, placeholder, value, onChange }) {
         options={options}
         value={value}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         onChange={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}

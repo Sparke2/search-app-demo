@@ -1,11 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 function App() {
   return (
-    <Router>
+  <Router>
     <Routes>
       <Route path="*" element={<Home />} />
     </Routes>

@@ -9,6 +9,7 @@ function SearchForm() {
   const [searchText, setSearchText] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [labelText, setLabelText] = useState('Искать в найденном');
+  
 
   const query = useMemo(() => new URLSearchParams(location.search).get('query'), [location.search]);
 

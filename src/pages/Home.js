@@ -3,16 +3,16 @@ import Breadcrumb from '../components/Breadcrumb';
 import SearchForm from '../components/SearchForm';
 import ResultsAccordion from '../components/ResultsAccordion';
 import Filters from '../components/Filters';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+
 import CheckboxFilterShow from '../components/CheckboxFilterShow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
+import { BBKProvider  } from '../providers/BBKContext';
+import { AppLayout } from '../layout/AppLayout';
 
 function Home() {
   return (
-    <>
-    <Header/>
+    <AppLayout>
     <main>
       <div id="search-page" className="bg-page">
         <div className="container py-4">
@@ -38,15 +38,16 @@ function Home() {
                 <ResultsAccordion />
               </div>
               <div className="col-lg-3 filter-field">
-                <Filters />
+                <BBKProvider>
+                  <Filters />
+                </BBKProvider>
               </div>
             </div>
           </div>
         </div>
       </div>
     </main>
-    <Footer/>
-    </>
+    </AppLayout>
   );
 }
 

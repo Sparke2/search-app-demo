@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReactSelect from './ReactSelect';
 import Checkbox from './Checkbox';
@@ -8,24 +8,69 @@ import OptionsForPublishers from '../filterdata/OptionsForPublishers';
 import OptionsForAvailability from '../filterdata/OptionsForAvailability';
 import OptionsForYears from '../filterdata/OptionsForYears';
 import OptionsForTarget from '../filterdata/OptionsForTarget';
+import OptionsForAdditionals from '../filterdata/OptionsForAdditionals';
+import BBKModal from './BBKModal';
+import { useBBK } from '../providers/BBKContext';
 
 function Filters() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [selectedFromYear, setSelectedFromYear] = useState(null);
-  const [selectedToYear, setSelectedToYear] = useState(null);
-  const searchParams = new URLSearchParams(location.search);
-  const availabilityValueFromURL = searchParams.get('availability');
+  const [isModalBBKOpen, setModalBBKOpen] = useState(false);
+  const { selectedBBK, removeBBK } = useBBK();
 
-  const defaultSelectedOptionsForAvailability = availabilityValueFromURL
-    ? OptionsForAvailability.find(option => option.value === availabilityValueFromURL)
-    : OptionsForAvailability.find(option => option.selected);
-  const [selectedOptionsForAvailability, setSelectedOptionsForAvailability] = useState(defaultSelectedOptionsForAvailability);
-  console.log(selectedOptionsForAvailability)
-  const filteredToYearOptions = useMemo(() => {
-    if (!selectedFromYear) return OptionsForYears;
-    return OptionsForYears.filter(option => option.value >= selectedFromYear.value);
-  }, [selectedFromYear]);
+  const toggleBBKModal = () => {
+    setModalBBKOpen(!isModalBBKOpen);
+  };
+  const searchParams = new URLSearchParams(location.search);
+
+  const getOption = (key, options) => {
+    const value = searchParams.get(key);
+    return value ? options.find(option => option.value === value) : null;
+  };
+
+  const getYear = (key, options) => {
+    const value = Number(searchParams.get(key));
+    return value ? options.find(option => option.value === value) : null;
+  };
+
+  const getMultyArrayOptions = (key, options) => {
+    const value = searchParams.get(key);
+    if (!value) return [];
+    return value.split(',').map(trimmedValue => {
+      return options.reduce((acc, group) => {
+        const option = group.options.find(option => option.value === trimmedValue.trim());
+        return option || acc;
+      }, undefined);
+    }).filter(Boolean);
+  };
+  
+  const getMultyOptions = (key, options) => {
+    const value = searchParams.get(key);
+    if (!value) return [];
+    return value.split(',').map(trimmedValue => {
+      return options.find(option => option.value === trimmedValue.trim());
+    }).filter(Boolean);
+  }
+
+  const defaultSelectedOptions = {
+    availability: getOption('availability', OptionsForAvailability) || OptionsForAvailability.find(option => option.selected),
+    publishers: getMultyOptions('publishers', OptionsForPublishers),
+    editions: getMultyArrayOptions('editions', OptionsForEditions),
+    targets: getMultyArrayOptions('targets', OptionsForTarget),
+    additionals: getMultyOptions('additionals', OptionsForAdditionals),
+    fromYear: getYear('fromYear', OptionsForYears),
+    toYear: getYear('toYear', OptionsForYears),
+  };
+
+  const [selectedOptions, setSelectedOptions] = useState({
+    availability: defaultSelectedOptions.availability,
+    publishers: defaultSelectedOptions.publishers,
+    editions: defaultSelectedOptions.editions,
+    additionals: defaultSelectedOptions.additionals,
+    targets: defaultSelectedOptions.targets,
+    fromYear: defaultSelectedOptions.fromYear,
+    toYear: defaultSelectedOptions.toYear,
+  });
 
   const [checkboxes, setCheckboxes] = useState({
     searchBooks: false,
@@ -38,48 +83,60 @@ function Filters() {
     searchInText: false,
   });
 
-  const handleCheckboxChange = (id) => {
-    setCheckboxes(prevState => ({
-      ...prevState,
-      [id]: !prevState[id],
-    }));
-  };
-
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    const updatedCheckboxes = { ...checkboxes };
-    for (const key in updatedCheckboxes) {
-      updatedCheckboxes[key] = searchParams.get(key) === 'true';
-    }
+    const updatedCheckboxes = Object.fromEntries(
+      Object.keys(checkboxes).map(key => [key, searchParams.get(key) === 'true'])
+    );
     setCheckboxes(updatedCheckboxes);
-
-    const availabilityValue = searchParams.get('availability');
-    if (availabilityValue) {
-      const availabilityOption = OptionsForAvailability.find(option => option.value === availabilityValue);
-      if (availabilityOption) {
-        setSelectedOptionsForAvailability(availabilityOption);
-        console.log(selectedOptionsForAvailability)
-      }
-    }
   }, [location.search]);
 
-  const applyFilters = () => {
-    const searchParams = new URLSearchParams();
-    for (const key in checkboxes) {
-      if (checkboxes[key]) {
-        searchParams.set(key, 'true');
-      }
-    }
-    if (selectedFromYear) {
-      searchParams.set('fromYear', selectedFromYear.value);
-    }
-    if (selectedToYear) {
-      searchParams.set('toYear', selectedToYear.value);
-    }
-    searchParams.set('availability', selectedOptionsForAvailability.value);
+  const filteredToYearOptions = useMemo(() => {
+    return selectedOptions.fromYear 
+      ? OptionsForYears.filter(option => option.value >= selectedOptions.fromYear.value) 
+      : OptionsForYears;
+  }, [selectedOptions.fromYear]);
 
-    navigate({ search: searchParams.toString() });
-  };
+  const handleCheckboxChange = useCallback((id) => {
+    setCheckboxes(prevState => ({ ...prevState, [id]: !prevState[id] }));
+  }, []);
+
+  const applyFilters = useCallback(() => {
+    const newSearchParams = new URLSearchParams();
+    
+    Object.entries(checkboxes).forEach(([key, value]) => {
+      if (value) newSearchParams.set(key, 'true');
+    });
+
+    if (selectedOptions.fromYear) {
+      newSearchParams.set('fromYear', selectedOptions.fromYear.value);
+    }
+    if (selectedOptions.toYear) {
+      newSearchParams.set('toYear', selectedOptions.toYear.value);
+    }
+    if (selectedOptions.availability) {
+      newSearchParams.set('availability', selectedOptions.availability.value);
+    }
+    if (selectedOptions.publishers.length > 0) {
+      const publishersValues = selectedOptions.publishers.map(option => option.value).join(',');
+      newSearchParams.set('publishers', publishersValues);
+    }
+    if (selectedOptions.editions.length > 0) {
+      const editionsValues = selectedOptions.editions.map(option => option.value).join(',');
+      newSearchParams.set('editions', editionsValues);
+    }
+
+    if (selectedOptions.targets.length > 0) {
+      const targetsValues = selectedOptions.targets.map(option => option.value).join(',');
+      newSearchParams.set('targets', targetsValues);
+    }
+
+    if (selectedOptions.additionals.length > 0) {
+      const additionalsValues = selectedOptions.additionals.map(option => option.value).join(',');
+      newSearchParams.set('additionals', additionalsValues);
+    }
+
+    navigate({ search: newSearchParams.toString() });
+  }, [checkboxes, selectedOptions, navigate]);
 
   return (
     <div className="row g-4 pt-4">
@@ -152,16 +209,16 @@ function Filters() {
             <ReactSelectWithLabel
               options={OptionsForYears}
               placeholder="От"
-              value={selectedFromYear}
-              onChange={setSelectedFromYear}
+              defaultValue={selectedOptions.fromYear}
+              onChange={option => setSelectedOptions(prev => ({ ...prev, fromYear: option }))}
             />
           </div>
           <div className='col-6'>
             <ReactSelectWithLabel
               options={filteredToYearOptions}
               placeholder="До"
-              value={selectedToYear}
-              onChange={setSelectedToYear}
+              defaultValue={selectedOptions.toYear}
+              onChange={option => setSelectedOptions(prev => ({ ...prev, toYear: option }))}
             />
           </div>
         </div>
@@ -171,13 +228,19 @@ function Filters() {
         <ReactSelect 
           options={OptionsForAvailability} 
           placeholder="Выберите из списка" 
-          defaultValue={selectedOptionsForAvailability} 
-          onChange={setSelectedOptionsForAvailability}
+          defaultValue={selectedOptions.availability} 
+          onChange={option => setSelectedOptions(prev => ({ ...prev, availability: option }))}
         />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Издательство</h6>
-        <ReactSelect options={OptionsForPublishers} placeholder="Введите или выберите из списка" />
+        <ReactSelect 
+          options={OptionsForPublishers} 
+          placeholder="Введите или выберите из списка"
+          isMulti
+          defaultValue={selectedOptions.publishers}  
+          onChange={option => setSelectedOptions(prev => ({ ...prev, publishers: option }))}
+        />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Укрупненная группа специальностей</h6>
@@ -185,15 +248,57 @@ function Filters() {
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Вид издания</h6>
-        <ReactSelect options={OptionsForEditions} placeholder="Выберите из списка" isMulti />
+        <ReactSelect 
+          options={OptionsForEditions} 
+          placeholder="Выберите из списка" 
+          isMulti 
+          defaultValue={selectedOptions.editions}
+          onChange={options => setSelectedOptions(prev => ({ ...prev, editions: options }))}
+        />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Целевое назначение</h6>
-        <ReactSelect options={OptionsForTarget} placeholder={"Выберите из списка"} isMulti />
+        <ReactSelect 
+          options={OptionsForTarget} 
+          placeholder="Выберите из списка" 
+          defaultValue={selectedOptions.targets}
+          onChange={options => setSelectedOptions(prev => ({ ...prev, targets: options }))}
+          isMulti 
+        />
       </div>
       <div className="col-12">
-        <h6 className='mb-3'>ББК</h6>
-        <button className="btn btn-outline-primary w-100">Выберите ББК</button>
+        <h6 className='mb-3'>Дополнительно</h6>
+        <ReactSelect 
+          options={OptionsForAdditionals} 
+          placeholder="Выберите из списка" 
+          defaultValue={selectedOptions.additionals}
+          onChange={options => setSelectedOptions(prev => ({ ...prev, additionals: options }))}
+          isMulti 
+        />
+      </div>
+      <div className="col-12">
+      <h6 className="mb-3">ББК</h6>
+        {selectedBBK.length > 0 && (
+          <div>
+            <ul>
+              {selectedBBK.map((item) => (
+                <li key={item.key}>
+                  {item.label}
+                  <button
+                    className="btn btn-sm btn-danger ml-2"
+                    onClick={() => removeBBK(item.key)}
+                  >
+                    Удалить
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <button className="btn btn-outline-primary w-100" onClick={toggleBBKModal}>
+          Выберите ББК
+        </button>
+        <BBKModal isOpen={isModalBBKOpen} toggleModal={toggleBBKModal} />
       </div>
       <div className='col-12'>
         <button className='btn btn-primary w-100' onClick={applyFilters}>Применить параметры</button>

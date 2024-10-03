@@ -351,3 +351,9 @@ header .link-tab {
  border-radius: 5px;
  text-align-last: left;
 }
+
+.p-tree-container {
+  overflow: hidden;
+  overflow-y: auto;
+  height: 40vh;
+}
