@@ -22,13 +22,10 @@ export const BBKProvider = ({ children }) => {
         let selectedItems = NodesBBK.filter((node,index) => {
             return bbkKeys.includes(node.key)
         })
-        console.log({bbkKeys})
         const bbkKeysOnlyChildren = bbkKeys.filter((node,index) => node.length>1)
-        console.log({bbkKeysOnlyChildren})
         selectedItems = NodesBBK.map((node,index) => ({...node, children: node.children.filter(child=>bbkKeysOnlyChildren.includes(child.key))}))
 
-        console.log({selectedItems  });
-        setSelectedBBK(selectedItems);
+        setSelectedBBK(selectedItems.filter(v=>v.children.length));
         setSelectedKeys(updatedKeys);
     }, [location.search]);
 

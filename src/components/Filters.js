@@ -46,8 +46,7 @@ function Filters() {
       }
     });
   };
-  console.log({xyi:selectedBBK});
-  
+
   const toggleBBKModal = () => {
     setModalBBKOpen(!isModalBBKOpen);
   };
@@ -73,7 +72,7 @@ function Filters() {
       }, undefined);
     }).filter(Boolean);
   };
-  
+
   const getMultyOptions = (key, options) => {
     const value = searchParams.get(key);
     if (!value) return [];
@@ -121,8 +120,8 @@ function Filters() {
   }, [location.search]);
 
   const filteredToYearOptions = useMemo(() => {
-    return selectedOptions.fromYear 
-      ? OptionsForYears.filter(option => option.value >= selectedOptions.fromYear.value) 
+    return selectedOptions.fromYear
+      ? OptionsForYears.filter(option => option.value >= selectedOptions.fromYear.value)
       : OptionsForYears;
   }, [selectedOptions.fromYear]);
 
@@ -132,7 +131,7 @@ function Filters() {
 
   const applyFilters = useCallback(() => {
     const newSearchParams = new URLSearchParams();
-    
+
     Object.entries(checkboxes).forEach(([key, value]) => {
       if (value) newSearchParams.set(key, 'true');
     });
@@ -210,26 +209,26 @@ function Filters() {
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Область поиска</h6>
-        <Checkbox 
-          id="searchAuthor" 
+        <Checkbox
+          id="searchAuthor"
           label="По автору"
           isChecked={checkboxes.searchAuthor}
           handleCheckboxChange={handleCheckboxChange}
           applyFilters={applyFilters}
         />
-        <Checkbox 
-          id="searchTitle" 
+        <Checkbox
+          id="searchTitle"
           label="По названию"
           isChecked={checkboxes.searchTitle}
           handleCheckboxChange={handleCheckboxChange}
-          applyFilters={applyFilters} 
+          applyFilters={applyFilters}
         />
-        <Checkbox 
-          id="searchInText" 
+        <Checkbox
+          id="searchInText"
           label="В тексте"
           isChecked={checkboxes.searchInText}
           handleCheckboxChange={handleCheckboxChange}
-          applyFilters={applyFilters} 
+          applyFilters={applyFilters}
         />
       </div>
       <div className="col-12">
@@ -255,20 +254,20 @@ function Filters() {
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Доступность изданий</h6>
-        <ReactSelect 
-          options={OptionsForAvailability} 
-          placeholder="Выберите из списка" 
-          defaultValue={selectedOptions.availability} 
+        <ReactSelect
+          options={OptionsForAvailability}
+          placeholder="Выберите из списка"
+          defaultValue={selectedOptions.availability}
           onChange={option => setSelectedOptions(prev => ({ ...prev, availability: option }))}
         />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Издательство</h6>
-        <ReactSelect 
-          options={OptionsForPublishers} 
+        <ReactSelect
+          options={OptionsForPublishers}
           placeholder="Введите или выберите из списка"
           isMulti
-          defaultValue={selectedOptions.publishers}  
+          defaultValue={selectedOptions.publishers}
           onChange={option => setSelectedOptions(prev => ({ ...prev, publishers: option }))}
         />
       </div>
@@ -278,32 +277,32 @@ function Filters() {
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Вид издания</h6>
-        <ReactSelect 
-          options={OptionsForEditions} 
-          placeholder="Выберите из списка" 
-          isMulti 
+        <ReactSelect
+          options={OptionsForEditions}
+          placeholder="Выберите из списка"
+          isMulti
           defaultValue={selectedOptions.editions}
           onChange={options => setSelectedOptions(prev => ({ ...prev, editions: options }))}
         />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Целевое назначение</h6>
-        <ReactSelect 
-          options={OptionsForTarget} 
-          placeholder="Выберите из списка" 
+        <ReactSelect
+          options={OptionsForTarget}
+          placeholder="Выберите из списка"
           defaultValue={selectedOptions.targets}
           onChange={options => setSelectedOptions(prev => ({ ...prev, targets: options }))}
-          isMulti 
+          isMulti
         />
       </div>
       <div className="col-12">
         <h6 className='mb-3'>Дополнительно</h6>
-        <ReactSelect 
-          options={OptionsForAdditionals} 
-          placeholder="Выберите из списка" 
+        <ReactSelect
+          options={OptionsForAdditionals}
+          placeholder="Выберите из списка"
           defaultValue={selectedOptions.additionals}
           onChange={options => setSelectedOptions(prev => ({ ...prev, additionals: options }))}
-          isMulti 
+          isMulti
         />
       </div>
       <div className="col-12">
