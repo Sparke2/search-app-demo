@@ -324,7 +324,7 @@ header .nav-pills .nav-link.active span {
 header .nav-link span {
    color: #263238;
    font-weight: 500;
-   font-size: 24px;
+   font-size: 22px;
  font-weight: 700;
  width: fit-content;
 }
@@ -347,11 +347,13 @@ header .tab-pane a:hover {
  transition: 0.3s;
 }
 header .link-tab {
- padding: 1rem;
+ padding: 0.7rem;
  border-radius: 5px;
  text-align-last: left;
 }
-
+#bdNavbar a {
+  color: #FF8A00;
+}
 .p-tree-container {
   overflow: hidden;
   overflow-y: auto;

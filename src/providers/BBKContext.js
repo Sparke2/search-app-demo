@@ -19,11 +19,15 @@ export const BBKProvider = ({ children }) => {
             acc[key] = true;
             return acc;
         }, {});
+        let selectedItems = NodesBBK.filter((node,index) => {
+            return bbkKeys.includes(node.key)
+        })
+        console.log({bbkKeys})
+        const bbkKeysOnlyChildren = bbkKeys.filter((node,index) => node.length>1)
+        console.log({bbkKeysOnlyChildren})
+        selectedItems = NodesBBK.map((node,index) => ({...node, children: node.children.filter(child=>bbkKeysOnlyChildren.includes(child.key))}))
 
-        const selectedItems = NodesBBK.filter((node) =>
-            bbkKeys.includes(node.key)
-        );
-
+        console.log({selectedItems  });
         setSelectedBBK(selectedItems);
         setSelectedKeys(updatedKeys);
     }, [location.search]);
@@ -60,3 +64,6 @@ export const BBKProvider = ({ children }) => {
         </BBKContext.Provider>
     );
 };
+export const useBBKV2 = () => {
+    const location = useLocation()
+}

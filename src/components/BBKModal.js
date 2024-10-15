@@ -5,15 +5,20 @@ import { useBBK } from '../providers/BBKContext';
 import { useNavigate } from 'react-router-dom';
 
 const BBKModal = ({ isOpen, toggleModal }) => {
-  const [localSelectedKeys, setLocalSelectedKeys] = useState({});
   const { applyBBK, selectedKeys } = useBBK();
   const navigate = useNavigate();
+  const [localSelectedKeys, setLocalSelectedKeys] = useState(() => selectedKeys);
+
   const modalRef = useRef(null);
 
   useEffect(() => {
+
     if (isOpen) {
-      const updatedLocalSelectedKeys = { ...selectedKeys };
-      setLocalSelectedKeys(updatedLocalSelectedKeys);
+      const updatedLocalSelectedKeys = selectedKeys;
+      setLocalSelectedKeys(Object.keys(updatedLocalSelectedKeys).reduce((acc,cur) => {
+          acc[cur] = {checked:selectedKeys[cur]}
+          return acc;
+      }, {}) );
     }
   }, [isOpen, selectedKeys]);
 
@@ -56,6 +61,7 @@ const BBKModal = ({ isOpen, toggleModal }) => {
     setLocalSelectedKeys({});
   };
 
+
   if (!isOpen) return null;
 
   return (
@@ -77,6 +83,7 @@ const BBKModal = ({ isOpen, toggleModal }) => {
                 selectionKeys={localSelectedKeys}
                 onSelectionChange={(e) => setLocalSelectedKeys(e.value)}
                 filter 
+                
                 filterBy="label"
                 className="w-full md:w-30rem"
               />

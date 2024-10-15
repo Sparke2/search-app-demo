@@ -10,6 +10,7 @@ import OptionsForYears from '../filterdata/OptionsForYears';
 import OptionsForTarget from '../filterdata/OptionsForTarget';
 import OptionsForAdditionals from '../filterdata/OptionsForAdditionals';
 import BBKModal from './BBKModal';
+import NodeBBK from '../filterdata/NodesBBK';
 import { useBBK } from '../providers/BBKContext';
 
 function Filters() {
@@ -17,7 +18,36 @@ function Filters() {
   const navigate = useNavigate();
   const [isModalBBKOpen, setModalBBKOpen] = useState(false);
   const { selectedBBK, removeBBK } = useBBK();
+  //todo если NodeBBK[key].children.length не совпадает с selectedBBK[key].length, значит при рендере
+  // фильроов - нерендерить selectdBKK[key].label, если совпадает, то не ренджерить selectedBKK[key].children
+  const renderSelectedBBK = (NodeBBK, selectedBBK) => {
+    return selectedBBK.map((selectedItem, key) => {
+      const nodeChildrenLength = NodeBBK[key]?.children?.length || 0;
+      const selectedChildrenLength = selectedItem?.length || 0;
 
+      if (nodeChildrenLength !== selectedChildrenLength) {
+        // Render logic when lengths do not match
+        return (
+            <div key={key}>
+              {/* Render selectedBBK[key].children */}
+              {selectedItem.children.map((child, index) => (
+                  <div key={index}>{child.label}</div>
+              ))}
+            </div>
+        );
+      } else {
+        // Render logic when lengths match
+        return (
+            <div key={key}>
+              {/* Render selectedBBK[key].label */}
+              <span>{selectedItem.label}</span>
+            </div>
+        );
+      }
+    });
+  };
+  console.log({xyi:selectedBBK});
+  
   const toggleBBKModal = () => {
     setModalBBKOpen(!isModalBBKOpen);
   };
@@ -278,6 +308,7 @@ function Filters() {
       </div>
       <div className="col-12">
       <h6 className="mb-3">ББК</h6>
+        {renderSelectedBBK(NodeBBK, selectedBBK)}
         {selectedBBK.length > 0 && (
           <div>
             <ul>
