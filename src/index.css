@@ -24,14 +24,10 @@
   font-weight: 600;
 }
 
-
-
-
-
 .label {
   position: absolute;
   top: 0;
-  left: 0;    
+  left: 0;
   font-size: 12px;
   color: #333;
   transform: translateY(-1rem);
@@ -207,7 +203,7 @@ h5 {
   background: #FCF7EC !important;
   color: #263238 !important;
   background: linear-gradient(90deg, #FCF7EC 0%, #FAF1ED 100%) !important;
-} 
+}
 .react-select__option--is-selected {
   color: #FE5B00 !important;
   background-color: #fff !important;
@@ -245,9 +241,67 @@ h5 {
   font-size: 14px;
   border-radius: 10rem;
 }
+.accordion-button {
+    background: transparent;
+    padding: 0.8rem 0;
+}
+.accordion-button span {
+    font-weight: 600;
+}
+.accordion-body {
+    padding: 0.8rem 0;
+}
+.accordion-item {
+    border: none;
+}
+.accordion-button:not(.collapsed),
+.accordion-button:focus {
+    box-shadow: none;
+    background: transparent;
+}
+.accordion-button::after {
+    margin-left: 0.5rem;
+}
 
-
-
+.card-item {
+    box-shadow: 0 0 15px 0 #00000026;
+    padding: 1.5rem 1.5rem 1.5rem 3rem;
+    border-radius: 1rem;
+    font-size: 15px;
+}
+.card-item a {
+    font-weight: 500 !important;
+}
+.card-item a:hover {
+    cursor: pointer;
+    text-decoration: underline !important;
+}
+.card-item p {
+    margin-bottom: 0.25rem;
+}
+.card-item-text-small-grey {
+    color: #94989B;
+    font-size: 14px;
+}
+.card-item-text-small {
+    font-size: 14px;
+}
+.card-item-text-grey {
+    color: #94989B;
+}
+.card-item-text {
+    font-weight: 600;
+}
+.number-card {
+    left: 2rem;
+}
+.row > div {
+    border-right: 1px solid #DFE2E6;
+    padding-left: 1rem;
+}
+.row > div:last-child {
+    border-right: none;
+}
 
 
 

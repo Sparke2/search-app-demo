@@ -44,8 +44,8 @@ const ResultsAccordion = () => {
   const renderAccordionItems = (categoriesList) => {
     return categoriesList.map((cat, index) => (
       <Accordion.Item key={cat} eventKey={index}>
-        <Accordion.Header>{`${CATEGORIES_LABELS[cat]}: ${0}`}</Accordion.Header>
-        <Accordion.Body>
+        <Accordion.Header> {`${CATEGORIES_LABELS[cat]}:`} <span className="ps-2">{0}</span></Accordion.Header>
+        <Accordion.Body className="me-3">
           {renderItem(cat)}
         </Accordion.Body>
       </Accordion.Item>
