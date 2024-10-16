@@ -38,9 +38,9 @@ function Home() {
                 <ResultsAccordion />
               </div>
               <div className="col-lg-3 filter-field">
-                <BBKProvider>
+                {/*<BBKProvider>*/}
                   <Filters />
-                </BBKProvider>
+                {/*</BBKProvider>*/}
               </div>
             </div>
           </div>
