@@ -17,8 +17,9 @@ export const BBKProvider = ({ children }) => {
             acc[key] = true;
             return acc;
         }, {});
-        let selectedItems
-
+        let selectedItems = NodesBBK.filter((node,index) => {
+            return bbkKeys.includes(node.key)
+        })
         const bbkKeysOnlyChildren = bbkKeys.filter((node,index) => node.length>1)
         selectedItems = NodesBBK.map((node,index) => ({...node, children: node.children.filter(child=>bbkKeysOnlyChildren.includes(child.key))}))
         setSelectedBBK(selectedItems.filter(v=>v.children.length));
