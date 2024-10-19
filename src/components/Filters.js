@@ -19,24 +19,34 @@ import {BBKS} from "./BBKS";
 
 function Filters() {
   const location = useLocation();
-  // useBbk()
+  const {filterNodesBbkByKeys, bkkSelectedKeys, remove} = useBbk()
   const navigate = useNavigate();
   const [isModalBBKOpen, setModalBBKOpen] = useState(false);
+  const selectedBBK= filterNodesBbkByKeys(bkkSelectedKeys).filter(Boolean)
+  console.log({selectedBBK})
   // const { selectedBBK, removeBBK } = useBBK();
   //todo если NodeBBK[key].children.length не совпадает с selectedBBK[key].length, значит при рендере
   // фильроов - нерендерить selectdBKK[key].label, если совпадает, то не ренджерить selectedBKK[key].children
-  const renderSelectedBBK = (NodeBBK, selectedBBK) => {
+  const renderSelectedBBK = () => {
     return selectedBBK.map((selectedItem, key) => {
       const nodeChildrenLength = NodeBBK[key]?.children?.length || 0;
       const selectedChildrenLength = selectedItem?.length || 0;
-
+      // политехничаская 74/82
       if (nodeChildrenLength !== selectedChildrenLength) {
         // Render logic when lengths do not match
         return (
             <div key={key}>
               {/* Render selectedBBK[key].children */}
               {selectedItem.children.map((child, index) => (
-                  <div key={index}>{child.label}</div>
+                  <div key={index}>{child.label}
+                    <button
+                        className="btn btn-sm btn-danger ml-2"
+                        onClick={() => remove(child.key)}
+                    >
+                      Удалить
+                    </button>
+                  </div>
+
               ))}
             </div>
         );
@@ -312,25 +322,27 @@ function Filters() {
       </div>
       <div className="col-12">
       <h6 className="mb-3">ББК</h6>
-        <BBKS/>
-        {/*{renderSelectedBBK(NodeBBK, selectedBBK)}*/}
-        {/*{selectedBBK.length > 0 && (*/}
-        {/*  <div>*/}
-        {/*    <ul>*/}
-        {/*      /!*{selectedBBK.map((item) => (*!/*/}
-        {/*      /!*  <li key={item.key}>*!/*/}
-        {/*      /!*    {item.label}*!/*/}
-        {/*      /!*    <button*!/*/}
-        {/*      /!*      className="btn btn-sm btn-danger ml-2"*!/*/}
-        {/*      /!*      onClick={() => removeBBK(item.key)}*!/*/}
-        {/*      /!*    >*!/*/}
-        {/*      /!*      Удалить*!/*/}
-        {/*      /!*    </button>*!/*/}
-        {/*      /!*  </li>*!/*/}
-        {/*      /!*))}*!/*/}
-        {/*    </ul>*/}
-        {/*  </div>*/}
-        {/*)}*/}
+        {/*<BBKS/>*/}
+        {selectedBBK.length > 0 && (
+          <div>
+            <ul>
+              {selectedBBK.map((item) => (
+                  bkkSelectedKeys[item.key]?.partialChecked?null:
+                <li key={item.key}>
+                  {item.label}
+                  <button
+                    className="btn btn-sm btn-danger ml-2"
+                    onClick={() => remove(item.key)}
+                  >
+                    Удалить
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {renderSelectedBBK(NodeBBK, selectedBBK)}
+
         <button className="btn btn-outline-primary w-100" onClick={toggleBBKModal}>
           Выберите ББК
         </button>

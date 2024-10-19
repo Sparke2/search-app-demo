@@ -51,7 +51,6 @@ export const BBKProvider = ({ children }) => {
             return newKeys;
         });
     };
-    console.log({selectedKeys, selectedBBK})
     return (
         <BBKContext.Provider value={{ selectedBBK, selectedKeys, applyBBK, removeBBK }}>
             {children}

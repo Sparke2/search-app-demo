@@ -7,7 +7,7 @@ import NodesBBK from "../filterdata/NodesBBK";
 import {useBbk} from "../features/bbk/model/useBbk";
 
 export const BBKS = ()=> {
-    const {apply, bkkSelectedKeys} = useBbk();
+    const {apply, bkkSelectedKeys, filterNodesBbkByKeys} = useBbk();
     console.log({bkkSelectedKeys})
     const nodeTemplate = (node: TreeNode, options: TreeNodeTemplateOptions) => {
         let label = <b>{node.label}</b>;
@@ -45,14 +45,15 @@ export const BBKS = ()=> {
     return (
         <>
             <div className="card flex justify-content-center">
-                <Tree expandedKeys={bkkSelectedKeys} value={NodesBBK} nodeTemplate={nodeTemplate}
+                <Tree  expandedKeys={bkkSelectedKeys} value={NodesBBK} nodeTemplate={nodeTemplate}
                       togglerTemplate={togglerTemplate} className="w-full md:w-30rem"/>
-            </div>
             <style jsx>{`
-                ul,li{
+                .card ul,li{
                     padding:0 !important;
                 }
             `}</style>
+            </div>
+
 
         </>
     )

@@ -1,17 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {Tree, TreeCheckboxSelectionKeyType} from 'primereact/tree';
-import NodesBBK, {type Node} from '../filterdata/NodesBBK';
-import { useBBK } from '../providers/BBKContext';
-import { useNavigate } from 'react-router-dom';
+import {Tree} from 'primereact/tree';
+import NodesBBK from '../filterdata/NodesBBK';
 import {TreeChecked} from "../global";
-import {isPartialCheckedBbkKey, useBbk} from "../features/bbk/model/useBbk";
+import {useBbk} from "../features/bbk/model/useBbk";
 
 const BBKModal = ({ isOpen, toggleModal }) => {
-  // const { applyBBK, selectedKeys } = useBBK();
-  const navigate = useNavigate();
   const {apply:applyBBK, bkkSelectedKeys:selectedKeys} = useBbk()
   const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(() => selectedKeys);
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    if(!isOpen){
+      setLocalSelectedKeys(selectedKeys)
+    }
+  }, [isOpen, selectedKeys])
   //
   // useEffect(() => {
   //
@@ -44,7 +46,6 @@ const BBKModal = ({ isOpen, toggleModal }) => {
   }, [isOpen, toggleModal]);
 
   const handleApply = () => {
-    console.log({localSelectedKeys})
     // const selectedKeysArray = Object.keys(localSelectedKeys).map(v=>localSelectedKeys[v].partialChecked?`-${v}`:localSelectedKeys[v].checked? v:undefined).filter(Boolean)
     // const selectedItems = NodesBBK.filter((node) => selectedKeysArray.includes(node.key));
     applyBBK(localSelectedKeys);
