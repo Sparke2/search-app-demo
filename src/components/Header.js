@@ -13,7 +13,21 @@ function Header() {
     activeTab: 'v-pills-home',
   });
 
-  const toggleCollapse = () => {
+    const [isMenuVisible, setMenuVisible] = useState(true); // Для отображения/скрытия левого меню
+    const [activeTab, setActiveTab] = useState(null); // Для активного таба
+
+    const handleTabClick = (tabId) => {
+        setActiveTab(tabId); // Устанавливаем активный таб
+        setMenuVisible(false); // Скрываем меню при выборе таба
+    };
+
+    const handleBackToMenu = () => {
+        setMenuVisible(true); // Показываем меню
+        setActiveTab(null); // Очищаем активный таб
+    };
+
+
+    const toggleCollapse = () => {
     setState((prevState) => ({
       ...prevState,
       isCollapsed: !prevState.isCollapsed,
@@ -27,12 +41,20 @@ function Header() {
     }));
   };
 
-  const handleTabClick = (tabId) => {
-    setState((prevState) => ({
-      ...prevState,
-      activeTab: tabId,
-    }));
-  };
+    const toggleCollapseAndMenu = () => {
+        setState((prevState) => ({
+            ...prevState,
+            isCollapsed: !prevState.isCollapsed,
+            isCollapsedMenu: !prevState.isCollapsedMenu,
+        }));
+    };
+
+  // const handleTabClick = (tabId) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     activeTab: tabId,
+  //   }));
+  // };
 
   const tabs = [
     { id: 'v-pills-home', label: 'Библиотека', links: [
@@ -94,25 +116,25 @@ function Header() {
       <nav className="navbar navbar-expand-xl fixed-top header-nav p-0">
         <div className="container align-items-center d-block">
           <div className="d-flex justify-content-between">
-            <button
-              className="navbar-toggler collapsed box-shadow-none"
-              type="button"
-              onClick={toggleCollapse}
-              aria-controls="bdNavbar"
-              aria-expanded={state.isCollapsed}
-              aria-label="Toggle navigation"
-            >
-              <img src={menuIcon} alt="Menu icon" />
-            </button>
-            <a className="navbar-brand brandName d-xl-none d-block" href="https://www.iprbookshop.ru">
-              <img src={logo} alt="Logo" />
-            </a>
+              <button
+                  className="btn d-block d-lg-none"
+                  type="button"
+                  onClick={toggleCollapseAndMenu}
+                  aria-controls="bdNavbar"
+                  aria-expanded={state.isCollapsed && state.isCollapsedMenu}  // Используем логическое И
+                  aria-label="Toggle navigation"
+              >
+                  <FontAwesomeIcon icon={faBars}/>
+              </button>
+              <a className="navbar-brand brandName d-xl-none d-block" href="https://www.iprbookshop.ru">
+                  <img src={logo} alt="Logo"/>
+              </a>
           </div>
-          <div className={`navbar-collapse collapse ${state.isCollapsed ? 'show' : ''}`} id="bdNavbar">
+            <div className={`navbar-collapse collapse ${state.isCollapsed ? 'show' : ''}`} id="bdNavbar">
             <div className="w-100 d-flex justify-content-between align-items-center flex-wrap py-1">
               <button
                 id="btn-menu"
-                className="btn"
+                className="btn d-none d-lg-block"
                 type="button"
                 onClick={toggleCollapseMenu}
                 aria-expanded={state.isCollapsedMenu}
@@ -132,7 +154,7 @@ function Header() {
                   </button>
                 </div>
               </form>
-              <a className="btn btn-link" href="https://www.iprbookshop.ru/sveden/common/">
+              <a className="btn btn-link sv d-lg-block d-none" href="https://www.iprbookshop.ru/sveden/common/">
                 Сведения об<br />образовательной организации
               </a>
               <a className="btn" href="/special">
@@ -144,66 +166,83 @@ function Header() {
               <a href="https://www.iprbookshop.ru/auth" className="btn btn-link text-bold">Вход</a>
             </div>
           </div>
-          <div className={`collapse ${state.isCollapsedMenu ? 'show' : ''}`} id="collapseMenu">
-            <div className="row">
-              <div className="col-5">
-              <div className="nav flex-column nav-pills py-sm-4 py-2 pe-4" style={{ boxShadow: '41px 0 42px -36px rgba(0, 0, 0, 0.09)' }}>
-                {tabs.map(tab => (
-                  tab.isLink ? (
-                    <a key={tab.id} className="nav-link" href={tab.href} target={tab.target}>
-                      <span>{tab.label}</span>
-                    </a>
-                  ) : (
-                    <button
-                      key={tab.id}
-                      className={`nav-link ${state.activeTab === tab.id ? 'active' : ''}`}
-                      onClick={() => handleTabClick(tab.id)}
-                    >
-                      <span>{tab.label}</span>
-                    </button>
-                  )
-                ))}
-              </div>
-              </div>
-              <div className="col-7">
-                <div className="tab-content pt-sm-4 pt-2 pb-5">
-                  {tabs.map(tab => (
-                    state.activeTab === tab.id && (
-                      <div key={tab.id} className="tab-pane fade show active">
-                        <div className="row px-md-5">
-                          {tab.links.map((link, idx) => (
-                            <div key={idx} className="col-12">
-                              <div className="link-tab">
-                                <a href={link.href} target={link.target || '_self'}>{link.label}</a>
-                              </div>
-                            </div>
-                          ))}
+            <div className={`collapse ${state.isCollapsedMenu ? 'show' : ''}`} id="collapseMenu">
+                <div className="row">
+                    {/* Левое меню */}
+                    <div className={`col-5 ${isMenuVisible ? 'menu-visible' : 'menu-hidden'}`}>
+                        <div className="nav flex-column nav-pills py-sm-4 py-2 pe-4">
+                            {tabs.map(tab => (
+                                tab.isLink ? (
+                                    <a key={tab.id} className="nav-link" href={tab.href} target={tab.target}>
+                                        <span>{tab.label}</span>
+                                    </a>
+                                ) : (
+                                    <button
+                                        key={tab.id}
+                                        className={`nav-link ${activeTab === tab.id ? 'active' : ''}`}
+                                        onClick={() => handleTabClick(tab.id)}
+                                    >
+                                        <span>{tab.label}</span>
+                                    </button>
+                                )
+                            ))}
                         </div>
-                      </div>
-                    )
-                  ))}
-                  {state.activeTab === 'v-pills-mobile' && (
-                    <div className="tab-pane fade show active" id="v-pills-mobile" role="tabpanel" aria-labelledby="v-pills-mobile-tab" tabIndex="0">
-                      <div className="row px-md-5 qr-header">
-                        <div className="col-xl-6 text-center">
-                          <a href="https://play.google.com/store/apps/details?id=ru.iprbooks.iprbooksmobile&hl=ru&gl=US&pli=1" target="_blank">
-                            <img src={qrCodeAndroid} alt="Android QR" />
-                            <span className="text-center"><br />Android</span>
-                          </a>
-                        </div>
-                        <div className="col-xl-6 text-center">
-                          <a href="https://apps.apple.com/ru/app/ipr-smart-mobile-reader/id1322302612" target="_blank">
-                            <img src={qrCodeIos} alt="IOS QR" />
-                            <span className="text-center"><br />IOS</span>
-                          </a>
-                        </div>
-                      </div>
                     </div>
-                  )}
+
+                    {/* Контент таба */}
+                    <div className={`col-7 ${isMenuVisible ? 'content-hidden' : 'content-visible'}`}>
+                        <div className="tab-content pt-sm-4 pt-2 pb-5">
+                            {activeTab && (
+                                <button onClick={handleBackToMenu} className="btn btn-secondary">
+                                    {tabs.find(tab => tab.id === activeTab)?.label}
+                                </button>
+                            )}
+
+                            {tabs.map(tab => (
+                                activeTab === tab.id && (
+                                    <div key={tab.id} className="tab-pane fade show active">
+                                        <div className="row px-md-5">
+                                            {tab.links.map((link, idx) => (
+                                                <div key={idx} className="col-12">
+                                                    <div className="link-tab">
+                                                        <a href={link.href}
+                                                           target={link.target || '_self'}>{link.label}</a>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )
+                            ))}
+
+                            {/* Дополнительный контент */}
+                            {activeTab === 'v-pills-mobile' && (
+                                <div className="tab-pane fade show active" id="v-pills-mobile" role="tabpanel"
+                                     aria-labelledby="v-pills-mobile-tab" tabIndex="0">
+                                    <div className="row px-md-5 qr-header">
+                                        <div className="col-xl-6 text-center">
+                                            <a href="https://play.google.com/store/apps/details?id=ru.iprbooks.iprbooksmobile&hl=ru&gl=US&pli=1"
+                                               target="_blank">
+                                                <img src={qrCodeAndroid} alt="Android QR"/>
+                                                <span className="text-center"><br/>Android</span>
+                                            </a>
+                                        </div>
+                                        <div className="col-xl-6 text-center">
+                                            <a href="https://apps.apple.com/ru/app/ipr-smart-mobile-reader/id1322302612"
+                                               target="_blank">
+                                                <img src={qrCodeIos} alt="IOS QR"/>
+                                                <span className="text-center"><br/>IOS</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
-              </div>
+
+
             </div>
-          </div>
         </div>
       </nav>
     </header>

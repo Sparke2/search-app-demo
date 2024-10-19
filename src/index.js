@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "@fontsource/montserrat";
 import "@fontsource/montserrat/400.css";
 import "@fontsource/montserrat/400-italic.css";
-import './index.css';
+import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

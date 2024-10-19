@@ -24,10 +24,10 @@ function Home() {
               </div>
               <div className='col-lg-3'>
                 <p className='mb-2 ps-3'>
-                  <a href='#'>Искать по коллекциям  <FontAwesomeIcon icon={faArrowRightLong} /></a>
+                  <a href='#' /* eslint-disable-line jsx-a11y/anchor-is-valid */>Искать по коллекциям  <FontAwesomeIcon icon={faArrowRightLong} /></a>
                 </p>
                 <p className='m-0 ps-3'>
-                  <a href='#'>Искать по каталогам <FontAwesomeIcon icon={faArrowRightLong} /></a>
+                  <a href='#' /* eslint-disable-line jsx-a11y/anchor-is-valid */>Искать по каталогам <FontAwesomeIcon icon={faArrowRightLong} /></a>
                 </p>
               </div>
             </div>
