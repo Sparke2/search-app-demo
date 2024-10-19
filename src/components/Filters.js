@@ -23,10 +23,6 @@ function Filters() {
   const navigate = useNavigate();
   const [isModalBBKOpen, setModalBBKOpen] = useState(false);
   const selectedBBK= filterNodesBbkByKeys(bkkSelectedKeys).filter(Boolean)
-  console.log({selectedBBK})
-  // const { selectedBBK, removeBBK } = useBBK();
-  //todo если NodeBBK[key].children.length не совпадает с selectedBBK[key].length, значит при рендере
-  // фильроов - нерендерить selectdBKK[key].label, если совпадает, то не ренджерить selectedBKK[key].children
   const renderSelectedBBK = () => {
     return selectedBBK.map((selectedItem, key) => {
       const nodeChildrenLength = NodeBBK[key]?.children?.length || 0;
