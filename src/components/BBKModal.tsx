@@ -1,19 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {Tree} from 'primereact/tree';
-import NodesBBK from '../filterdata/NodesBBK';
+
 import {TreeChecked} from "../global";
 import {useBbk} from "../features/bbk/model/useBbk";
+import {useAllBbk} from "../data/bbk/queries";
+import {Tree} from "primereact/tree";
+import {Skeleton} from "../shared/ui/Skeleton/Skeleton";
 
 const BBKModal = ({ isOpen, toggleModal }) => {
+  const {data:NodesBBK = [], isLoading} = useAllBbk()
+  console.log({isLoading})
   const {apply:applyBBK, bkkSelectedKeys:selectedKeys} = useBbk()
   const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(() => selectedKeys);
   const modalRef = useRef(null);
 
-  useEffect(() => {
-    if(!isOpen){
-      setLocalSelectedKeys(selectedKeys)
-    }
-  }, [isOpen, selectedKeys])
+  // useEffect(() => {
+  //   if(!isOpen){
+  //     setLocalSelectedKeys(selectedKeys)
+  //   }
+  // }, [isOpen, selectedKeys])
   //
   // useEffect(() => {
   //
@@ -81,7 +85,7 @@ const BBKModal = ({ isOpen, toggleModal }) => {
             </div>
             <div className="modal-body">
 
-              <Tree
+              {!isLoading?<Tree
                 value={NodesBBK}
                 selectionMode="checkbox"
                 selectionKeys={localSelectedKeys}
@@ -93,7 +97,7 @@ const BBKModal = ({ isOpen, toggleModal }) => {
 
                 filterBy="label"
                 className="w-full md:w-30rem"
-              />
+              />:<Skeleton width='100%' height='125px'/>}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={toggleModal}>
