@@ -3,22 +3,32 @@ import React, { useState, useEffect, useRef } from 'react';
 import {TreeChecked} from "../global";
 import {useBbk} from "../features/bbk/model/useBbk";
 import {useAllBbk} from "../data/bbk/queries";
-import {Tree} from "primereact/tree";
+import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
 import {Skeleton} from "../shared/ui/Skeleton/Skeleton";
+import {useIsFirstRender} from "../shared/utils/isFirst";
+export const BBKModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
+  const {isLoading} = useAllBbk()
+  const {bkkSelectedKeys:selectedKeys} = useBbk()
+  return <BBKModal init={selectedKeys} isOpen={isOpen} toggleModal={toggleModal}/>
 
-const BBKModal = ({ isOpen, toggleModal }) => {
+}
+const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() => void;init:Record<string, TreeChecked>}) => {
   const {data:NodesBBK = [], isLoading} = useAllBbk()
-  console.log({isLoading})
-  const {apply:applyBBK, bkkSelectedKeys:selectedKeys} = useBbk()
-  const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(() => selectedKeys);
+  const {apply:applyBBK} = useBbk()
+  const selectedKeys = init;
+  console.log({init})
+  const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(selectedKeys);
   const modalRef = useRef(null);
+  const isFirst = useIsFirstRender();
+  useEffect(() => {
+    console.log({isFirst})
+    // const hasChanges = Object.keys(selectedKeys).some(key => selectedKeys[key] !== localSelectedKeys[key]);
 
-  // useEffect(() => {
-  //   if(!isOpen){
-  //     setLocalSelectedKeys(selectedKeys)
-  //   }
-  // }, [isOpen, selectedKeys])
-  //
+    if (!isFirst)
+      setLocalSelectedKeys(selectedKeys);
+  }, [selectedKeys, isFirst]);
+
+
   // useEffect(() => {
   //
   //   if (isOpen) {
@@ -67,6 +77,7 @@ const BBKModal = ({ isOpen, toggleModal }) => {
 
   const handleClearSelection = () => {
     setLocalSelectedKeys({});
+    applyBBK({})
   };
 
 
@@ -89,7 +100,8 @@ const BBKModal = ({ isOpen, toggleModal }) => {
                 value={NodesBBK}
                 selectionMode="checkbox"
                 selectionKeys={localSelectedKeys}
-                onSelectionChange={(e) => {
+                  // @ts-ignore
+                onSelectionChange={(e: TreeCheckboxSelectionKeys) => {
                   // @ts-ignore
                   setLocalSelectedKeys(e.value)
                 }}
@@ -118,4 +130,4 @@ const BBKModal = ({ isOpen, toggleModal }) => {
   );
 };
 
-export default BBKModal;
+
