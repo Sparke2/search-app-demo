@@ -9,7 +9,7 @@ import OptionsForAvailability from '../filterdata/OptionsForAvailability';
 import OptionsForYears from '../filterdata/OptionsForYears';
 import OptionsForTarget from '../filterdata/OptionsForTarget';
 import OptionsForAdditionals from '../filterdata/OptionsForAdditionals';
-import BBKModal from './BBKModal';
+import BBKModal, {BBKModalRoot} from './BBKModal';
 import NodeBBK from '../filterdata/NodesBBK';
 import { useBBK } from '../providers/BBKContext';
 import {useBbk} from "../features/bbk/model/useBbk";
@@ -59,7 +59,7 @@ function Filters() {
   };
 
   const toggleBBKModal = () => {
-    setModalBBKOpen(!isModalBBKOpen);
+    setModalBBKOpen(v=>!v);
   };
   const searchParams = new URLSearchParams(location.search);
 
@@ -342,7 +342,7 @@ function Filters() {
         <button className="btn btn-outline-primary w-100" onClick={toggleBBKModal}>
           Выберите ББК
         </button>
-        <BBKModal isOpen={isModalBBKOpen} toggleModal={toggleBBKModal} />
+        <BBKModalRoot isOpen={isModalBBKOpen} toggleModal={toggleBBKModal} />
       </div>
       <div className='col-12'>
         <button className='btn btn-primary w-100' onClick={applyFilters}>Применить параметры</button>

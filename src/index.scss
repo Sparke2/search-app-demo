@@ -14,10 +14,11 @@
   --color-text-muted: #747A7E;
   --color-shadow: #00000026;
   --color-footer-bg: #2B3539;
+  --color-footer-text: rgba(255, 255, 255, 0.70);
   --color-footer-highlight: #FE5B00;
   --linear-gradient-select: linear-gradient(90deg, #FCF7EC 0%, #FAF1ED 100%);
-  --linear-gradient-primary-focus: linear-gradient(90deg, rgba(250,179,54,1) 0%, rgba(244,111,64,1) 100%);
-  --linear-gradient-primary: linear-gradient(180deg, rgba(250,179,54,1) 0%, rgba(244,111,64,1) 100%);
+  --linear-gradient-primary-focus: linear-gradient(90deg, rgba(250, 179, 54, 1) 0%, rgba(244, 111, 64, 1) 100%);
+  --linear-gradient-primary: linear-gradient(180deg, rgba(250, 179, 54, 1) 0%, rgba(244, 111, 64, 1) 100%);
 }
 
 * {
@@ -30,15 +31,17 @@
   color: var(--color-muted);
   content: url("./img/breadcrumb-icon.svg");
 }
+
 .breadcrumb {
   > li {
-      a {
-        color: var(--color-grey-dark);
-        text-decoration: none;
-        &:hover {
-          text-decoration: underline;
-        }
+    a {
+      color: var(--color-grey-dark);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
       }
+    }
 
     &:last-child {
       color: var(--color-primary-all);
@@ -204,6 +207,7 @@
     background: var(--linear-gradient-primary-focus);
   }
 }
+
 .btn-outline-primary {
   border-radius: 100rem;
   padding: 0.625rem 0.5rem;
@@ -217,12 +221,14 @@
     color: var(--color-white) !important;
     background-color: var(--color-primary-all) !important;
   }
+
   &:focus-visible,
   &:active {
     color: var(--color-white) !important;
     background-color: var(--color-primary-all) !important;
   }
 }
+
 .btn-small {
   padding: 0.5314rem 1.5rem;
   font-size: 14px;
@@ -411,6 +417,7 @@
       &:last-child {
         border-right: none;
       }
+
       &:first-child {
         text-align: left;
       }
@@ -461,6 +468,42 @@ header {
     max-height: 70px;
   }
 
+  .btn-menu {
+    outline: none !important;
+    border: none !important;
+    width: 36px;
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-visible {
+      outline: none !important;
+      border: none !important;
+    }
+  }
+
+  .menu-back {
+    padding: 0 0 1rem 0;
+    font-size: 22px;
+    color: var(--color-primary-all);
+    font-weight: 600;
+    outline: none !important;
+    border: none !important;
+
+    svg {
+      padding-right: 1rem;
+    }
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-visible {
+      outline: none !important;
+      border: none !important;
+      color: var(--color-primary-all) !important;
+    }
+  }
+
   .search-header {
     input {
       border-radius: 10px;
@@ -487,6 +530,7 @@ header {
       &:active,
       &:focus-visible {
         border-color: var(--color-primary-all) !important;
+
         svg {
           color: var(--color-primary-all);
         }
@@ -498,33 +542,47 @@ header {
     }
   }
 
-  .nav-pills .nav-link {
-    padding: 1rem 0;
-    text-align: left;
-
-    &.active {
-      position: relative;
-      border-radius: 20px;
-      background: var(--color-white);
+  .nav-pills {
+    .nav-link:first-child {
+      padding-top: 0;
+    }
+    .nav-link {
+      padding: 1rem 0;
       text-align: left;
-      width: fit-content;
-      transition: 0.5s;
-      padding: 1rem;
+
+      &.active {
+        position: relative;
+        border-radius: 20px;
+        background: var(--color-white);
+        text-align: left;
+        width: fit-content;
+        transition: 0.5s;
+        padding: 1rem;
+
+        span {
+          color: var(--color-primary-all);
+        }
+      }
 
       span {
-        color: var(--color-primary-all);
-      }
-    }
+        color: var(--color-grey-dark);
+        font-weight: 600;
+        font-size: 22px;
+        width: fit-content;
 
-    span {
-      color: var(--color-grey-dark);
-      font-weight: 500;
-      font-size: 22px;
-      width: fit-content;
+        svg {
+          padding-left: 1rem;
+          color: var(--color-white);
+        }
 
-      &:hover {
-        color: var(--color-primary-all);
-        transition: 0.3s;
+        &:hover {
+          color: var(--color-primary-all);
+          transition: 0.3s;
+
+          svg {
+            color: var(--color-primary-all);
+          }
+        }
       }
     }
   }
@@ -542,11 +600,16 @@ header {
   }
 
   .link-tab {
-    padding: 0.7rem;
+    padding: 0.7rem 0;
     border-radius: 5px;
     text-align-last: left;
+
+    a {
+      font-weight: 600;
+    }
   }
-  #bdNavbar a.btn-link {
+
+  a.btn-link {
     color: var(--color-grey-dark);
     text-decoration: none;
     line-height: 1rem;
@@ -599,15 +662,34 @@ header {
   header {
     .nav-pills .nav-link {
       padding: 0.7rem 0;
+
       span {
-        font-size: 20px;
+        font-size: 16px;
       }
     }
+
     .link-tab {
       padding: 0.5rem 0;
+
       a {
-        font-size: 19px;
+        font-size: 15px;
       }
     }
   }
 }
+
+  @media (max-width: 500px) {
+    header {
+      .navbar-brand.brandName img {
+        max-height: unset;
+        max-width: 84px;
+      }
+      a.btn-link {
+        font-size: 14px;
+        line-height: 13px;
+      }
+      .menu-back {
+        font-size: 15px;
+      }
+    }
+  }
