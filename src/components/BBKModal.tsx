@@ -7,7 +7,6 @@ import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
 import {Skeleton} from "../shared/ui/Skeleton/Skeleton";
 import {useIsFirstRender} from "../shared/utils/isFirst";
 export const BBKModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
-  const {isLoading} = useAllBbk()
   const {bkkSelectedKeys:selectedKeys} = useBbk()
   return <BBKModal init={selectedKeys} isOpen={isOpen} toggleModal={toggleModal}/>
 
@@ -16,30 +15,13 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
   const {data:NodesBBK = [], isLoading} = useAllBbk()
   const {apply:applyBBK} = useBbk()
   const selectedKeys = init;
-  console.log({init})
   const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(selectedKeys);
   const modalRef = useRef(null);
   const isFirst = useIsFirstRender();
   useEffect(() => {
-    console.log({isFirst})
-    // const hasChanges = Object.keys(selectedKeys).some(key => selectedKeys[key] !== localSelectedKeys[key]);
-
     if (!isFirst)
       setLocalSelectedKeys(selectedKeys);
   }, [selectedKeys, isFirst]);
-
-
-  // useEffect(() => {
-  //
-  //   if (isOpen) {
-  //
-  //     const updatedLocalSelectedKeys = selectedKeys;
-  //     setLocalSelectedKeys(Object.keys(updatedLocalSelectedKeys).reduce((acc,cur) => {
-  //       acc[isPartialCheckedBbkKey(cur)? cur.slice(1):cur] = {checked:selectedKeys[cur] && !isPartialCheckedBbkKey(cur), partialChecked:isPartialCheckedBbkKey(cur)} as TreeChecked
-  //       return acc;
-  //     }, {}) );
-  //   }
-  // }, [isOpen, selectedKeys]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -60,18 +42,7 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
   }, [isOpen, toggleModal]);
 
   const handleApply = () => {
-    // const selectedKeysArray = Object.keys(localSelectedKeys).map(v=>localSelectedKeys[v].partialChecked?`-${v}`:localSelectedKeys[v].checked? v:undefined).filter(Boolean)
-    // const selectedItems = NodesBBK.filter((node) => selectedKeysArray.includes(node.key));
     applyBBK(localSelectedKeys);
-    //
-    // const searchParams = new URLSearchParams(window.location.search);
-    // if (selectedKeysArray.length > 0) {
-    //   searchParams.set('bbk', selectedKeysArray.join(','));
-    // } else {
-    //   searchParams.delete('bbk');
-    // }
-
-    // navigate({ search: searchParams.toString() });
     toggleModal();
   };
 
@@ -112,9 +83,6 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
               />:<Skeleton width='100%' height='125px'/>}
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={toggleModal}>
-                Закрыть
-              </button>
               <button type="button" className="btn btn-danger" onClick={handleClearSelection}>
                 Очистить выбор
               </button>

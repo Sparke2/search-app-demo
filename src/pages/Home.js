@@ -7,7 +7,6 @@ import Filters from '../components/Filters';
 import CheckboxFilterShow from '../components/CheckboxFilterShow';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
-import { BBKProvider  } from '../providers/BBKContext';
 import { AppLayout } from '../layout/AppLayout';
 
 function Home() {
@@ -32,15 +31,13 @@ function Home() {
               </div>
             </div>
             <div className="row mt-1 g-4">
-              <div className="col-lg-9">
+              <div className="col-lg-9 result-field">
                 <SearchForm />
                 <CheckboxFilterShow />
                 <ResultsAccordion />
               </div>
               <div className="col-lg-3 filter-field">
-                {/*<BBKProvider>*/}
                   <Filters />
-                {/*</BBKProvider>*/}
               </div>
             </div>
           </div>

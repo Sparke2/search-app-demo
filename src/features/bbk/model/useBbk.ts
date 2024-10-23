@@ -1,6 +1,6 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {TreeChecked} from "../../../global";
-import NodesBBK, {type Node} from "../../../filterdata/NodesBBK";
+import {type Node} from "../../../filterdata/NodesBBK";
 import {useAllBbk} from "../../../data/bbk/queries";
 
 
@@ -12,7 +12,6 @@ export const useBbk = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const {data:NodesBBK = [], isLoading} = useAllBbk()
-    console.log({isLoading})
     const searchParams = new URLSearchParams(location.search)
     const bbkRouter = searchParams.get('bbk')?.split?.(',')?.sort?.(((a, b) => +a[0] - +b[0])) || []
     const bkkSelectedKeys = bbkRouter.reduce((acc, bbk) => {

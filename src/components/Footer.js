@@ -32,17 +32,17 @@ function Footer() {
                         </div>
                         <div className="col-xl-2 col-lg-3 col-md-6">
                             <div className="mb-4">
-                                <a className="pe-1" href="https://www.iprbookshop.ru/getsharelink?link_id=1" target="_blank" title="Vkontakte">
+                                <a className="pe-1" href="https://www.iprbookshop.ru/getsharelink?link_id=1" target="_blank" title="Vkontakte" rel="noreferrer">
                                     <img src={vk} alt=""/>
                                 </a>
-                                <a className="px-1" href="https://www.iprbookshop.ru/getsharelink?link_id=4" target="_blank" title="Youtube">
+                                <a className="px-1" href="https://www.iprbookshop.ru/getsharelink?link_id=4" target="_blank" title="Youtube" rel="noreferrer">
                                     <img src={youtube} alt=""/>
                                 </a>
-                                <a className="px-1" href="https://www.iprbookshop.ru/getsharelink?link_id=5" target="_blank" title="Telegram">
+                                <a className="px-1" href="https://www.iprbookshop.ru/getsharelink?link_id=5" target="_blank" title="Telegram" rel="noreferrer">
                                     <img src={tg} alt=""/>
                     
                                 </a>
-                                <a className="px-1" href="https://www.iprbookshop.ru/getsharelink?link_id=6" target="_blank" title="Telegram">
+                                <a className="px-1" href="https://www.iprbookshop.ru/getsharelink?link_id=6" target="_blank" title="Telegram" rel="noreferrer">
                                     <img src={tg} alt=""/>
                                 </a>
                             </div>

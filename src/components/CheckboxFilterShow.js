@@ -15,7 +15,6 @@ function CheckboxFilterShow() {
         searchInText: false,
     });
 
-    // Парсим URL и обновляем состояние чекбоксов
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const newCheckboxes = { ...checkboxes };
@@ -48,7 +47,6 @@ function CheckboxFilterShow() {
     const clearAllFilters = () => {
         const params = new URLSearchParams(location.search);
 
-        // Удаляем только определенные параметры
         const filterKeysToClear = [
             'searchBooks',
             'searchPeriodicals',
