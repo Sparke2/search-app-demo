@@ -131,8 +131,7 @@ function Filters() {
     }, []);
 
     const applyFilters = useCallback(() => {
-        const newSearchParams = new URLSearchParams();
-
+        const newSearchParams = new URLSearchParams(location.search);
         Object.entries(checkboxes).forEach(([key, value]) => {
             if (value) newSearchParams.set(key, 'true');
         });
@@ -164,9 +163,9 @@ function Filters() {
             const additionalsValues = selectedOptions.additionals.map(option => option.value).join(',');
             newSearchParams.set('additionals', additionalsValues);
         }
-
+        console.log({newSearchParams})
         navigate({search: newSearchParams.toString()});
-    }, [checkboxes, selectedOptions, navigate]);
+    }, [checkboxes, selectedOptions, navigate, location.search]);
 
     return (
         <div className="row g-4 pt-4">
