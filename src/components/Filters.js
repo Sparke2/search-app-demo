@@ -139,8 +139,7 @@ function Filters() {
     }, []);
 
     const applyFilters = useCallback(() => {
-        const newSearchParams = new URLSearchParams();
-
+        const newSearchParams = new URLSearchParams(location.search);
         Object.entries(checkboxes).forEach(([key, value]) => {
             if (value) newSearchParams.set(key, 'true');
         });
@@ -178,9 +177,8 @@ function Filters() {
         } else {
             newSearchParams.delete('isbn');
         }
-
         navigate({search: newSearchParams.toString()});
-    }, [checkboxes, selectedOptions.fromYear, selectedOptions.toYear, selectedOptions.availability, selectedOptions.publishers, selectedOptions.editions, selectedOptions.targets, selectedOptions.additionals, isbn, navigate]);
+    }, [location.search, checkboxes, selectedOptions.fromYear, selectedOptions.toYear, selectedOptions.availability, selectedOptions.publishers, selectedOptions.editions, selectedOptions.targets, selectedOptions.additionals, isbn, navigate]);
 
     // @ts-ignore
     return (
@@ -256,134 +254,134 @@ function Filters() {
                     <h6 className='mb-3'>Год записи</h6>
                 )}
                 {( ['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].includes(currentCategories[0]) || currentCategories.length === 0)  && (
-                <div className='row g-4 pt-1'>
-                    <div className='col-6'>
-                        <ReactSelectWithLabel
-                            options={OptionsForYears}
-                            placeholder="От"
-                            defaultValue={selectedOptions.fromYear}
-                            onChange={option => setSelectedOptions(prev => ({...prev, fromYear: option}))}
-                            applyFilters={applyFilters}
-                        />
+                    <div className='row g-4 pt-1'>
+                        <div className='col-6'>
+                            <ReactSelectWithLabel
+                                options={OptionsForYears}
+                                placeholder="От"
+                                defaultValue={selectedOptions.fromYear}
+                                onChange={option => setSelectedOptions(prev => ({...prev, fromYear: option}))}
+                                applyFilters={applyFilters}
+                            />
+                        </div>
+                        <div className='col-6'>
+                            <ReactSelectWithLabel
+                                options={filteredToYearOptions}
+                                placeholder="До"
+                                defaultValue={selectedOptions.toYear}
+                                onChange={option => setSelectedOptions(prev => ({...prev, toYear: option}))}
+                                applyFilters={applyFilters}
+                            />
+                        </div>
                     </div>
-                    <div className='col-6'>
-                        <ReactSelectWithLabel
-                            options={filteredToYearOptions}
-                            placeholder="До"
-                            defaultValue={selectedOptions.toYear}
-                            onChange={option => setSelectedOptions(prev => ({...prev, toYear: option}))}
-                            applyFilters={applyFilters}
-                        />
-                    </div>
-                </div>
                 )}
             </div>
             {( ['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className='mb-3'>Доступность изданий</h6>
-                <ReactSelect
-                    options={OptionsForAvailability}
-                    placeholder="Выберите из списка"
-                    defaultValue={selectedOptions.availability}
-                    onChange={option => setSelectedOptions(prev => ({...prev, availability: option}))}
-                    applyFilters={applyFilters}
-                />
-            </div>
-            )}
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className='mb-3'>Издательство</h6>
-                <ReactSelect
-                    options={OptionsForPublishers}
-                    placeholder="Введите или выберите из списка"
-                    isMulti
-                    defaultValue={selectedOptions.publishers}
-                    onChange={option => setSelectedOptions(prev => ({...prev, publishers: option}))}
-                    applyFilters={applyFilters}
-                />
-            </div>
-            )}
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6>ISBN</h6>
-                <InputISBN
-                    name="isbn"
-                    placeholder="Введите номер"
-                    value={isbn}
-                    onChange={handleIsbnChange}
-                    applyFilters={applyFilters}
-                />
-            </div>
-            )}
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className='mb-3'>Укрупненная группа специальностей</h6>
-                <button className="btn btn-outline-primary w-100">Выберите УГСН</button>
-            </div>
-            )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className='mb-3'>Вид издания</h6>
-                <ReactSelect
-                    options={OptionsForEditions}
-                    placeholder="Выберите из списка"
-                    isMulti
-                    defaultValue={selectedOptions.editions}
-                    onChange={options => setSelectedOptions(prev => ({...prev, editions: options}))}
-                    applyFilters={applyFilters}
-                />
-            </div>
-            )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className='mb-3'>Целевое назначение</h6>
-                <ReactSelect
-                    options={OptionsForTarget}
-                    placeholder="Выберите из списка"
-                    defaultValue={selectedOptions.targets}
-                    onChange={options => setSelectedOptions(prev => ({...prev, targets: options}))}
-                    applyFilters={applyFilters}
-                    isMulti
-                />
-            </div>
-            )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className='mb-3'>Дополнительно</h6>
-                <ReactSelect
-                    options={OptionsForAdditionals}
-                    placeholder="Выберите из списка"
-                    defaultValue={selectedOptions.additionals}
-                    onChange={options => setSelectedOptions(prev => ({...prev, additionals: options}))}
-                    isMulti
-                    applyFilters={applyFilters}
-                />
-            </div>
-            )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
-            <div className="col-12">
-                <h6 className="mb-3">ББК</h6>
-                <div className="selected-items-modal">
-                    {selectedBBK.length > 0 && (
-                        <div className="list-items-modal">
-                            {selectedBBK.map((item) => (
-                                bkkSelectedKeys[item.key]?.partialChecked ? null :
-                                    <div key={item.key}>
-                                        {item.label}
-                                        <button className="btn p-0 ps-2" onClick={() => remove(item.key)}>
-                                            <FontAwesomeIcon icon={faXmark} />
-                                        </button>
-                                    </div>
-                            ))}
-                        </div>
-                    )}
-                    {renderSelectedBBK(NodeBBK, selectedBBK)}
+                <div className="col-12">
+                    <h6 className='mb-3'>Доступность изданий</h6>
+                    <ReactSelect
+                        options={OptionsForAvailability}
+                        placeholder="Выберите из списка"
+                        defaultValue={selectedOptions.availability}
+                        onChange={option => setSelectedOptions(prev => ({...prev, availability: option}))}
+                        applyFilters={applyFilters}
+                    />
                 </div>
-                <button className="btn btn-outline-primary w-100" onClick={toggleBBKModal}>
-                    Выберите ББК
-                </button>
-                <BBKModalRoot isOpen={isModalBBKOpen} toggleModal={toggleBBKModal}/>
-            </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Издательство</h6>
+                    <ReactSelect
+                        options={OptionsForPublishers}
+                        placeholder="Введите или выберите из списка"
+                        isMulti
+                        defaultValue={selectedOptions.publishers}
+                        onChange={option => setSelectedOptions(prev => ({...prev, publishers: option}))}
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6>ISBN</h6>
+                    <InputISBN
+                        name="isbn"
+                        placeholder="Введите номер"
+                        value={isbn}
+                        onChange={handleIsbnChange}
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Укрупненная группа специальностей</h6>
+                    <button className="btn btn-outline-primary w-100">Выберите УГСН</button>
+                </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Вид издания</h6>
+                    <ReactSelect
+                        options={OptionsForEditions}
+                        placeholder="Выберите из списка"
+                        isMulti
+                        defaultValue={selectedOptions.editions}
+                        onChange={options => setSelectedOptions(prev => ({...prev, editions: options}))}
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Целевое назначение</h6>
+                    <ReactSelect
+                        options={OptionsForTarget}
+                        placeholder="Выберите из списка"
+                        defaultValue={selectedOptions.targets}
+                        onChange={options => setSelectedOptions(prev => ({...prev, targets: options}))}
+                        applyFilters={applyFilters}
+                        isMulti
+                    />
+                </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Дополнительно</h6>
+                    <ReactSelect
+                        options={OptionsForAdditionals}
+                        placeholder="Выберите из списка"
+                        defaultValue={selectedOptions.additionals}
+                        onChange={options => setSelectedOptions(prev => ({...prev, additionals: options}))}
+                        isMulti
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                <div className="col-12">
+                    <h6 className="mb-3">ББК</h6>
+                    <div className="selected-items-modal">
+                        {selectedBBK.length > 0 && (
+                            <div className="list-items-modal">
+                                {selectedBBK.map((item) => (
+                                    bkkSelectedKeys[item.key]?.partialChecked ? null :
+                                        <div key={item.key}>
+                                            {item.label}
+                                            <button className="btn p-0 ps-2" onClick={() => remove(item.key)}>
+                                                <FontAwesomeIcon icon={faXmark} />
+                                            </button>
+                                        </div>
+                                ))}
+                            </div>
+                        )}
+                        {renderSelectedBBK(NodeBBK, selectedBBK)}
+                    </div>
+                    <button className="btn btn-outline-primary w-100" onClick={toggleBBKModal}>
+                        Выберите ББК
+                    </button>
+                    <BBKModalRoot isOpen={isModalBBKOpen} toggleModal={toggleBBKModal}/>
+                </div>
             )}
             <div className='col-12'>
                 <button className='btn btn-primary w-100' onClick={applyFilters}>Применить параметры</button>
