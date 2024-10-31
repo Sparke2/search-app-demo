@@ -9,6 +9,10 @@ import OptionsForAvailability from '../filterdata/OptionsForAvailability';
 import OptionsForYears from '../filterdata/OptionsForYears';
 import OptionsForTarget from '../filterdata/OptionsForTarget';
 import OptionsForAdditionals from '../filterdata/OptionsForAdditionals';
+import OptionsForVAK from '../filterdata/OptionsForVAK';
+import OptionsForSubscribe from "../filterdata/OptionsForSubscribe";
+import OptionsForAppointment from "../filterdata/OptionsForAppointment";
+import OptionsForPerformers from "../filterdata/OptionsForPerformers";
 import {BBKModalRoot} from './BBKModal';
 import NodeBBK from '../filterdata/NodesBBK';
 import {useBbk} from "../features/bbk/model/useBbk";
@@ -86,6 +90,10 @@ function Filters() {
     }
 
     const defaultSelectedOptions = {
+        appointments: getMultyOptions('appointments', OptionsForAppointment),
+        performers: getMultyOptions('performers', OptionsForPerformers),
+        vak: getOption('vak', OptionsForVAK) || OptionsForVAK.find(option => option.selected),
+        subscribe: getOption('subscribe', OptionsForSubscribe) || OptionsForSubscribe.find(option => option.selected),
         availability: getOption('availability', OptionsForAvailability) || OptionsForAvailability.find(option => option.selected),
         publishers: getMultyOptions('publishers', OptionsForPublishers),
         editions: getMultyArrayOptions('editions', OptionsForEditions),
@@ -96,6 +104,10 @@ function Filters() {
     };
 
     const [selectedOptions, setSelectedOptions] = useState({
+        vak: defaultSelectedOptions.vak,
+        performers: defaultSelectedOptions.performers,
+        appointments: defaultSelectedOptions.appointments,
+        subscribe: defaultSelectedOptions.subscribe,
         availability: defaultSelectedOptions.availability,
         publishers: defaultSelectedOptions.publishers,
         editions: defaultSelectedOptions.editions,
@@ -155,6 +167,20 @@ function Filters() {
         }
         if (selectedOptions.availability) {
             newSearchParams.set('availability', selectedOptions.availability.value);
+        }
+        if (selectedOptions.vak) {
+            newSearchParams.set('vak', selectedOptions.vak.value);
+        }
+        if (selectedOptions.subscribe) {
+            newSearchParams.set('subscribe', selectedOptions.subscribe.value);
+        }
+        if (selectedOptions.appointments.length > 0) {
+            const appointmentsValues = selectedOptions.appointments.map(option => option.value).join(',');
+            newSearchParams.set('appointments', appointmentsValues);
+        }
+        if (selectedOptions.performers.length > 0) {
+            const performersValues = selectedOptions.performers.map(option => option.value).join(',');
+            newSearchParams.set('performers', performersValues);
         }
         if (selectedOptions.publishers.length > 0) {
             const publishersValues = selectedOptions.publishers.map(option => option.value).join(',');
@@ -249,14 +275,14 @@ function Filters() {
                 />
             </div>
             <div className="col-12">
-                {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                     <h6 className='mb-3'>Год издания</h6>
                 )}
-                {( ['searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) &&
+                {(['searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) &&
                     !['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category))) && (
                     <h6 className='mb-3'>Год записи</h6>
                 )}
-                {( ['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].includes(currentCategories[0]) || currentCategories.length === 0)  && (
+                {(['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].includes(currentCategories[0]) || currentCategories.length === 0) && (
                     <div className='row g-4 pt-1'>
                         <div className='col-6'>
                             <ReactSelectWithLabel
@@ -279,7 +305,7 @@ function Filters() {
                     </div>
                 )}
             </div>
-            {( ['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Доступность изданий</h6>
                     <ReactSelect
@@ -291,7 +317,20 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchAudio'].some(category => currentCategories.includes(category))) && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Исполнители</h6>
+                    <ReactSelect
+                        options={OptionsForPerformers}
+                        placeholder="Введите фамилию автора"
+                        isMulti
+                        defaultValue={selectedOptions.performers}
+                        onChange={option => setSelectedOptions(prev => ({...prev, performers: option}))}
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Издательство</h6>
                     <ReactSelect
@@ -304,7 +343,20 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchAudio'].some(category => currentCategories.includes(category))) && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Назначение</h6>
+                    <ReactSelect
+                        options={OptionsForAppointment}
+                        placeholder="Выберите из списка"
+                        isMulti
+                        defaultValue={selectedOptions.appointments}
+                        onChange={option => setSelectedOptions(prev => ({...prev, appointments: option}))}
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6>ISBN</h6>
                     <InputISBN
@@ -316,13 +368,37 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchPeriodicals'].some(category => currentCategories.includes(category))) && (
+            <div className="col-12">
+                <h6 className='mb-3'>Входит ли в ВАК</h6>
+                <ReactSelect
+                    options={OptionsForVAK}
+                    placeholder="Выберите из списка"
+                    defaultValue={selectedOptions.vak}
+                    onChange={option => setSelectedOptions(prev => ({...prev, vak: option}))}
+                    applyFilters={applyFilters}
+                />
+            </div>
+            )}
+            {(['searchPeriodicals'].some(category => currentCategories.includes(category))) && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Вариант подписки</h6>
+                    <ReactSelect
+                        options={OptionsForSubscribe}
+                        placeholder="Вариант подписки"
+                        defaultValue={selectedOptions.subscribe}
+                        onChange={option => setSelectedOptions(prev => ({...prev, subscribe: option}))}
+                        applyFilters={applyFilters}
+                    />
+                </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Укрупненная группа специальностей</h6>
                     <button className="btn btn-outline-primary w-100">Выберите УГСН</button>
                 </div>
             )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Вид издания</h6>
                     <ReactSelect
@@ -335,7 +411,7 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Целевое назначение</h6>
                     <ReactSelect
@@ -348,7 +424,7 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Дополнительно</h6>
                     <ReactSelect
@@ -361,7 +437,7 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className="mb-3">ББК</h6>
                     <div className="selected-items-modal">
@@ -372,7 +448,7 @@ function Filters() {
                                         <div key={item.key}>
                                             {item.label}
                                             <button className="btn p-0 ps-2" onClick={() => remove(item.key)}>
-                                                <FontAwesomeIcon icon={faXmark} />
+                                                <FontAwesomeIcon icon={faXmark}/>
                                             </button>
                                         </div>
                                 ))}
