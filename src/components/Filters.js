@@ -14,8 +14,11 @@ import NodeBBK from '../filterdata/NodesBBK';
 import {useBbk} from "../features/bbk/model/useBbk";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import InputISBN from "./InputISBN";
+import {useCategoriesArray} from "../hooks/useCategoriesArray";
 
 function Filters() {
+    const currentCategories = useCategoriesArray();
     const location = useLocation();
     const {filterNodesBbkByKeys, bkkSelectedKeys, remove} = useBbk()
     const navigate = useNavigate();
@@ -113,6 +116,11 @@ function Filters() {
         searchInText: false,
     });
 
+    const [isbn, setIsbn] = useState(searchParams.get('isbn') || '');
+    const handleIsbnChange = (value) => {
+        setIsbn(value);
+    };
+
     useEffect(() => {
         const updatedCheckboxes = Object.fromEntries(
             Object.keys(checkboxes).map(key => [key, searchParams.get(key) === 'true'])
@@ -165,9 +173,16 @@ function Filters() {
             newSearchParams.set('additionals', additionalsValues);
         }
 
-        navigate({search: newSearchParams.toString()});
-    }, [checkboxes, selectedOptions, navigate]);
+        if (isbn) {
+            newSearchParams.set('isbn', isbn);
+        } else {
+            newSearchParams.delete('isbn');
+        }
 
+        navigate({search: newSearchParams.toString()});
+    }, [checkboxes, selectedOptions.fromYear, selectedOptions.toYear, selectedOptions.availability, selectedOptions.publishers, selectedOptions.editions, selectedOptions.targets, selectedOptions.additionals, isbn, navigate]);
+
+    // @ts-ignore
     return (
         <div className="row g-4 pt-4">
             <div className="col-12">
@@ -233,7 +248,14 @@ function Filters() {
                 />
             </div>
             <div className="col-12">
-                <h6 className='mb-3'>Год издания</h6>
+                {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+                    <h6 className='mb-3'>Год издания</h6>
+                )}
+                {( ['searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) &&
+                    !['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category))) && (
+                    <h6 className='mb-3'>Год записи</h6>
+                )}
+                {( ['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].includes(currentCategories[0]) || currentCategories.length === 0)  && (
                 <div className='row g-4 pt-1'>
                     <div className='col-6'>
                         <ReactSelectWithLabel
@@ -254,7 +276,9 @@ function Filters() {
                         />
                     </div>
                 </div>
+                )}
             </div>
+            {( ['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className='mb-3'>Доступность изданий</h6>
                 <ReactSelect
@@ -265,6 +289,8 @@ function Filters() {
                     applyFilters={applyFilters}
                 />
             </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className='mb-3'>Издательство</h6>
                 <ReactSelect
@@ -276,10 +302,26 @@ function Filters() {
                     applyFilters={applyFilters}
                 />
             </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
+            <div className="col-12">
+                <h6>ISBN</h6>
+                <InputISBN
+                    name="isbn"
+                    placeholder="Введите номер"
+                    value={isbn}
+                    onChange={handleIsbnChange}
+                    applyFilters={applyFilters}
+                />
+            </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className='mb-3'>Укрупненная группа специальностей</h6>
                 <button className="btn btn-outline-primary w-100">Выберите УГСН</button>
             </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className='mb-3'>Вид издания</h6>
                 <ReactSelect
@@ -291,6 +333,8 @@ function Filters() {
                     applyFilters={applyFilters}
                 />
             </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className='mb-3'>Целевое назначение</h6>
                 <ReactSelect
@@ -302,6 +346,8 @@ function Filters() {
                     isMulti
                 />
             </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className='mb-3'>Дополнительно</h6>
                 <ReactSelect
@@ -313,6 +359,8 @@ function Filters() {
                     applyFilters={applyFilters}
                 />
             </div>
+            )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0)  && (
             <div className="col-12">
                 <h6 className="mb-3">ББК</h6>
                 <div className="selected-items-modal">
@@ -336,6 +384,7 @@ function Filters() {
                 </button>
                 <BBKModalRoot isOpen={isModalBBKOpen} toggleModal={toggleBBKModal}/>
             </div>
+            )}
             <div className='col-12'>
                 <button className='btn btn-primary w-100' onClick={applyFilters}>Применить параметры</button>
             </div>

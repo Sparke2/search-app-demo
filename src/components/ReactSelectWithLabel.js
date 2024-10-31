@@ -9,6 +9,8 @@ function ReactSelectWithLabel({ options, placeholder, value, onChange, defaultVa
     const [showButton, setShowButton] = useState(false);
     const buttonRef = useRef(null);
 
+    const optionsWithClear = [{ label: "Не выбрано", value: "" }, ...options];
+
     const handleFocus = () => {
         setLabelVisible(true);
     };
@@ -17,10 +19,13 @@ function ReactSelectWithLabel({ options, placeholder, value, onChange, defaultVa
         setLabelVisible(false);
     };
 
-    const handleChange = (selectedOptions) => {
+    const handleChange = (selectedOption) => {
         setShowButton(true);
-        if (onChange) {
-            onChange(selectedOptions);
+
+        if (selectedOption?.value === "") {
+            onChange(null);
+        } else {
+            onChange(selectedOption);
         }
     };
 
@@ -48,7 +53,7 @@ function ReactSelectWithLabel({ options, placeholder, value, onChange, defaultVa
                 {placeholder}
             </label>
             <Select
-                options={options}
+                options={optionsWithClear}
                 value={value}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
