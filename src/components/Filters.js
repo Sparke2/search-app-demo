@@ -141,9 +141,12 @@ function Filters() {
     const applyFilters = useCallback(() => {
         const newSearchParams = new URLSearchParams(location.search);
         Object.entries(checkboxes).forEach(([key, value]) => {
-            if (value) newSearchParams.set(key, 'true');
+            if (value) {
+                newSearchParams.set(key, 'true');
+            } else {
+                newSearchParams.delete(key);
+            }
         });
-
         if (selectedOptions.fromYear) {
             newSearchParams.set('fromYear', selectedOptions.fromYear.value);
         }
@@ -178,7 +181,7 @@ function Filters() {
             newSearchParams.delete('isbn');
         }
         navigate({search: newSearchParams.toString()});
-    }, [location.search, checkboxes, selectedOptions.fromYear, selectedOptions.toYear, selectedOptions.availability, selectedOptions.publishers, selectedOptions.editions, selectedOptions.targets, selectedOptions.additionals, isbn, navigate]);
+    }, [location.search, checkboxes, selectedOptions, isbn, navigate]);
 
     // @ts-ignore
     return (
