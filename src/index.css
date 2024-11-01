@@ -382,6 +382,27 @@
   padding: 0;
 }
 
+.p-component {
+  padding-top: 0;
+}
+
+.p-tree-header {
+  margin-bottom: 1rem;
+}
+.p-tree-header svg {
+  margin-right: 1rem;
+  color: var(--color-primary-all);
+}
+.p-tree-header .p-inputtext {
+  padding: 0.8rem;
+  border: 1px solid var(--color-primary-all);
+  border-radius: 0.8rem;
+}
+.p-tree-header .p-inputtext:focus {
+  box-shadow: none;
+  border: 1px solid var(--color-footer-highlight);
+}
+
 .p-tree, .modal-header, .modal-footer {
   border: none;
 }
@@ -690,6 +711,35 @@ header a.btn-link:hover {
   display: block;
   transform: translateX(0);
   transition: transform 0.3s ease-in-out;
+}
+
+.modal h5.modal-title {
+  font-size: 24px;
+}
+.modal .btn.close {
+  color: var(--color-primary-all);
+  font-size: 28px;
+  padding: 0;
+}
+.modal .btn.close:hover {
+  color: var(--color-footer-highlight);
+}
+.modal .btn.close:active, .modal .btn.close:focus, .modal .btn.close:focus-visible {
+  border-color: transparent;
+}
+.modal .modal-body {
+  padding: 0;
+}
+.modal .modal-content {
+  padding: 1rem;
+}
+.modal .modal-footer {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.modal .modal-footer .btn {
+  padding: 0.7rem 5rem;
 }
 
 @media (max-width: 1199px) {

@@ -416,6 +416,28 @@
   height: 40vh;
   padding: 0;
 }
+.p-component {
+  padding-top: 0;
+}
+.p-tree-header {
+  margin-bottom: 1rem;
+
+  svg {
+    margin-right: 1rem;
+    color: var(--color-primary-all);
+  }
+
+  .p-inputtext {
+    padding: 0.8rem;
+    border: 1px solid var(--color-primary-all);
+    border-radius: 0.8rem;
+
+    &:focus {
+      box-shadow: none;
+      border: 1px solid var(--color-footer-highlight);
+    }
+  }
+}
 .p-tree, .modal-header, .modal-footer {
   border: none;
 }
@@ -800,6 +822,39 @@ header {
   display: block;
   transform: translateX(0);
   transition: transform 0.3s ease-in-out;
+}
+
+.modal {
+  h5.modal-title {
+    font-size: 24px;
+  }
+  .btn.close {
+    color: var(--color-primary-all);
+    font-size: 28px;
+    padding: 0;
+    &:hover {
+      color: var(--color-footer-highlight);
+    }
+    &:active,
+    &:focus,
+    &:focus-visible {
+      border-color: transparent;
+    }
+  }
+  .modal-body {
+    padding: 0;
+  }
+  .modal-content {
+    padding: 1rem;
+  }
+  .modal-footer {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    .btn {
+      padding: 0.7rem 5rem;
+    }
+  }
 }
 
 

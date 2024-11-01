@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import {TreeChecked} from "../global";
-import {useBbk} from "../features/bbk/model/useBbk";
-import {useAllBbk} from "../data/bbk/queries";
+import {TreeChecked} from "../../global";
+import {useBbk} from "../../features/bbk/model/useBbk";
+import {useAllBbk} from "../../data/bbk/queries";
 import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
-import {Skeleton} from "../shared/ui/Skeleton/Skeleton";
-import {useIsFirstRender} from "../shared/utils/isFirst";
+import {Skeleton} from "../../shared/ui/Skeleton/Skeleton";
+import {useIsFirstRender} from "../../shared/utils/isFirst";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
 export const BBKModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
   const {bkkSelectedKeys:selectedKeys} = useBbk()
   return <BBKModal init={selectedKeys} isOpen={isOpen} toggleModal={toggleModal}/>
@@ -59,10 +61,10 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
       <div className="modal fade show" style={{ display: 'block' }} tabIndex={-1} role="dialog">
         <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header justify-content-between">
               <h5 className="modal-title">Выберите ББК из списка</h5>
-              <button type="button" className="close" onClick={toggleModal}>
-                <span>&times;</span>
+              <button type="button" className="btn close" onClick={toggleModal}>
+                <FontAwesomeIcon icon={faXmark}/>
               </button>
             </div>
             <div className="modal-body">
@@ -77,14 +79,14 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
                   setLocalSelectedKeys(e.value)
                 }}
                 filter
-
+                filterPlaceholder="Поиск по списку"
                 filterBy="label"
                 className="w-full md:w-30rem"
               />:<Skeleton width='100%' height='125px'/>}
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-danger" onClick={handleClearSelection}>
-                Очистить выбор
+              <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>
+                Очистить
               </button>
               <button type="button" className="btn btn-primary" onClick={handleApply}>
                 Применить

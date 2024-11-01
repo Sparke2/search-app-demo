@@ -13,7 +13,9 @@ import OptionsForVAK from '../filterdata/OptionsForVAK';
 import OptionsForSubscribe from "../filterdata/OptionsForSubscribe";
 import OptionsForAppointment from "../filterdata/OptionsForAppointment";
 import OptionsForPerformers from "../filterdata/OptionsForPerformers";
-import {BBKModalRoot} from './BBKModal';
+import OptionsCheckboxForGenre from "../filterdata/OptionsCheckboxForGenre";
+import OptionsCheckboxForCollections from "../filterdata/OptionsCheckboxForCollections";
+import {BBKModalRoot} from './modal/BBKModal';
 import NodeBBK from '../filterdata/NodesBBK';
 import {useBbk} from "../features/bbk/model/useBbk";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -126,6 +128,8 @@ function Filters() {
         searchAuthor: false,
         searchTitle: false,
         searchInText: false,
+        ...Object.fromEntries(OptionsCheckboxForGenre.map(option => [`genre-${option.value}`, false])),
+        ...Object.fromEntries(OptionsCheckboxForCollections.map(option => [`collection-${option.value}`, false])),
     });
 
     const [isbn, setIsbn] = useState(searchParams.get('isbn') || '');
@@ -208,6 +212,32 @@ function Filters() {
         }
         navigate({search: newSearchParams.toString()});
     }, [location.search, checkboxes, selectedOptions, isbn, navigate]);
+
+    const renderGenreCheckboxes = () => {
+        return OptionsCheckboxForGenre.map(option => (
+            <Checkbox
+                key={`genre-${option.value}`}
+                id={`genre-${option.value}`}
+                label={option.label}
+                isChecked={checkboxes[`genre-${option.value}`]}
+                handleCheckboxChange={handleCheckboxChange}
+                applyFilters={applyFilters}
+            />
+        ));
+    };
+
+    const renderCollectionCheckboxes = () => {
+        return OptionsCheckboxForCollections.map(option => (
+            <Checkbox
+                key={`collection-${option.value}`}
+                id={`collection-${option.value}`}
+                label={option.label}
+                isChecked={checkboxes[`collection-${option.value}`]}
+                handleCheckboxChange={handleCheckboxChange}
+                applyFilters={applyFilters}
+            />
+        ));
+    };
 
     // @ts-ignore
     return (
@@ -305,6 +335,18 @@ function Filters() {
                     </div>
                 )}
             </div>
+            {(['searchAudio'].some(category => currentCategories.includes(category))) && (
+            <div className="col-12">
+                <h6 className='mb-3'>Жанры</h6>
+                {renderGenreCheckboxes()}
+            </div>
+            )}
+            {(['searchAudio'].some(category => currentCategories.includes(category))) && (
+            <div className="col-12">
+                <h6 className='mb-3'>Коллекции</h6>
+                {renderCollectionCheckboxes()}
+            </div>
+            )}
             {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Доступность изданий</h6>
@@ -369,16 +411,16 @@ function Filters() {
                 </div>
             )}
             {(['searchPeriodicals'].some(category => currentCategories.includes(category))) && (
-            <div className="col-12">
-                <h6 className='mb-3'>Входит ли в ВАК</h6>
-                <ReactSelect
-                    options={OptionsForVAK}
-                    placeholder="Выберите из списка"
-                    defaultValue={selectedOptions.vak}
-                    onChange={option => setSelectedOptions(prev => ({...prev, vak: option}))}
-                    applyFilters={applyFilters}
-                />
-            </div>
+                <div className="col-12">
+                    <h6 className='mb-3'>Входит ли в ВАК</h6>
+                    <ReactSelect
+                        options={OptionsForVAK}
+                        placeholder="Выберите из списка"
+                        defaultValue={selectedOptions.vak}
+                        onChange={option => setSelectedOptions(prev => ({...prev, vak: option}))}
+                        applyFilters={applyFilters}
+                    />
+                </div>
             )}
             {(['searchPeriodicals'].some(category => currentCategories.includes(category))) && (
                 <div className="col-12">
