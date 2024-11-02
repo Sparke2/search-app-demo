@@ -4,8 +4,10 @@ import {TreeChecked} from "../../global";
 import {useBbk} from "../../features/bbk/model/useBbk";
 import {useAllBbk} from "../../data/bbk/queries";
 import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
-import {Skeleton} from "./Skeleton/Skeleton";
-import {useIsFirstRender} from "../shared/utils/isFirst";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {useIsFirstRender} from "../../shared/utils/isFirst";
+import {Skeleton} from "@mui/material";
 export const BBKModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
   const {bkkSelectedKeys:selectedKeys} = useBbk()
   return <BBKModal init={selectedKeys} isOpen={isOpen} toggleModal={toggleModal}/>
@@ -67,7 +69,7 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
             </div>
             <div className="modal-body">
 
-              {!isLoading?<Tree
+              {<Tree
                 value={NodesBBK}
                 selectionMode="checkbox"
                 selectionKeys={localSelectedKeys}
@@ -80,7 +82,7 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
                 filterPlaceholder="Поиск по списку"
                 filterBy="label"
                 className="w-full md:w-30rem"
-              />:<Skeleton width='100%' height='125px'/>}
+              />}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>

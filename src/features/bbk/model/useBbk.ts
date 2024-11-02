@@ -11,7 +11,7 @@ export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
 export const useBbk = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const {data:NodesBBK = [], isLoading} = useAllBbk()
+    const {data:NodesBBK = []} = useAllBbk()
     const searchParams = new URLSearchParams(location.search)
     const bbkRouter = searchParams.get('bbk')?.split?.(',')?.sort?.(((a, b) => +a[0] - +b[0])) || []
     const bkkSelectedKeys = bbkRouter.reduce((acc, bbk) => {
