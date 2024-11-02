@@ -4,10 +4,8 @@ import {TreeChecked} from "../../global";
 import {useBbk} from "../../features/bbk/model/useBbk";
 import {useAllBbk} from "../../data/bbk/queries";
 import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
-import {Skeleton} from "../../shared/ui/Skeleton/Skeleton";
-import {useIsFirstRender} from "../../shared/utils/isFirst";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {Skeleton} from "./Skeleton/Skeleton";
+import {useIsFirstRender} from "../shared/utils/isFirst";
 export const BBKModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
   const {bkkSelectedKeys:selectedKeys} = useBbk()
   return <BBKModal init={selectedKeys} isOpen={isOpen} toggleModal={toggleModal}/>
