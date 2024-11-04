@@ -21,7 +21,7 @@ export const useCurrentDirection = () => {
         const params = new URLSearchParams(location.search)
         params.set('direction', newUsgn.join(','))
         // if(!newUsgn.length){
-        // остальные очистить
+        //     params.delete('direction')
         // }
         // params.delete('direction')
         navigate({search: params.toString()}) /// убрать связанные

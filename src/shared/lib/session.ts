@@ -32,3 +32,6 @@
 //         }
 //     }, [token])
 // }
+// const curUser = usSession()
+// const curUserId = useSession(v=>v.id)
+// const logged = !!useSession(v=>v.id)
