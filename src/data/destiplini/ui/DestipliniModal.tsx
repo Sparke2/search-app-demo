@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAllDestiplini} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -10,12 +10,12 @@ export const DestipliniModalRoot = memo(() => {
     const toggle = () => {
         setModalDestipliniOpen(v => !v)
     }
+    // это важно!!
     const {destiplini} = useCurrentDestiplini()
+    const {data} = useAllDestiplini(!!destiplini.length)
     return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
-        {useMemo(() => (
-            <DestipliniModal isOpen={isModalDestipliniOpen} toggleModal={toggle}/>
-        ), [destiplini])}
+        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите Десциплину</button>
+        <DestipliniModal isOpen={isModalDestipliniOpen} toggleModal={toggle}/>
     </>
 
 
@@ -75,7 +75,7 @@ const DestipliniModal = ({isOpen, toggleModal}: {
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
-                            <h5 className="modal-title">Выберите УГСН из списка</h5>
+                            <h5 className="modal-title">Выберите Десциплину из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>

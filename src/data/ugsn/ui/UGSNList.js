@@ -19,7 +19,8 @@ export const UGSNList = memo(({Component, ComponentClassName}) => {
             if (!recordUgsn?.[selectedItem]) return null;
             return (
                 <div className="list-items-modal" key={key}>
-                    <div key={key}>{recordUgsn[selectedItem]}
+                    <div key={key}>
+                        {recordUgsn[selectedItem]}
                         <button className="btn p-0 ps-2" onClick={() => remove(selectedItem)}>
                             <FontAwesomeIcon icon={faXmark}/>
                         </button>

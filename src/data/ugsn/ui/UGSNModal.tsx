@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAllUGSN} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -11,11 +11,11 @@ export const UGSNModalRoot = memo(() => {
         setModalUGSNOpen(v => !v)
     }
     const {ugsn} = useCurrentUGSN()
+    // если есть в урле угсн - фетч на бэк до открытия
+    const {data} = useAllUGSN(!!ugsn.length)
     return <>
         <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
-        {useMemo(() => (
-            <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>
-        ), [ugsn])}
+        {isModalUGSNOpen && <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>}
     </>
 
 
@@ -27,6 +27,7 @@ const UGSNModal = ({isOpen, toggleModal}: {
     const {data: NodesUGSN = []} = useAllUGSN(isOpen)
 
     const {ugsn = [], set} = useCurrentUGSN()
+
     const [selected, setSelected] = useState<string[] | undefined>();
 
     const recordUGSN = NodesUGSN.reduce((acc, cur) => {

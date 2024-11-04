@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAllDirection} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -17,9 +17,7 @@ export const DirectionModalRoot = memo(() => {
 
     return <>
         <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите Направление</button>
-        {useMemo(() => (
-            <DirectionModal isOpen={isModalDirectionOpen} toggleModal={toggle}/>
-        ), [direction])}
+        {isModalDirectionOpen && <DirectionModal isOpen={isModalDirectionOpen} toggleModal={toggle}/>}
     </>
 
 
