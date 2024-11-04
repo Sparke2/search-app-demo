@@ -24,7 +24,7 @@ const UGSNModal = ({isOpen, toggleModal}: {
     isOpen: boolean,
     toggleModal: () => void;
 }) => {
-    const {data: NodesUGSN = []} = useAllUGSN()
+    const {data: NodesUGSN = []} = useAllUGSN(isOpen)
 
     const {ugsn = [], set} = useCurrentUGSN()
     const [selected, setSelected] = useState<string[] | undefined>();

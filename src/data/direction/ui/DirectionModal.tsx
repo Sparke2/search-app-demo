@@ -10,9 +10,13 @@ export const DirectionModalRoot = memo(() => {
     const toggle = () => {
         setModalDirectionOpen(v => !v)
     }
+
     const {direction} = useCurrentDirection()
+    // если есть направления в урле - грузим их, чо нам ждать то
+    const {data} = useAllDirection(!!direction?.length)
+
     return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
+        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите Направление</button>
         {useMemo(() => (
             <DirectionModal isOpen={isModalDirectionOpen} toggleModal={toggle}/>
         ), [direction])}
@@ -75,7 +79,7 @@ const DirectionModal = ({isOpen, toggleModal}: {
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
-                            <h5 className="modal-title">Выберите УГСН из списка</h5>
+                            <h5 className="modal-title">Выберите направление из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>

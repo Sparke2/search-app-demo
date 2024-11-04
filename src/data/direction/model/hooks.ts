@@ -4,7 +4,7 @@ export const useCurrentDirection = () => {
     const location = useLocation()
     const navigate = useNavigate();
     const searParams = new URLSearchParams(location.search)
-    const direction = searParams.get('direction')?.split(',') || [];
+    const direction = searParams.get('direction')?.split(',').filter(Boolean) || [];
     const add = (newDirectionValue: string) => {
         const s = new Set(direction)
         s.add(newDirectionValue)

@@ -6,7 +6,8 @@ import {useAllUGSN} from "../model/queries";
 // memo - если копмопнент не принимает объекты в виде пропсов - кеширует компонент
 export const UGSNList = memo(({Component, ComponentClassName}) => {
     const {ugsn, remove} = useCurrentUGSN()
-    const {data: allUgsn = [], isLoading} = useAllUGSN()
+    console.log({ugsn})
+    const {data: allUgsn = [], isLoading} = useAllUGSN(!!ugsn?.length)
     const recordUgsn = useMemo(() => {
         return allUgsn.reduce((acc, curUgsn) => {
             acc[curUgsn.value] = curUgsn.label;

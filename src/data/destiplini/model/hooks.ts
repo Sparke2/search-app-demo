@@ -4,7 +4,7 @@ export const useCurrentDestiplini = () => {
     const location = useLocation()
     const navigate = useNavigate();
     const searParams = new URLSearchParams(location.search)
-    const destiplini = searParams.get('destiplini')?.split(',') || [];
+    const destiplini = searParams.get('destiplini')?.split(',').filter(Boolean) || [];
     const add = (newDestipliniValue: string) => {
         const s = new Set(destiplini)
         s.add(newDestipliniValue)
