@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo, useCallback} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import ReactSelect from './ReactSelect';
 import Checkbox from './Checkbox';
@@ -17,7 +17,7 @@ import OptionsCheckboxForGenre from "../filterdata/OptionsCheckboxForGenre";
 import OptionsCheckboxForCollections from "../filterdata/OptionsCheckboxForCollections";
 import {BBKModalRoot} from './modal/BBKModal';
 import NodeBBK from '../filterdata/NodesBBK';
-import {useBbk} from "../features/bbk/model/useBbk";
+import {hooks} from "../data/bbk/model/hooks";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import InputISBN from "./InputISBN";
@@ -26,9 +26,10 @@ import {useCategoriesArray} from "../hooks/useCategoriesArray";
 function Filters() {
     const currentCategories = useCategoriesArray();
     const location = useLocation();
-    const {filterNodesBbkByKeys, bkkSelectedKeys, remove} = useBbk()
+    const {filterNodesBbkByKeys, bkkSelectedKeys, remove} = hooks()
     const navigate = useNavigate();
     const [isModalBBKOpen, setModalBBKOpen] = useState(false);
+    const [isModalUGSNOpen, setModalUGSNOpen] = useState(false);
     const selectedBBK = filterNodesBbkByKeys(bkkSelectedKeys).filter(Boolean)
     const renderSelectedBBK = () => {
         return selectedBBK.map((selectedItem, key) => {

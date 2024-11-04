@@ -1,14 +1,12 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {TreeChecked} from "../../../global";
 import {type Node} from "../../../filterdata/NodesBBK";
-import {useAllBbk} from "../../../data/bbk/queries";
-
-
+import {useAllBbk} from "./queries";
 
 
 export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
 
-export const useBbk = () => {
+export const hooks = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const {data:NodesBBK = []} = useAllBbk()

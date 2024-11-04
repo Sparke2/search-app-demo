@@ -1,28 +1,27 @@
-import React, {useEffect, useRef, useState} from 'react';
-
-import {TreeChecked} from "../../global";
-import {hooks} from "../../data/bbk/model/hooks";
-import {useAllBbk} from "../../data/bbk/model/queries";
-import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
+import React, {useEffect, useRef} from 'react';
+import {useAllUGSN} from "../../data/ugsn/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useIsFirstRender} from "../../shared/utils/isFirst";
+import {useUGSN} from "../../data/ugsn/model/hooks";
+import Checkbox from "../Checkbox";
 
-export const BBKModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
-  const {bkkSelectedKeys:selectedKeys} = hooks()
-  return <BBKModal init={selectedKeys} isOpen={isOpen} toggleModal={toggleModal}/>
+export const UGSNModalRoot = ({ isOpen, toggleModal }:{isOpen:boolean, toggleModal:() => void}) => {
+  // const {bkkSelectedKeys:selectedKeys} = useAllUGSN()
+  const {ugsn} = useUGSN()
+  return <UGSNModal init={ugsn} isOpen={isOpen} toggleModal={toggleModal}/>
 
 }
-const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() => void;init:Record<string, TreeChecked>}) => {
-  const {data:NodesBBK = []} = useAllBbk()
-  const {apply:applyBBK} = hooks()
+const UGSNModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() => void;init:Record<string, {value:string, label:string}>}) => {
+  const {data:NodesUGSN = []} = useAllUGSN()
+  const {add:applyUGSN, remove} = useUGSN()
   const selectedKeys = init;
-  const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(selectedKeys);
+  // const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(selectedKeys);
   const modalRef = useRef(null);
   const isFirst = useIsFirstRender();
   useEffect(() => {
-    if (!isFirst)
-      setLocalSelectedKeys(selectedKeys);
+    // if (!isFirst)
+      // setLocalSelectedKeys(selectedKeys);
   }, [selectedKeys, isFirst]);
 
   useEffect(() => {
@@ -44,13 +43,13 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
   }, [isOpen, toggleModal]);
 
   const handleApply = () => {
-    applyBBK(localSelectedKeys);
+    // applyUGSN(localSelectedKeys);
     toggleModal();
   };
 
   const handleClearSelection = () => {
-    setLocalSelectedKeys({});
-    applyBBK({})
+    // setLocalSelectedKeys({});
+    // applyUGSN({})
   };
 
 
@@ -69,20 +68,9 @@ const BBKModal = ({ isOpen, toggleModal, init }:{isOpen:boolean, toggleModal:() 
             </div>
             <div className="modal-body">
 
-              {<Tree
-                value={NodesBBK}
-                selectionMode="checkbox"
-                selectionKeys={localSelectedKeys}
-                  // @ts-ignore
-                onSelectionChange={(e: TreeCheckboxSelectionKeys) => {
-                  // @ts-ignore
-                  setLocalSelectedKeys(e.value)
-                }}
-                filter
-                filterPlaceholder="Поиск по списку"
-                filterBy="label"
-                className="w-full md:w-30rem"
-              />}
+              {NodesUGSN.map(v=> <div>
+                <Checkbox/>
+              </div>)}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>

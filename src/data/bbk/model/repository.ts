@@ -1,5 +1,5 @@
-import NodesBBK, {type Node} from "../../filterdata/NodesBBK";
-import {$api} from "../../shared/lib/fetch-client";
+import NodesBBK, {type Node} from "../../../filterdata/NodesBBK";
+import {$api} from "../../../shared/lib/fetch-client";
 import {BBKEndpoints} from "./endpoints";
 
 export namespace BbkRepository {
