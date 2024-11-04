@@ -1,31 +1,37 @@
-import React, {useEffect, useRef} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
+import {useAllUGSN} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import {useIsFirstRender} from "../../shared/utils/isFirst";
-import {useCurrentUGSN} from "../../data/ugsn/model/hooks";
-import Checkbox from "../Checkbox";
-import {useAllUGSN} from "../../data/ugsn/model/queries";
+import {useCurrentUGSN} from "../model/hooks";
+import Checkbox from "../../../components/Checkbox";
 
-export const UGSNModalRoot = ({isOpen, toggleModal}: { isOpen: boolean, toggleModal: () => void }) => {
-    // const {bkkSelectedKeys:selectedKeys} = useAllUGSN()
-    return <UGSNModal isOpen={isOpen} toggleModal={toggleModal}/>
+export const UGSNModalRoot = memo(() => {
+    const [isModalUGSNOpen, setModalUGSNOpen] = useState(false);
+    const toggle = () => {
+        setModalUGSNOpen(v => !v)
+    }
+    return <>
+        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
+        <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>
+    </>
 
-}
+
+})
 const UGSNModal = ({isOpen, toggleModal}: {
     isOpen: boolean,
     toggleModal: () => void;
-    init: Record<string, { value: string, label: string }>
 }) => {
     const {data: NodesUGSN = []} = useAllUGSN()
-    const {add: applyUGSN, remove} = useCurrentUGSN()
-    // const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(selectedKeys);
-    const modalRef = useRef(null);
-    const isFirst = useIsFirstRender();
-    useEffect(() => {
-        // if (!isFirst)
-        // setLocalSelectedKeys(selectedKeys);
-    }, [selectedKeys, isFirst]);
 
+    const {ugsn = [], set} = useCurrentUGSN()
+    const [selected, setSelected] = useState<string[] | undefined>();
+
+    const recordUGSN = NodesUGSN.reduce((acc, cur) => {
+        acc[cur.value] = (selected || ugsn).includes(cur.value);
+        return acc;
+    }, {}) as Record<string, boolean> | {}
+
+    const modalRef = useRef(null);
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -45,13 +51,15 @@ const UGSNModal = ({isOpen, toggleModal}: {
     }, [isOpen, toggleModal]);
 
     const handleApply = () => {
-        // applyUGSN(localSelectedKeys);
+        // applyBBK(localSelectedKeys);
         toggleModal();
+        set(selected || ugsn || [])
     };
 
     const handleClearSelection = () => {
         // setLocalSelectedKeys({});
-        // applyUGSN({})
+        setSelected([])
+        // applyBBK({})
     };
 
 
@@ -59,20 +67,34 @@ const UGSNModal = ({isOpen, toggleModal}: {
 
     return (
         <>
+
             <div className="modal fade show" style={{display: 'block'}} tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
-                            <h5 className="modal-title">Выберите ББК из списка</h5>
+                            <h5 className="modal-title">Выберите УГСН из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body ">
+                            <div className='w-full md:w-30rem'>
 
-                            {NodesUGSN.map(v => <div>
-                                <Checkbox/>
-                            </div>)}
+                                {NodesUGSN.map(({value, label}, index) => (
+                                    <Checkbox
+                                        shouldShowApply={false}
+                                        key={`ugsn-${value}`}
+                                        id={`ugsn-${value}`}
+                                        label={label}
+                                        isChecked={(selected || ugsn).includes(value)}
+                                        handleCheckboxChange={() => {
+                                            const isCheked = recordUGSN[value]
+                                            setSelected((v = []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                        }}
+                                        applyFilters={handleApply}
+                                    />
+                                ))}
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>

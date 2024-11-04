@@ -1,12 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-function Checkbox({ id, label, isChecked, handleCheckboxChange, applyFilters }) {
+function Checkbox({
+                      shouldShowApply = true,
+                      id, label, isChecked, handleCheckboxChange, applyFilters = () => {
+    }
+                  }) {
     const [showButton, setShowButton] = useState(false);
     const buttonRef = useRef(null);
 
     const handleChange = () => {
         handleCheckboxChange(id);
-        setShowButton(true);
+        if (shouldShowApply)
+            setShowButton(true);
     };
 
     const handleClickOutside = (event) => {

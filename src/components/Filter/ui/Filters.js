@@ -19,6 +19,7 @@ import {BBKModalRoot} from '../../../data/bbk/ui/BBKModal';
 import InputISBN from "../../InputISBN";
 import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
 import {NodesBBKList} from "../../../data/bbk/ui/NodesBBKList";
+import {UGSNModalRoot} from "../../../data/ugsn/ui/UGSNModal";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -245,27 +246,20 @@ function Filters() {
             </div>
             <div className="col-12">
                 <h6 className='mb-3'>Область поиска</h6>
-                <Checkbox
-                    id="searchAuthor"
-                    label="По автору"
-                    isChecked={checkboxes.searchAuthor}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
-                <Checkbox
-                    id="searchTitle"
-                    label="По названию"
-                    isChecked={checkboxes.searchTitle}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
-                <Checkbox
-                    id="searchInText"
-                    label="В тексте"
-                    isChecked={checkboxes.searchInText}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
+                {[{value: 'searchAuthor', label: 'По автору'}, {
+                    value: 'searchTitle',
+                    label: 'По названию'
+                }, {value: 'searchInText', label: 'По тексту'}].map(({value, label}) => (
+                    <Checkbox
+                        id={value}
+                        label={label}
+                        isChecked={checkboxes?.[value]}
+                        handleCheckboxChange={handleCheckboxChange}
+                        applyFilters={applyFilters}
+                    />
+                ))
+                }
+
             </div>
             <div className="col-12">
                 {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
@@ -400,7 +394,8 @@ function Filters() {
             {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Укрупненная группа специальностей</h6>
-                    <button className="btn btn-outline-primary w-100">Выберите УГСН</button>
+                    <UGSNModalRoot/>
+
                 </div>
             )}
             {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
