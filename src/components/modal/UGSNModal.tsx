@@ -21,10 +21,7 @@ const UGSNModal = ({isOpen, toggleModal}: {
     // const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string,TreeChecked> >(selectedKeys);
     const modalRef = useRef(null);
     const isFirst = useIsFirstRender();
-    useEffect(() => {
-        // if (!isFirst)
-        // setLocalSelectedKeys(selectedKeys);
-    }, [selectedKeys, isFirst]);
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {

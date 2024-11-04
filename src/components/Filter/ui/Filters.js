@@ -20,6 +20,7 @@ import InputISBN from "../../InputISBN";
 import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
 import {NodesBBKList} from "../../../data/bbk/ui/NodesBBKList";
 import {UGSNModalRoot} from "../../../data/ugsn/ui/UGSNModal";
+import {UGSNList} from "../../../data/ugsn/ui/UGSNList";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -393,7 +394,7 @@ function Filters() {
             )}
             {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
-                    <h6 className='mb-3'>Укрупненная группа специальностей</h6>
+                    <UGSNList/>
                     <UGSNModalRoot/>
 
                 </div>

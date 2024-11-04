@@ -4,7 +4,7 @@ export const useCurrentUGSN = () => {
     const location = useLocation()
     const navigate = useNavigate();
     const searParams = new URLSearchParams(location.search)
-    const ugsn = searParams.get('ugsn')?.split(',');
+    const ugsn = searParams.get('ugsn')?.split(',') || [];
     const add = (newUgsnValue: string) => {
         const s = new Set(ugsn)
         s.add(newUgsnValue)

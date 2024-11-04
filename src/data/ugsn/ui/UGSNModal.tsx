@@ -1,4 +1,4 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useMemo, useRef, useState} from 'react';
 import {useAllUGSN} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
@@ -10,9 +10,12 @@ export const UGSNModalRoot = memo(() => {
     const toggle = () => {
         setModalUGSNOpen(v => !v)
     }
+    const {ugsn} = useCurrentUGSN()
     return <>
         <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
-        <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>
+        {useMemo(() => (
+            <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>
+        ), [ugsn])}
     </>
 
 
