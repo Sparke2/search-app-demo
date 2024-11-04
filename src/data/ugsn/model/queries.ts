@@ -7,7 +7,7 @@ const getAllUGSNOptions = (enabled?: boolean) => queryOptions({
     queryFn: () => UGSNRepository.getAllUGSN(),
     staleTime: Infinity,
     gcTime: Infinity,
-    enabled,
+    enabled: enabled,
     refetchOnWindowFocus: true
 })
 // enabled= false - не совершает запрос, enabled=true -совершаем, по умолчанию - true в самом useQuery

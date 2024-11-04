@@ -20,7 +20,11 @@ export const useCurrentDirection = () => {
     const set = (newUsgn: string[]) => {
         const params = new URLSearchParams(location.search)
         params.set('direction', newUsgn.join(','))
-        navigate({search: params.toString()})
+        // if(!newUsgn.length){
+        // остальные очистить
+        // }
+        // params.delete('direction')
+        navigate({search: params.toString()}) /// убрать связанные
 
     }
 

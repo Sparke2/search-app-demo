@@ -20,6 +20,7 @@ import InputISBN from "../../InputISBN";
 import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
 import {NodesBBKList} from "../../../data/bbk/ui/NodesBBKList";
 import {GroupModalsChain} from "./GroupModals/GroupModals";
+import {CurrentCategoriesExclusive} from "../../CurrentCategoriesExclusive";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -405,7 +406,7 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
+            <CurrentCategoriesExclusive categories={['searchBooks']}>
                 <div className="col-12">
                     <h6 className='mb-3'>Целевое назначение</h6>
                     <ReactSelect
@@ -417,7 +418,7 @@ function Filters() {
                         isMulti
                     />
                 </div>
-            )}
+            </CurrentCategoriesExclusive>
             {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Дополнительно</h6>

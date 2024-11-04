@@ -12,7 +12,7 @@ export const UGSNModalRoot = memo(() => {
     }
     const {ugsn} = useCurrentUGSN()
     // если есть в урле угсн - фетч на бэк до открытия
-    const {data} = useAllUGSN(!!ugsn.length)
+    const {data} = useAllUGSN(!!ugsn.length || isModalUGSNOpen)
     return <>
         <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
         {isModalUGSNOpen && <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>}

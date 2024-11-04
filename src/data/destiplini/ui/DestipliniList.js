@@ -28,6 +28,7 @@ export const DestipliniList = memo(({Component, ComponentClassName}) => {
             );
         });
     };
+    // вместо Component можно вставить 'div'
     const Comp = Component ? Component : Fragment; //Fragment - <></>
     const props = Component ? {className: ComponentClassName} : undefined;
     //если Component задала - можно кидать classnAME, иначе - <></> без className

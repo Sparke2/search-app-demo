@@ -1,5 +1,5 @@
 import React from "react";
-import ShareButtons from '../ShareButtons';
+import ShareButtons from '../../ShareButtons';
 
 const VideoItem = () =>
     <div className="card-item video position-relative">
