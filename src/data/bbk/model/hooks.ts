@@ -1,12 +1,13 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {TreeChecked} from "../../../global";
-import {type Node} from "../../../filterdata/NodesBBK";
 import {useAllBbk} from "./queries";
+import {TreeChecked} from "../../../global";
+import {TreeNode} from "./types";
+
 
 
 export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
 
-export const hooks = () => {
+export const useBbk = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const {data:NodesBBK = []} = useAllBbk()
@@ -27,7 +28,7 @@ export const hooks = () => {
     const filterNodesBbkByKeys = (keys: Record<string, TreeChecked>) => {
         let tree = (JSON.parse(JSON.stringify(NodesBBK)) || []) as typeof NodesBBK;
 
-        const foo = (node: Node): Node | null => {
+        const foo = (node: TreeNode): TreeNode | null => {
             const curKey = keys?.[node.key];
 
             if (!curKey || (!curKey.checked && !curKey.partialChecked)) {
@@ -47,10 +48,10 @@ export const hooks = () => {
 
         return tree;
     };
-    const nodesToSelectedKeys = (nodes: Node[]): Record<string, TreeChecked> => {
+    const nodesToSelectedKeys = (nodes: TreeNode[]): Record<string, TreeChecked> => {
         let selectedKeys: Record<string, TreeChecked> = {};
 
-        const foo = (node: Node, index: number): Node => {
+        const foo = (node: TreeNode, index: number): TreeNode => {
             const originalNode = NodesBBK[index];
 
             const isFull = originalNode?.children?.length === node?.children?.length;

@@ -1,68 +1,30 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import ReactSelect from './ReactSelect';
-import Checkbox from './Checkbox';
-import ReactSelectWithLabel from './ReactSelectWithLabel';
-import OptionsForEditions from '../filterdata/OptionsForEditions';
-import OptionsForPublishers from '../filterdata/OptionsForPublishers';
-import OptionsForAvailability from '../filterdata/OptionsForAvailability';
-import OptionsForYears from '../filterdata/OptionsForYears';
-import OptionsForTarget from '../filterdata/OptionsForTarget';
-import OptionsForAdditionals from '../filterdata/OptionsForAdditionals';
-import OptionsForVAK from '../filterdata/OptionsForVAK';
-import OptionsForSubscribe from "../filterdata/OptionsForSubscribe";
-import OptionsForAppointment from "../filterdata/OptionsForAppointment";
-import OptionsForPerformers from "../filterdata/OptionsForPerformers";
-import OptionsCheckboxForGenre from "../filterdata/OptionsCheckboxForGenre";
-import OptionsCheckboxForCollections from "../filterdata/OptionsCheckboxForCollections";
-import {BBKModalRoot} from './modal/BBKModal';
-import NodeBBK from '../filterdata/NodesBBK';
-import {hooks} from "../data/bbk/model/hooks";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import InputISBN from "./InputISBN";
-import {useCategoriesArray} from "../hooks/useCategoriesArray";
+import ReactSelect from '../../ReactSelect';
+import Checkbox from '../../Checkbox';
+import ReactSelectWithLabel from '../../ReactSelectWithLabel';
+import OptionsForEditions from '../../../filterdata/OptionsForEditions';
+import OptionsForPublishers from '../../../filterdata/OptionsForPublishers';
+import OptionsForAvailability from '../../../filterdata/OptionsForAvailability';
+import OptionsForYears from '../../../filterdata/OptionsForYears';
+import OptionsForTarget from '../../../filterdata/OptionsForTarget';
+import OptionsForAdditionals from '../../../filterdata/OptionsForAdditionals';
+import OptionsForVAK from '../../../filterdata/OptionsForVAK';
+import OptionsForSubscribe from "../../../filterdata/OptionsForSubscribe";
+import OptionsForAppointment from "../../../filterdata/OptionsForAppointment";
+import OptionsForPerformers from "../../../filterdata/OptionsForPerformers";
+import OptionsCheckboxForGenre from "../../../filterdata/OptionsCheckboxForGenre";
+import OptionsCheckboxForCollections from "../../../filterdata/OptionsCheckboxForCollections";
+import {BBKModalRoot} from '../../../data/bbk/ui/BBKModal';
+import InputISBN from "../../InputISBN";
+import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
+import {NodesBBKList} from "../../../data/bbk/ui/NodesBBKList";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
     const location = useLocation();
-    const {filterNodesBbkByKeys, bkkSelectedKeys, remove} = hooks()
     const navigate = useNavigate();
-    const [isModalBBKOpen, setModalBBKOpen] = useState(false);
-    const [isModalUGSNOpen, setModalUGSNOpen] = useState(false);
-    const selectedBBK = filterNodesBbkByKeys(bkkSelectedKeys).filter(Boolean)
-    const renderSelectedBBK = () => {
-        return selectedBBK.map((selectedItem, key) => {
-            const nodeChildrenLength = NodeBBK[key]?.children?.length || 0;
-            const selectedChildrenLength = selectedItem?.length || 0;
-            if (nodeChildrenLength !== selectedChildrenLength) {
-                return (
-                    <div className="list-items-modal" key={key}>
-                        {selectedItem.children.map((child, index) => (
-                            <div key={index}>{child.label}
-                                <button className="btn p-0 ps-2" onClick={() => remove(child.key)}>
-                                    <FontAwesomeIcon icon={faXmark}/>
-                                </button>
-                            </div>
-
-                        ))}
-                    </div>
-                );
-            } else {
-                return (
-                    <div key={key}>
-                        <span>{selectedItem.label}</span>
-                    </div>
-                );
-            }
-        });
-    };
-
-    const toggleBBKModal = () => {
-        setModalBBKOpen(v => !v);
-    };
     const searchParams = new URLSearchParams(location.search);
-
     const getOption = (key, options) => {
         const value = searchParams.get(key);
         return value ? options.find(option => option.value === value) : null;
@@ -337,16 +299,16 @@ function Filters() {
                 )}
             </div>
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
-            <div className="col-12">
-                <h6 className='mb-3'>Жанры</h6>
-                {renderGenreCheckboxes()}
-            </div>
+                <div className="col-12">
+                    <h6 className='mb-3'>Жанры</h6>
+                    {renderGenreCheckboxes()}
+                </div>
             )}
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
-            <div className="col-12">
-                <h6 className='mb-3'>Коллекции</h6>
-                {renderCollectionCheckboxes()}
-            </div>
+                <div className="col-12">
+                    <h6 className='mb-3'>Коллекции</h6>
+                    {renderCollectionCheckboxes()}
+                </div>
             )}
             {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
@@ -482,27 +444,8 @@ function Filters() {
             )}
             {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
-                    <h6 className="mb-3">ББК</h6>
-                    <div className="selected-items-modal">
-                        {selectedBBK.length > 0 && (
-                            <div className="list-items-modal">
-                                {selectedBBK.map((item) => (
-                                    bkkSelectedKeys[item.key]?.partialChecked ? null :
-                                        <div key={item.key}>
-                                            {item.label}
-                                            <button className="btn p-0 ps-2" onClick={() => remove(item.key)}>
-                                                <FontAwesomeIcon icon={faXmark}/>
-                                            </button>
-                                        </div>
-                                ))}
-                            </div>
-                        )}
-                        {renderSelectedBBK(NodeBBK, selectedBBK)}
-                    </div>
-                    <button className="btn btn-outline-primary w-100" onClick={toggleBBKModal}>
-                        Выберите ББК
-                    </button>
-                    <BBKModalRoot isOpen={isModalBBKOpen} toggleModal={toggleBBKModal}/>
+                    <NodesBBKList/>
+                    <BBKModalRoot/>
                 </div>
             )}
             <div className='col-12'>
