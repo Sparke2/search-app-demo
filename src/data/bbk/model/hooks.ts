@@ -4,7 +4,6 @@ import {TreeChecked} from "../../../global";
 import {TreeNode} from "./types";
 
 
-
 export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
 
 export const useBbk = () => {
@@ -48,45 +47,47 @@ export const useBbk = () => {
 
         return tree;
     };
-    const nodesToSelectedKeys = (nodes: TreeNode[]): Record<string, TreeChecked> => {
-        let selectedKeys: Record<string, TreeChecked> = {};
+    // const nodesToSelectedKeys = (nodes: TreeNode[]): Record<string, TreeChecked> => {
+    //     let selectedKeys: Record<string, TreeChecked> = {};
+    //
+    //     const foo = (node: TreeNode, index: number): TreeNode => {
+    //         const originalNode = NodesBBK[index];
+    //
+    //         const isFull = originalNode?.children?.length === node?.children?.length;
+    //
+    //         if (node.children && node.children.length > 0) {
+    //             node.children.forEach((childNode, childIndex) => {
+    //                 foo(childNode, childIndex);
+    //             });
+    //         }
+    //
+    //         selectedKeys[node.key] = {
+    //             checked: isFull,
+    //             partialChecked: !isFull
+    //         };
+    //
+    //         return node;
+    //     };
+    //
+    //     nodes.forEach((node, index) => {
+    //         foo(node, index);
+    //     });
+    //     return selectedKeys;
+    // };
 
-        const foo = (node: TreeNode, index: number): TreeNode => {
-            const originalNode = NodesBBK[index];
+    const remove = (key: string) => {
+        if (bkkSelectedKeys[key]) {
+            const keysToRemove = Object.keys(bkkSelectedKeys).filter(innerKey =>
+                innerKey === key || innerKey.startsWith(`${key}.`) || innerKey.startsWith(`${key}-`)
+            );
+            const newKeys = Object.keys(bkkSelectedKeys)
+                .filter(innerKey => !keysToRemove.includes(innerKey))
+                .reduce((acc, cur) => {
+                    acc[cur] = bkkSelectedKeys[cur];
+                    return acc;
+                }, {});
 
-            const isFull = originalNode?.children?.length === node?.children?.length;
-
-            if (node.children && node.children.length > 0) {
-                node.children.forEach((childNode, childIndex) => {
-                    foo(childNode, childIndex);
-                });
-            }
-
-            selectedKeys[node.key] = {
-                checked: isFull,
-                partialChecked: !isFull
-            };
-
-            return node;
-        };
-
-        nodes.forEach((node, index) => {
-            foo(node, index);
-        });
-        return selectedKeys;
-    };
-    const remove = (key:string) => {
-        if(bkkSelectedKeys[key]){
-            const newKeys = Object.keys(bkkSelectedKeys).filter(innerKey => {
-                return !innerKey.startsWith(key) || innerKey === key;
-            }).reduce((acc,cur) => {
-                acc[cur] = bkkSelectedKeys[cur]
-                return acc;
-            }, {})
-            delete newKeys[key]
-            const d = filterNodesBbkByKeys(newKeys).filter(v=>v&& v.children.length)
-            apply(nodesToSelectedKeys(d))
-
+            apply(newKeys);
         }
     }
 
