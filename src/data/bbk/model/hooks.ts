@@ -9,7 +9,7 @@ export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
 export const useBbk = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const {data:NodesBBK = []} = useAllBbk()
+    const {data: NodesBBK = []} = useAllBbk()
     const searchParams = new URLSearchParams(location.search)
     const bbkRouter = searchParams.get('bbk')?.split?.(',')?.sort?.(((a, b) => +a[0] - +b[0])) || []
     const bkkSelectedKeys = bbkRouter.reduce((acc, bbk) => {
@@ -43,7 +43,7 @@ export const useBbk = () => {
             return node;
         };
         // @ts-ignore
-        tree = tree.map(node => foo(node)).map(v=> v && v.children?v:undefined);
+        tree = tree.map(node => foo(node)).map(v => v && v.children ? v : undefined);
 
         return tree;
     };
@@ -78,15 +78,16 @@ export const useBbk = () => {
     const remove = (key: string) => {
         if (bkkSelectedKeys[key]) {
             const keysToRemove = Object.keys(bkkSelectedKeys).filter(innerKey =>
-                innerKey === key || innerKey.startsWith(`${key}.`) || innerKey.startsWith(`${key}-`)
+                innerKey === key || innerKey === key[0] || innerKey.startsWith(`${key}.`) || innerKey.startsWith(`${key}-`)
             );
+            console.log({keysToRemove})
+
             const newKeys = Object.keys(bkkSelectedKeys)
                 .filter(innerKey => !keysToRemove.includes(innerKey))
                 .reduce((acc, cur) => {
                     acc[cur] = bkkSelectedKeys[cur];
                     return acc;
                 }, {});
-
             apply(newKeys);
         }
     }
