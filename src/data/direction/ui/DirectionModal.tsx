@@ -93,8 +93,8 @@ const DirectionModal = ({isOpen, toggleModal}: {
                                         label={label}
                                         isChecked={(selected || direction).includes(value)}
                                         handleCheckboxChange={() => {
-                                            const isCheked = recordDirection[value]
-                                            setSelected((v = []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                            const isCheked = recordDirection[value];
+                                            setSelected((v = direction || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
                                         }}
                                         applyFilters={handleApply}
                                     />

@@ -92,7 +92,7 @@ const DestipliniModal = ({isOpen, toggleModal}: {
                                         isChecked={(selected || destiplini).includes(value)}
                                         handleCheckboxChange={() => {
                                             const isCheked = recordDestiplini[value]
-                                            setSelected((v = []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                            setSelected((v = destiplini || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
                                         }}
                                         applyFilters={handleApply}
                                     />

@@ -93,7 +93,7 @@ const UGSNModal = ({isOpen, toggleModal}: {
                                         isChecked={(selected || ugsn).includes(value)}
                                         handleCheckboxChange={() => {
                                             const isCheked = recordUGSN[value]
-                                            setSelected((v = []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                            setSelected((v = ugsn || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
                                         }}
                                         applyFilters={handleApply}
                                     />
