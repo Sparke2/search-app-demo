@@ -21,6 +21,8 @@ import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
 import {NodesBBKList} from "../../../data/bbk/ui/NodesBBKList";
 import {GroupModalsChain} from "./GroupModals/GroupModals";
 import {CurrentCategoriesExclusive} from "../../CurrentCategoriesExclusive";
+import {CheckboxSearchParam} from "../model/contst/CheckboxSearchParam";
+import {CheckboxSearchArea} from "../model/contst/CheckboxSearchArea";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -209,58 +211,11 @@ function Filters() {
         <div className="row g-4 pt-4">
             <div className="col-12">
                 <h6 className='mb-3'>Поиск по</h6>
-                <Checkbox
-                    id="searchBooks"
-                    label="Книгам"
-                    isChecked={checkboxes.searchBooks}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
-                <Checkbox
-                    id="searchPeriodicals"
-                    label="Журналам"
-                    isChecked={checkboxes.searchPeriodicals}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
-                <Checkbox
-                    id="searchAudio"
-                    label="Аудио"
-                    isChecked={checkboxes.searchAudio}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
-                <Checkbox
-                    id="searchVideo"
-                    label="Видео"
-                    isChecked={checkboxes.searchVideo}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
-                <Checkbox
-                    id="searchArchives"
-                    label="Архивам"
-                    isChecked={checkboxes.searchArchives}
-                    handleCheckboxChange={handleCheckboxChange}
-                    applyFilters={applyFilters}
-                />
+                <CheckboxSearchParam handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
             </div>
             <div className="col-12">
                 <h6 className='mb-3'>Область поиска</h6>
-                {[{value: 'searchAuthor', label: 'По автору'}, {
-                    value: 'searchTitle',
-                    label: 'По названию'
-                }, {value: 'searchInText', label: 'По тексту'}].map(({value, label}) => (
-                    <Checkbox
-                        id={value}
-                        label={label}
-                        isChecked={checkboxes?.[value]}
-                        handleCheckboxChange={handleCheckboxChange}
-                        applyFilters={applyFilters}
-                    />
-                ))
-                }
-
+                <CheckboxSearchArea handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
             </div>
             <div className="col-12">
                 {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (

@@ -1,13 +1,13 @@
 import React from 'react';
-import Breadcrumb from '../components/Breadcrumb';
+import Breadcrumb from '../components/core/Breadcrumb';
 import SearchForm from '../components/SearchForm';
 import ResultsAccordion from '../components/ResultsAccordion';
 import Filters from '../components/Filter/ui/Filters';
 
 import CheckboxFilterShow from '../components/CheckboxFilterShow';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
-import { AppLayout } from '../layout/AppLayout';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons';
+import {AppLayout} from '../layout/AppLayout';
 
 function Home() {
   return (

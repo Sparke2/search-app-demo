@@ -33,7 +33,7 @@ export const DirectionList = memo(({Component, ComponentClassName}) => {
     //если Component задала - можно кидать classnAME, иначе - <></> без className
     return (
         <Comp {...props}>
-            <h6 className="mb-3">Укрепленная группа специальностей</h6>
+            <h6 className="mb-3">Направление подготовки</h6>
             <div className="selected-items-modal">
                 {renderSelectedDirection()}
             </div>

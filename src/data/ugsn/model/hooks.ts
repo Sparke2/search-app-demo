@@ -15,13 +15,16 @@ export const useCurrentUGSN = () => {
         const s = new Set(ugsn)
         s.delete(newUgsnValue)
         searParams.set('ugsn', Array.from(s).join(','));
+        const isInURL = searParams.get('ugsn')?.split(',').filter(Boolean) || [];
+        if (isInURL.length === 0) {
+            ['direction', 'destiplini', 'ugsn'].forEach(param => searParams.delete(param));
+        }
         navigate({search: searParams.toString()});
     }
     const set = (newUsgn: string[]) => {
         const params = new URLSearchParams(location.search)
         params.set('ugsn', newUsgn.join(','))
         navigate({search: params.toString()})
-
     }
 
     return {ugsn, add, remove, set}

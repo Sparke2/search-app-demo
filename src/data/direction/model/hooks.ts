@@ -16,17 +16,16 @@ export const useCurrentDirection = () => {
         const s = new Set(direction)
         s.delete(newDirectionValue)
         searParams.set('direction', Array.from(s).join(','));
+        const isInURL = searParams.get('direction')?.split(',').filter(Boolean) || [];
+        if (isInURL.length === 0) {
+            ['direction', 'destiplini'].forEach(param => searParams.delete(param));
+        }
         navigate({search: searParams.toString()});
     }
     const set = (newUsgn: string[]) => {
         const params = new URLSearchParams(location.search)
         params.set('direction', newUsgn.join(','))
-        // if(!newUsgn.length){
-        //     params.delete('direction')
-        // }
-        // params.delete('direction')
-        navigate({search: params.toString()}) /// убрать связанные
-
+        navigate({search: params.toString()})
     }
 
     return {direction, add, remove, set}

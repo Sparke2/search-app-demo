@@ -1,9 +1,16 @@
 import React, {useState} from 'react';
-import logo from '../img/header/logo.svg';
-import qrCodeAndroid from '../img/header/qr-code-android.gif';
-import qrCodeIos from '../img/header/qr-code-ios.gif';
+import logo from '../../img/header/logo.svg';
+import qrCodeAndroid from '../../img/header/qr-code-android.gif';
+import qrCodeIos from '../../img/header/qr-code-ios.gif';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBars, faEye, faMagnifyingGlass, faChevronLeft, faChevronRight, faXmark} from '@fortawesome/free-solid-svg-icons';
+import {
+    faBars,
+    faChevronLeft,
+    faChevronRight,
+    faEye,
+    faMagnifyingGlass,
+    faXmark
+} from '@fortawesome/free-solid-svg-icons';
 
 function Header() {
     const [state, setState] = useState({

@@ -1,7 +1,7 @@
 import React from 'react';
-import tg from "../img/footer/tg.svg";
-import vk from "../img/footer/vk.svg";
-import youtube from "../img/footer/youtube.svg";
+import tg from "../../img/footer/tg.svg";
+import vk from "../../img/footer/vk.svg";
+import youtube from "../../img/footer/youtube.svg";
 
 function Footer() {
     return (
