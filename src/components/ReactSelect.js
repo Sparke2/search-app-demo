@@ -1,15 +1,25 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Select from 'react-select';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
 
-function ReactSelect({ options, placeholder, isMulti, defaultValue, onChange, applyFilters }) {
+function ReactSelect({
+                         shouldApplyButtonRender = true,
+                         options,
+                         placeholder = undefined,
+                         isMulti = false,
+                         defaultValue,
+                         onChange,
+                         applyFilters = () => {
+                         }
+                     }) {
     const [menuIsOpen, setMenuIsOpen] = useState(false);
     const [showButton, setShowButton] = useState(false);
     const buttonRef = useRef(null);
 
     const handleChange = (selectedOptions) => {
-        setShowButton(true);
+        if (shouldApplyButtonRender)
+            setShowButton(true);
         if (onChange) {
             onChange(selectedOptions);
         }
@@ -48,9 +58,9 @@ function ReactSelect({ options, placeholder, isMulti, defaultValue, onChange, ap
                     DropdownIndicator: () => (
                         <div className="react-select__dropdown-indicator">
                             {menuIsOpen ? (
-                                <FontAwesomeIcon icon={faChevronUp} className="color-grey" />
+                                <FontAwesomeIcon icon={faChevronUp} className="color-grey"/>
                             ) : (
-                                <FontAwesomeIcon icon={faChevronDown} className="color-grey" />
+                                <FontAwesomeIcon icon={faChevronDown} className="color-grey"/>
                             )}
                         </div>
                     ),
