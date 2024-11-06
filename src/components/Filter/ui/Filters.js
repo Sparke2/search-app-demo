@@ -209,14 +209,8 @@ function Filters() {
     // @ts-ignore
     return (
         <div className="row g-4 pt-4">
-            <div className="col-12">
-                <h6 className='mb-3'>Поиск по</h6>
-                <CheckboxSearchParam handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
-            </div>
-            <div className="col-12">
-                <h6 className='mb-3'>Область поиска</h6>
-                <CheckboxSearchArea handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
-            </div>
+            <CheckboxSearchParam handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
+            <CheckboxSearchArea handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
             <div className="col-12">
                 {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                     <h6 className='mb-3'>Год издания</h6>
@@ -225,7 +219,7 @@ function Filters() {
                     !['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category))) && (
                     <h6 className='mb-3'>Год записи</h6>
                 )}
-                {(['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].includes(currentCategories[0]) || currentCategories.length === 0) && (
+                {(['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                     <div className='row g-4 pt-1'>
                         <div className='col-6'>
                             <ReactSelectWithLabel
