@@ -299,6 +299,20 @@
 .react-select-container {
   position: relative;
 }
+.react-select-container ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+.react-select-container ::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+}
+.react-select-container ::-webkit-scrollbar-thumb {
+  background: #F46F40;
+  background: linear-gradient(90deg, #F46F40 0%, #FAB336 100%);
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
+}
 
 .react-select__dropdown-indicator {
   display: flex;
@@ -375,11 +389,25 @@
   border: none;
 }
 
-.p-tree-container {
+.modal-body {
   overflow: hidden;
   overflow-y: auto;
-  height: 40vh;
+  height: 45vh;
   padding: 0;
+}
+.modal-body::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+.modal-body::-webkit-scrollbar-track {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+  background: #F46F40;
+  background: linear-gradient(90deg, #F46F40 0%, #FAB336 100%);
+  border-radius: 10px;
+  border: 3px solid #f0f0f0;
 }
 
 .modal .p-component {
@@ -417,6 +445,9 @@
 }
 .p-tree .p-highlight .p-checkbox-box .p-checkbox-icon {
   color: var(--color-primary-all);
+}
+.p-tree .p-tree-container {
+  padding-left: 0;
 }
 .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight {
   background-color: var(--color-primary-all-pale);
@@ -683,8 +714,12 @@ header a.btn-link.sv {
   color: var(--color-primary-all);
   text-align: start;
 }
+header a.btn-link.sv:hover {
+  color: var(--color-primary-all);
+}
 header a.btn-link:hover {
   text-decoration: underline;
+  color: var(--color-grey-dark);
 }
 
 .menu-hidden {
@@ -713,11 +748,15 @@ header a.btn-link:hover {
   transition: transform 0.3s ease-in-out;
 }
 
+.list-items-modal .btn:active, .list-items-modal .btn:focus, .list-items-modal .btn:focus-visible {
+  border-color: transparent;
+}
+
 .modal h5.modal-title {
   font-size: 24px;
 }
 .modal .btn.close {
-  color: var(--color-primary-all);
+  color: var(--color-grey);
   font-size: 28px;
   padding: 0;
 }
@@ -732,6 +771,26 @@ header a.btn-link:hover {
 }
 .modal .modal-content {
   padding: 1rem;
+}
+.modal .modal-content .input-group.search-modal {
+  border: 1px solid var(--color-primary-all);
+  border-radius: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.modal .modal-content .input-group.search-modal .form-control {
+  border: none;
+  padding: 0.8rem;
+  border-radius: 1rem;
+}
+.modal .modal-content .input-group.search-modal .form-control:focus {
+  box-shadow: none;
+}
+.modal .modal-content .input-group.search-modal .form-control::placeholder {
+  color: var(--color-grey);
+}
+.modal .modal-content .input-group.search-modal svg {
+  color: var(--color-primary-all);
 }
 .modal .modal-footer {
   justify-content: center;

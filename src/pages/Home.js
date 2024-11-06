@@ -14,9 +14,9 @@ function Home() {
     <AppLayout>
     <main>
       <div id="search-page" className="bg-page">
-        <div className="container py-4">
+        <div className="container py-5">
           <Breadcrumb />
-          <div className="bg-main-screen">
+          <div className="bg-main-screen mt-4 mb-5">
             <div className='row g-4'>
               <div className='col-lg-9 d-flex'>
                 <h1 className='my-auto'>Поиск по цифровой библиотеке</h1>

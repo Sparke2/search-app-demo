@@ -13,7 +13,6 @@ import SearchPeriodicals from './core/card/SearchPeriodicals';
 import SearchAudio from './core/card/SearchAudio';
 import SearchVideo from './core/card/SearchVideo';
 import SearchArchives from './core/card/SearchArchives';
-import {ExmaplePaginatedList} from "../widgets/example-of-pagination/ui/example";
 
 const renderItem = (category) => {
     switch (category) {
@@ -74,7 +73,7 @@ const ResultsAccordion = () => {
                 {variant === 'some-accordion' && renderAccordionItems(currentCategories)}
                 {variant === 'all-accordion' && renderAccordionItems(categories)}
             </Accordion>
-            <ExmaplePaginatedList/>
+            {/*<ExmaplePaginatedList/>*/}
         </div>
     );
 };

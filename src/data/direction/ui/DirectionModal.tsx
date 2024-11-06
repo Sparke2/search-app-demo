@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAllDirection} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentDirection} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
 
@@ -30,6 +30,11 @@ const DirectionModal = ({isOpen, toggleModal}: {
 
     const {direction = [], set} = useCurrentDirection()
     const [selected, setSelected] = useState<string[] | undefined>();
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredNodesDirection = NodesDirection.filter(node =>
+        node.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const recordDirection = NodesDirection.reduce((acc, cur) => {
         acc[cur.value] = (selected || direction).includes(cur.value);
@@ -82,24 +87,35 @@ const DirectionModal = ({isOpen, toggleModal}: {
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
                         </div>
-                        <div className="modal-body ">
-                            <div className='w-full md:w-30rem'>
-
-                                {NodesDirection.map(({value, label}, index) => (
-                                    <Checkbox
-                                        shouldShowApply={false}
-                                        key={`direction-${value}`}
-                                        id={`direction-${value}`}
-                                        label={label}
-                                        isChecked={(selected || direction).includes(value)}
-                                        handleCheckboxChange={() => {
-                                            const isCheked = recordDirection[value];
-                                            setSelected((v = direction || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
-                                        }}
-                                        applyFilters={handleApply}
-                                    />
-                                ))}
+                        <div className="px-3 mb-4">
+                            <div className="input-group search-modal">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Поиск по списку"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <button className="btn" type="submit" id="search">
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20"/>
+                                </button>
                             </div>
+                        </div>
+                        <div className="modal-body px-3">
+                            {filteredNodesDirection.map(({value, label}, index) => (
+                                <Checkbox
+                                    shouldShowApply={false}
+                                    key={`direction-${value}`}
+                                    id={`direction-${value}`}
+                                    label={label}
+                                    isChecked={(selected || direction).includes(value)}
+                                    handleCheckboxChange={() => {
+                                        const isCheked = recordDirection[value];
+                                        setSelected((v = direction || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                    }}
+                                    applyFilters={handleApply}
+                                />
+                            ))}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>

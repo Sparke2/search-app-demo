@@ -47,33 +47,6 @@ export const useBbk = () => {
 
         return tree;
     };
-    // const nodesToSelectedKeys = (nodes: TreeNode[]): Record<string, TreeChecked> => {
-    //     let selectedKeys: Record<string, TreeChecked> = {};
-    //
-    //     const foo = (node: TreeNode, index: number): TreeNode => {
-    //         const originalNode = NodesBBK[index];
-    //
-    //         const isFull = originalNode?.children?.length === node?.children?.length;
-    //
-    //         if (node.children && node.children.length > 0) {
-    //             node.children.forEach((childNode, childIndex) => {
-    //                 foo(childNode, childIndex);
-    //             });
-    //         }
-    //
-    //         selectedKeys[node.key] = {
-    //             checked: isFull,
-    //             partialChecked: !isFull
-    //         };
-    //
-    //         return node;
-    //     };
-    //
-    //     nodes.forEach((node, index) => {
-    //         foo(node, index);
-    //     });
-    //     return selectedKeys;
-    // };
 
     const remove = (key: string) => {
         if (bkkSelectedKeys[key]) {

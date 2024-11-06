@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAllUGSN} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentUGSN} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
 
@@ -29,6 +29,11 @@ const UGSNModal = ({isOpen, toggleModal}: {
     const {ugsn = [], set} = useCurrentUGSN()
 
     const [selected, setSelected] = useState<string[] | undefined>();
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredNodesUGSN = NodesUGSN.filter(node =>
+        node.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const recordUGSN = NodesUGSN.reduce((acc, cur) => {
         acc[cur.value] = (selected || ugsn).includes(cur.value);
@@ -81,31 +86,42 @@ const UGSNModal = ({isOpen, toggleModal}: {
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
                         </div>
-                        <div className="modal-body ">
-                            <div className='w-full md:w-30rem'>
-
-                                {NodesUGSN.map(({value, label}, index) => (
-                                    <Checkbox
-                                        shouldShowApply={false}
-                                        key={`ugsn-${value}`}
-                                        id={`ugsn-${value}`}
-                                        label={label}
-                                        isChecked={(selected || ugsn).includes(value)}
-                                        handleCheckboxChange={() => {
-                                            const isCheked = recordUGSN[value]
-                                            setSelected((v = ugsn || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
-                                        }}
-                                        applyFilters={handleApply}
-                                    />
-                                ))}
+                        <div className="px-3 mb-4">
+                            <div className="input-group search-modal">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Поиск по списку"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <button className="btn" type="submit" id="search">
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20"/>
+                                </button>
                             </div>
+                        </div>
+                        <div className="modal-body px-3">
+                            {filteredNodesUGSN.map(({value, label}, index) => (
+                                <Checkbox
+                                    shouldShowApply={false}
+                                    key={`ugsn-${value}`}
+                                    id={`ugsn-${value}`}
+                                    label={label}
+                                    isChecked={(selected || ugsn).includes(value)}
+                                    handleCheckboxChange={() => {
+                                        const isCheked = recordUGSN[value]
+                                        setSelected((v = ugsn || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                    }}
+                                    applyFilters={handleApply}
+                                />
+                            ))}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>
                                 Очистить
                             </button>
                             <button type="button" className="btn btn-primary" onClick={handleApply}>
-                                Применить
+                            Применить
                             </button>
                         </div>
                     </div>

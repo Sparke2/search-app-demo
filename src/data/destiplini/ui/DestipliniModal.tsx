@@ -1,7 +1,7 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {useAllDestiplini} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentDestiplini} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
 
@@ -28,6 +28,11 @@ const DestipliniModal = ({isOpen, toggleModal}: {
 
     const {destiplini = [], set} = useCurrentDestiplini()
     const [selected, setSelected] = useState<string[] | undefined>();
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredNodesDestiplini = NodesDestiplini.filter(node =>
+        node.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const recordDestiplini = NodesDestiplini.reduce((acc, cur) => {
         acc[cur.value] = (selected || destiplini).includes(cur.value);
@@ -80,24 +85,35 @@ const DestipliniModal = ({isOpen, toggleModal}: {
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
                         </div>
-                        <div className="modal-body ">
-                            <div className='w-full md:w-30rem'>
-
-                                {NodesDestiplini.map(({value, label}, index) => (
-                                    <Checkbox
-                                        shouldShowApply={false}
-                                        key={`destiplini-${value}`}
-                                        id={`destiplini-${value}`}
-                                        label={label}
-                                        isChecked={(selected || destiplini).includes(value)}
-                                        handleCheckboxChange={() => {
-                                            const isCheked = recordDestiplini[value]
-                                            setSelected((v = destiplini || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
-                                        }}
-                                        applyFilters={handleApply}
-                                    />
-                                ))}
+                        <div className="px-3 mb-4">
+                            <div className="input-group search-modal">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Поиск по списку"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                />
+                                <button className="btn" type="submit" id="search">
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20"/>
+                                </button>
                             </div>
+                        </div>
+                        <div className="modal-body px-3">
+                            {filteredNodesDestiplini.map(({value, label}, index) => (
+                                <Checkbox
+                                    shouldShowApply={false}
+                                    key={`destiplini-${value}`}
+                                    id={`destiplini-${value}`}
+                                    label={label}
+                                    isChecked={(selected || destiplini).includes(value)}
+                                    handleCheckboxChange={() => {
+                                        const isCheked = recordDestiplini[value]
+                                        setSelected((v = destiplini || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                    }}
+                                    applyFilters={handleApply}
+                                />
+                            ))}
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>
