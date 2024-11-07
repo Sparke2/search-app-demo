@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/search-app-demo/static/css/main.0f049221.css",
-    "main.js": "/search-app-demo/static/js/main.8be2a9d8.js",
+    "main.css": "/search-app-demo/static/css/main.18c3474d.css",
+    "main.js": "/search-app-demo/static/js/main.3f392597.js",
     "static/js/453.918e1538.chunk.js": "/search-app-demo/static/js/453.918e1538.chunk.js",
     "static/media/primeicons.svg": "/search-app-demo/static/media/primeicons.6ed59f962963a4a73af2.svg",
     "static/media/primeicons.eot": "/search-app-demo/static/media/primeicons.ff0c4cd79b2ffca2de54.eot",
@@ -37,12 +37,12 @@
     "static/media/youtube.svg": "/search-app-demo/static/media/youtube.ec587f26b39d10e18934e741d7b9e4e5.svg",
     "index.html": "/search-app-demo/index.html",
     "static/media/breadcrumb-icon.svg": "/search-app-demo/static/media/breadcrumb-icon.0e6d797035c535bb2e41.svg",
-    "main.0f049221.css.map": "/search-app-demo/static/css/main.0f049221.css.map",
-    "main.8be2a9d8.js.map": "/search-app-demo/static/js/main.8be2a9d8.js.map",
+    "main.18c3474d.css.map": "/search-app-demo/static/css/main.18c3474d.css.map",
+    "main.3f392597.js.map": "/search-app-demo/static/js/main.3f392597.js.map",
     "453.918e1538.chunk.js.map": "/search-app-demo/static/js/453.918e1538.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0f049221.css",
-    "static/js/main.8be2a9d8.js"
+    "static/css/main.18c3474d.css",
+    "static/js/main.3f392597.js"
   ]
 }
