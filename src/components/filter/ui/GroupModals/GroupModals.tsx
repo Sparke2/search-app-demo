@@ -28,20 +28,6 @@ export const GroupModalsChain = memo(() => {
     const {remove: removeUgsn, ugsn} = useCurrentUGSN()
     const {set: setDirection, direction} = useCurrentDirection()
     const {set: setDestiplini, destiplini} = useCurrentDestiplini()
-    // useEffect(() => {
-    //     if (!ugsn?.length) {
-    //         if (direction)
-    //             setDirection([])
-    //         if (destiplini)
-    //             setDestiplini([])
-    //         return;
-    //     }
-    //     if (!direction.length) {
-    //         if (destiplini)
-    //             setDestiplini([])
-    //         return;
-    //     }
-    // }, [ugsn.length, direction, destiplini])
     return (['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) ? <>
         <Container>
             <UGSNList/>

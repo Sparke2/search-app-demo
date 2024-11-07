@@ -1,43 +1,40 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
-import {useAllDirection} from "../model/queries";
+import {useAllChannel} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
-import {useCurrentDirection} from "../model/hooks";
+import {useCurrentChannel} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
 
-export const DirectionModalRoot = memo(() => {
-    const [isModalDirectionOpen, setModalDirectionOpen] = useState(false);
+export const ChannelModalRoot = memo(() => {
+    const [isModalChannelOpen, setModalChannelOpen] = useState(false);
     const toggle = () => {
-        setModalDirectionOpen(v => !v)
+        setModalChannelOpen(v => !v)
     }
-
-    const {direction} = useCurrentDirection()
-    // если есть направления в урле - грузим их, чо нам ждать то
-    const {data} = useAllDirection(!!direction?.length)
-
+    const {channel} = useCurrentChannel()
+    const {data} = useAllChannel(!!channel.length)
     return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите направление</button>
-        {isModalDirectionOpen && <DirectionModal isOpen={isModalDirectionOpen} toggleModal={toggle}/>}
+        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите канал</button>
+        <ChannelModal isOpen={isModalChannelOpen} toggleModal={toggle}/>
     </>
 
 
 })
-const DirectionModal = ({isOpen, toggleModal}: {
+const ChannelModal = ({isOpen, toggleModal}: {
     isOpen: boolean,
     toggleModal: () => void;
 }) => {
-    const {data: NodesDirection = []} = useAllDirection()
+    const {data: NodesChannel = []} = useAllChannel()
 
-    const {direction = [], set} = useCurrentDirection()
+    const {channel = [], set} = useCurrentChannel()
     const [selected, setSelected] = useState<string[] | undefined>();
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredNodesDirection = NodesDirection.filter(node =>
+    const filteredNodesChannel = NodesChannel.filter(node =>
         node.label.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const recordDirection = NodesDirection.reduce((acc, cur) => {
-        acc[cur.value] = (selected || direction).includes(cur.value);
+    const recordChannel = NodesChannel.reduce((acc, cur) => {
+        acc[cur.value] = (selected || channel).includes(cur.value);
         return acc;
     }, {}) as Record<string, boolean> | {}
 
@@ -61,15 +58,12 @@ const DirectionModal = ({isOpen, toggleModal}: {
     }, [isOpen, toggleModal]);
 
     const handleApply = () => {
-        // applyBBK(localSelectedKeys);
         toggleModal();
-        set(selected || direction || [])
+        set(selected || channel || [])
     };
 
     const handleClearSelection = () => {
-        // setLocalSelectedKeys({});
         setSelected([])
-        // applyBBK({})
     };
 
 
@@ -77,12 +71,11 @@ const DirectionModal = ({isOpen, toggleModal}: {
 
     return (
         <>
-
             <div className="modal fade show" style={{display: 'block'}} tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
-                            <h5 className="modal-title">Выберите направление подготовки</h5>
+                            <h5 className="modal-title">Выберите канал из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
@@ -102,16 +95,16 @@ const DirectionModal = ({isOpen, toggleModal}: {
                             </div>
                         </div>
                         <div className="modal-body px-3">
-                            {filteredNodesDirection.map(({value, label}, index) => (
+                            {filteredNodesChannel.map(({value, label}, index) => (
                                 <Checkbox
                                     shouldShowApply={false}
-                                    key={`direction-${value}`}
-                                    id={`direction-${value}`}
+                                    key={`channel-${value}`}
+                                    id={`channel-${value}`}
                                     label={label}
-                                    isChecked={(selected || direction).includes(value)}
+                                    isChecked={(selected || channel).includes(value)}
                                     handleCheckboxChange={() => {
-                                        const isCheked = recordDirection[value];
-                                        setSelected((v = direction || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                        const isCheked = recordChannel[value]
+                                        setSelected((v = channel || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
                                     }}
                                     applyFilters={handleApply}
                                 />

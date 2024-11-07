@@ -1,43 +1,40 @@
 import React, {memo, useEffect, useRef, useState} from 'react';
-import {useAllDirection} from "../model/queries";
+import {useAllLibrary} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
-import {useCurrentDirection} from "../model/hooks";
+import {useCurrentLibrary} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
 
-export const DirectionModalRoot = memo(() => {
-    const [isModalDirectionOpen, setModalDirectionOpen] = useState(false);
+export const LibraryModalRoot = memo(() => {
+    const [isModalLibraryOpen, setModalLibraryOpen] = useState(false);
     const toggle = () => {
-        setModalDirectionOpen(v => !v)
+        setModalLibraryOpen(v => !v)
     }
-
-    const {direction} = useCurrentDirection()
-    // если есть направления в урле - грузим их, чо нам ждать то
-    const {data} = useAllDirection(!!direction?.length)
-
+    const {library} = useCurrentLibrary()
+    const {data} = useAllLibrary(!!library.length)
     return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите направление</button>
-        {isModalDirectionOpen && <DirectionModal isOpen={isModalDirectionOpen} toggleModal={toggle}/>}
+        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите издание</button>
+        <LibraryModal isOpen={isModalLibraryOpen} toggleModal={toggle}/>
     </>
 
 
 })
-const DirectionModal = ({isOpen, toggleModal}: {
+const LibraryModal = ({isOpen, toggleModal}: {
     isOpen: boolean,
     toggleModal: () => void;
 }) => {
-    const {data: NodesDirection = []} = useAllDirection()
+    const {data: NodesLibrary = []} = useAllLibrary()
 
-    const {direction = [], set} = useCurrentDirection()
+    const {library = [], set} = useCurrentLibrary()
     const [selected, setSelected] = useState<string[] | undefined>();
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredNodesDirection = NodesDirection.filter(node =>
+    const filteredNodesLibrary = NodesLibrary.filter(node =>
         node.label.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const recordDirection = NodesDirection.reduce((acc, cur) => {
-        acc[cur.value] = (selected || direction).includes(cur.value);
+    const recordLibrary = NodesLibrary.reduce((acc, cur) => {
+        acc[cur.value] = (selected || library).includes(cur.value);
         return acc;
     }, {}) as Record<string, boolean> | {}
 
@@ -61,15 +58,12 @@ const DirectionModal = ({isOpen, toggleModal}: {
     }, [isOpen, toggleModal]);
 
     const handleApply = () => {
-        // applyBBK(localSelectedKeys);
         toggleModal();
-        set(selected || direction || [])
+        set(selected || library || [])
     };
 
     const handleClearSelection = () => {
-        // setLocalSelectedKeys({});
         setSelected([])
-        // applyBBK({})
     };
 
 
@@ -77,12 +71,11 @@ const DirectionModal = ({isOpen, toggleModal}: {
 
     return (
         <>
-
             <div className="modal fade show" style={{display: 'block'}} tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
-                            <h5 className="modal-title">Выберите направление подготовки</h5>
+                            <h5 className="modal-title">Выберите канал из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
@@ -102,16 +95,16 @@ const DirectionModal = ({isOpen, toggleModal}: {
                             </div>
                         </div>
                         <div className="modal-body px-3">
-                            {filteredNodesDirection.map(({value, label}, index) => (
+                            {filteredNodesLibrary.map(({value, label}, index) => (
                                 <Checkbox
                                     shouldShowApply={false}
-                                    key={`direction-${value}`}
-                                    id={`direction-${value}`}
+                                    key={`library-${value}`}
+                                    id={`library-${value}`}
                                     label={label}
-                                    isChecked={(selected || direction).includes(value)}
+                                    isChecked={(selected || library).includes(value)}
                                     handleCheckboxChange={() => {
-                                        const isCheked = recordDirection[value];
-                                        setSelected((v = direction || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                        const isCheked = recordLibrary[value]
+                                        setSelected((v = library || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
                                     }}
                                     applyFilters={handleApply}
                                 />

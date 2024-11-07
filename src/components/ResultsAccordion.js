@@ -8,11 +8,11 @@ import BookItem from './core/card/BookItem';
 import PeriodicalItem from './core/card/PeriodicalItem';
 import AudioItem from './core/card/AudioItem';
 import VideoItem from './core/card/VideoItem';
-import SearchBooks from './core/card/SearchBooks';
-import SearchPeriodicals from './core/card/SearchPeriodicals';
-import SearchAudio from './core/card/SearchAudio';
-import SearchVideo from './core/card/SearchVideo';
-import SearchArchives from './core/card/SearchArchives';
+import SearchBooks from '../widgets/search-page/SearchBooks';
+import SearchPeriodicals from '../widgets/search-page/SearchPeriodicals';
+import SearchAudio from '../widgets/search-page/SearchAudio';
+import SearchVideo from '../widgets/search-page/SearchVideo';
+import SearchArchives from '../widgets/search-page/SearchArchives';
 
 const renderItem = (category) => {
     switch (category) {

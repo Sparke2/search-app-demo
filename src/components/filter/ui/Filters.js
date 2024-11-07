@@ -23,6 +23,10 @@ import {GroupModalsChain} from "./GroupModals/GroupModals";
 import {CurrentCategoriesExclusive} from "../../CurrentCategoriesExclusive";
 import {CheckboxSearchParam} from "../model/contst/CheckboxSearchParam";
 import {CheckboxSearchArea} from "../model/contst/CheckboxSearchArea";
+import {ChannelList} from "../../../data/channel/ui/ChannelList";
+import {ChannelModalRoot} from "../../../data/channel/ui/ChannelModal";
+import {LibraryList} from "../../../data/library/ui/LibraryList";
+import {LibraryModalRoot} from "../../../data/library/ui/LibraryModal";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -132,44 +136,67 @@ function Filters() {
         });
         if (selectedOptions.fromYear) {
             newSearchParams.set('fromYear', selectedOptions.fromYear.value);
+        } else {
+            newSearchParams.delete('fromYear');
         }
         if (selectedOptions.toYear) {
             newSearchParams.set('toYear', selectedOptions.toYear.value);
+        } else {
+            newSearchParams.delete('toYear');
         }
         if (selectedOptions.availability) {
             newSearchParams.set('availability', selectedOptions.availability.value);
+        } else {
+            newSearchParams.delete('availability');
         }
-        if (selectedOptions.vak) {
+        if (selectedOptions.vak && selectedOptions.vak.value !== "") {
             newSearchParams.set('vak', selectedOptions.vak.value);
+        } else {
+            newSearchParams.delete('vak');
         }
-        if (selectedOptions.subscribe) {
+        if (selectedOptions.subscribe && selectedOptions.subscribe.value !== "") {
+            console.log(selectedOptions.subscribe);
             newSearchParams.set('subscribe', selectedOptions.subscribe.value);
+        } else {
+            newSearchParams.delete('subscribe');
         }
         if (selectedOptions.appointments.length > 0) {
             const appointmentsValues = selectedOptions.appointments.map(option => option.value).join(',');
             newSearchParams.set('appointments', appointmentsValues);
+        } else {
+            newSearchParams.delete('appointments');
         }
         if (selectedOptions.performers.length > 0) {
             const performersValues = selectedOptions.performers.map(option => option.value).join(',');
             newSearchParams.set('performers', performersValues);
+        } else {
+            newSearchParams.delete('performers');
         }
         if (selectedOptions.publishers.length > 0) {
             const publishersValues = selectedOptions.publishers.map(option => option.value).join(',');
             newSearchParams.set('publishers', publishersValues);
+        } else {
+            newSearchParams.delete('publishers');
         }
         if (selectedOptions.editions.length > 0) {
             const editionsValues = selectedOptions.editions.map(option => option.value).join(',');
             newSearchParams.set('editions', editionsValues);
+        } else {
+            newSearchParams.delete('editions');
         }
 
         if (selectedOptions.targets.length > 0) {
             const targetsValues = selectedOptions.targets.map(option => option.value).join(',');
             newSearchParams.set('targets', targetsValues);
+        } else {
+            newSearchParams.delete('targets');
         }
 
         if (selectedOptions.additionals.length > 0) {
             const additionalsValues = selectedOptions.additionals.map(option => option.value).join(',');
             newSearchParams.set('additionals', additionalsValues);
+        } else {
+            newSearchParams.delete('additionals');
         }
 
         if (isbn) {
@@ -209,17 +236,26 @@ function Filters() {
     // @ts-ignore
     return (
         <div className="row g-4 pt-4">
-            <CheckboxSearchParam handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
-            <CheckboxSearchArea handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes} applyFilters={applyFilters} />
-            <div className="col-12">
-                {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
-                    <h6 className='mb-3'>Год издания</h6>
-                )}
-                {(['searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) &&
-                    !['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category))) && (
-                    <h6 className='mb-3'>Год записи</h6>
-                )}
-                {(['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
+            <CheckboxSearchParam handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes}
+                                 applyFilters={applyFilters}/>
+            <CheckboxSearchArea handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes}
+                                applyFilters={applyFilters}/>
+            {(['searchArchives'].some(category => currentCategories.includes(category))) && (
+                <div className="col-12">
+                    <LibraryList/>
+                    <LibraryModalRoot/>
+                </div>
+            )}
+            {(['searchBooks', 'searchPeriodicals', 'searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
+                <div className="col-12 year">
+                    {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
+                        <h6 className='mb-3'>Год издания</h6>
+                    )}
+                    {(['searchAudio', 'searchArchives'].some(category => currentCategories.includes(category)) &&
+                        !['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category))) && (
+                        <h6 className='mb-3'>Год записи</h6>
+                    )}
+
                     <div className='row g-4 pt-1'>
                         <div className='col-6'>
                             <ReactSelectWithLabel
@@ -240,8 +276,8 @@ function Filters() {
                             />
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Жанры</h6>
@@ -385,6 +421,12 @@ function Filters() {
                 <div className="col-12">
                     <NodesBBKList/>
                     <BBKModalRoot/>
+                </div>
+            )}
+            {(['searchVideo'].some(category => currentCategories.includes(category))) && (
+                <div className="col-12">
+                    <ChannelList/>
+                    <ChannelModalRoot/>
                 </div>
             )}
             <div className='col-12'>

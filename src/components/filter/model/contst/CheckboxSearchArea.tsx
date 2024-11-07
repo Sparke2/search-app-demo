@@ -2,14 +2,12 @@ import Checkbox from "../../../Checkbox";
 import React from "react";
 import {useCategoriesArray} from "../../../../hooks/useCategoriesArray";
 
-export function CheckboxSearchArea({handleCheckboxChange, applyFilters, checkboxes})
-{
+export function CheckboxSearchArea({handleCheckboxChange, applyFilters, checkboxes}) {
     const currentCategories = useCategoriesArray();
     return (
-        <div className="col-12">
-
+        <>
             {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
-                <>
+                <div className="col-12">
                     <h6 className='mb-3'>Область поиска</h6>
                     <Checkbox
                         id="searchAuthor"
@@ -34,8 +32,8 @@ export function CheckboxSearchArea({handleCheckboxChange, applyFilters, checkbox
                             applyFilters={applyFilters}
                         />
                     )}
-                </>
+                </div>
             )}
-        </div>
+        </>
     )
 }

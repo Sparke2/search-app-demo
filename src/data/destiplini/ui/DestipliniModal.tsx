@@ -14,7 +14,7 @@ export const DestipliniModalRoot = memo(() => {
     const {destiplini} = useCurrentDestiplini()
     const {data} = useAllDestiplini(!!destiplini.length)
     return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите Десциплину</button>
+        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите дисциплину</button>
         <DestipliniModal isOpen={isModalDestipliniOpen} toggleModal={toggle}/>
     </>
 
@@ -80,7 +80,7 @@ const DestipliniModal = ({isOpen, toggleModal}: {
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
-                            <h5 className="modal-title">Выберите Десциплину из списка</h5>
+                            <h5 className="modal-title">Выберите дисциплину</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
                                 <FontAwesomeIcon icon={faXmark}/>
                             </button>
