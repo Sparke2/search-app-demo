@@ -1,4 +1,6 @@
 import React from "react";
+import {AudioFilesModalRoot} from "../../../data/audio-files/ui/AudioFilesModal";
+
 const AudioItem = () =>
     <div className="card-item position-relative">
         <div className="position-absolute number-card text">1.</div>
@@ -22,7 +24,7 @@ const AudioItem = () =>
             </div>
         </div>
         <div className="d-flex flex-wrap gap-3 mt-3">
-            <button className="btn btn-primary btn-small">Перейти к прослушиванию</button>
+            <AudioFilesModalRoot/>
         </div>
     </div>;
 export default AudioItem;

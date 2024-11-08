@@ -423,6 +423,48 @@
 .accordion-item {
   border: none;
 }
+.audio-files {
+  h4 {
+    font-weight: 600;
+    padding-left: 0.5rem;
+    padding-bottom: 1rem;
+  }
+  .modal-content {
+    background-color: #F2F4F6;
+
+    .row > div {
+      border-right: none;
+    }
+    .ind-block {
+      background-color: var(--color-white);
+      padding: 1rem 0.5rem;
+      border-radius: 0.8rem;
+
+      .row > div {
+        border-bottom: 1px solid var(--color-grey-light);
+        padding: 0.5rem 1rem;
+      }
+    }
+    .list-group-item {
+      background-color: var(--color-white);
+      border: none;
+      margin-bottom: 1rem;
+      border-radius: 0.8rem;
+      &:first-child {
+        margin-top: 1rem;
+      }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .modal-header {
+    padding: 0;
+  }
+  .modal-body {
+    height: 60vh;
+  }
+}
 
 .modal-body {
   overflow: hidden;

@@ -4,9 +4,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleQuestion} from "@fortawesome/free-regular-svg-icons";
 import {Tooltip} from "primereact/tooltip";
 
-const BookItem = () =>
+const BookItem = ({index}) =>
     <div className="card-item position-relative">
-        <div className="position-absolute number-card text">1.</div>
+        <div className="position-absolute number-card text">{index+1}.</div>
         <div className="row">
             <div className="col-8">
                 <p className="text">Осипов М.Ю.</p>

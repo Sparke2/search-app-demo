@@ -388,6 +388,45 @@
   border: none;
 }
 
+.audio-files h4 {
+  font-weight: 600;
+  padding-left: 0.5rem;
+  padding-bottom: 1rem;
+}
+.audio-files .modal-content {
+  background-color: #F2F4F6;
+}
+.audio-files .modal-content .row > div {
+  border-right: none;
+}
+.audio-files .modal-content .ind-block {
+  background-color: var(--color-white);
+  padding: 1rem 0.5rem;
+  border-radius: 0.8rem;
+}
+.audio-files .modal-content .ind-block .row > div {
+  border-bottom: 1px solid var(--color-grey-light);
+  padding: 0.5rem 1rem;
+}
+.audio-files .modal-content .list-group-item {
+  background-color: var(--color-white);
+  border: none;
+  margin-bottom: 1rem;
+  border-radius: 0.8rem;
+}
+.audio-files .modal-content .list-group-item:first-child {
+  margin-top: 1rem;
+}
+.audio-files .modal-content .list-group-item:last-child {
+  margin-bottom: 0;
+}
+.audio-files .modal-header {
+  padding: 0;
+}
+.audio-files .modal-body {
+  height: 60vh;
+}
+
 .modal-body {
   overflow: hidden;
   overflow-y: auto;

@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useCategoriesArray} from '../hooks/useCategoriesArray';
 import {categories, CATEGORIES_LABELS} from '../data/consts';
 import ArchiveItem from './core/card/ArchiveItem';
-import BookItem from './core/card/BookItem';
 import PeriodicalItem from './core/card/PeriodicalItem';
 import AudioItem from './core/card/AudioItem';
 import VideoItem from './core/card/VideoItem';
@@ -13,11 +12,12 @@ import SearchPeriodicals from '../widgets/search-page/SearchPeriodicals';
 import SearchAudio from '../widgets/search-page/SearchAudio';
 import SearchVideo from '../widgets/search-page/SearchVideo';
 import SearchArchives from '../widgets/search-page/SearchArchives';
+import {BookPreview} from "../widgets/search-page-preview/BookPreview";
 
 const renderItem = (category) => {
     switch (category) {
         case 'searchBooks':
-            return <BookItem/>;
+            return <BookPreview/>;
         case 'searchPeriodicals':
             return <PeriodicalItem/>;
         case 'searchAudio':
