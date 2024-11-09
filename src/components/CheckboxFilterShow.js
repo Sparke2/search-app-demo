@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 function CheckboxFilterShow() {
     const location = useLocation();
@@ -10,9 +10,9 @@ function CheckboxFilterShow() {
         searchAudio: false,
         searchVideo: false,
         searchArchives: false,
-        searchAuthor: false,
-        searchTitle: false,
-        searchInText: false,
+        author: false,
+        title: false,
+        description: false,
     });
 
     useEffect(() => {
@@ -53,9 +53,9 @@ function CheckboxFilterShow() {
             'searchAudio',
             'searchVideo',
             'searchArchives',
-            'searchAuthor',
-            'searchTitle',
-            'searchInText',
+            'author',
+            'title',
+            'description',
         ];
 
         filterKeysToClear.forEach(key => {
@@ -68,9 +68,9 @@ function CheckboxFilterShow() {
             searchAudio: false,
             searchVideo: false,
             searchArchives: false,
-            searchAuthor: false,
-            searchTitle: false,
-            searchInText: false,
+            author: false,
+            title: false,
+            description: false,
         });
 
         navigate({ search: params.toString() });
@@ -106,9 +106,9 @@ function getLabelById(id) {
         searchAudio: 'Поиск по: аудио',
         searchVideo: 'Поиск по: видео',
         searchArchives: 'Поиск по: архивам',
-        searchAuthor: 'Область поиска: по автору',
-        searchTitle: 'Область поиска: по названию',
-        searchInText: 'Область поиска: в тексте',
+        author: 'Область поиска: по автору',
+        title: 'Область поиска: по названию',
+        description: 'Область поиска: в тексте',
     };
 
     return labels[id];

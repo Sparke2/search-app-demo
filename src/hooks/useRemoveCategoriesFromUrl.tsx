@@ -22,6 +22,8 @@ export function useRemoveCategoriesFromUrl() {
             pathname: location.pathname,
             search: searchParams.toString(),
         });
+
+        window.scrollTo(0, 0);
     }
 
     return removeCategoriesFromUrl;

@@ -96,9 +96,9 @@ function Filters() {
         searchAudio: false,
         searchVideo: false,
         searchArchives: false,
-        searchAuthor: false,
-        searchTitle: false,
-        searchInText: false,
+        author: false,
+        title: false,
+        description: false,
         ...Object.fromEntries(OptionsCheckboxForGenre.map(option => [`genre-${option.value}`, false])),
         ...Object.fromEntries(OptionsCheckboxForCollections.map(option => [`collection-${option.value}`, false])),
     });

@@ -1,7 +1,7 @@
 import axios from "axios";
-// базровый url - basUrl
+
 export const $api = axios.create({
-    baseURL:'https://google.com/'
+    baseURL:'http://api.v2.search.ipr-smart.ru:4180/'
 })
 $api.interceptors.request.use(
     function (config) {

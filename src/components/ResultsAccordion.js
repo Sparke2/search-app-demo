@@ -7,7 +7,7 @@ import ArchiveItem from './core/card/ArchiveItem';
 import PeriodicalItem from './core/card/PeriodicalItem';
 import AudioItem from './core/card/AudioItem';
 import VideoItem from './core/card/VideoItem';
-import SearchBooks from '../widgets/search-page/SearchBooks';
+import {SearchBooks} from '../widgets/search-page/SearchBooks';
 import SearchPeriodicals from '../widgets/search-page/SearchPeriodicals';
 import SearchAudio from '../widgets/search-page/SearchAudio';
 import SearchVideo from '../widgets/search-page/SearchVideo';
@@ -73,7 +73,6 @@ const ResultsAccordion = () => {
                 {variant === 'some-accordion' && renderAccordionItems(currentCategories)}
                 {variant === 'all-accordion' && renderAccordionItems(categories)}
             </Accordion>
-            {/*<ExmaplePaginatedList/>*/}
         </div>
     );
 };

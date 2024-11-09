@@ -259,6 +259,28 @@
   font-size: 14px;
 }
 
+.more-results {
+  font-size: 15px;
+  padding-top: 1.5rem;
+  padding-left: 0;
+  color: var(--color-primary-all);
+  transition: 0.3s ease;
+  border: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: none;
+    color: var(--color-footer-highlight) !important;
+  }
+  &:hover svg {
+    padding-left: 0.5rem;
+  }
+  svg {
+    transition: 0.3s ease;
+  }
+}
+
 .apply {
   position: absolute;
   left: -8.8rem;
@@ -559,9 +581,25 @@
   }
 }
 
+.btn-paginate {
+  .btn {
+    color: var(--color-grey-dark);
+    border: none;
+
+    &:disabled {
+      color: var(--color-grey-light);
+      border: none;
+    }
+  }
+}
+.paginate-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .card-item {
   box-shadow: 0 0 15px 0 var(--color-shadow);
-  padding: 1.5rem 1.5rem 1.5rem 3rem;
+  padding: 1.5rem;
   border-radius: 1rem;
   font-size: 15px;
 
@@ -581,6 +619,14 @@
     &:hover {
       cursor: pointer;
       text-decoration: underline !important;
+    }
+
+    &.btn-primary,
+    &.btn-outline-primary {
+      font-weight: 600 !important;
+      &:hover {
+        text-decoration: none !important;
+      }
     }
   }
 

@@ -10,24 +10,24 @@ export function CheckboxSearchArea({handleCheckboxChange, applyFilters, checkbox
                 <div className="col-12">
                     <h6 className='mb-3'>Область поиска</h6>
                     <Checkbox
-                        id="searchAuthor"
+                        id="author"
                         label="По автору"
-                        isChecked={checkboxes?.searchAuthor}
+                        isChecked={checkboxes?.author}
                         handleCheckboxChange={handleCheckboxChange}
                         applyFilters={applyFilters}
                     />
                     <Checkbox
-                        id="searchTitle"
+                        id="title"
                         label="По названию"
-                        isChecked={checkboxes?.searchTitle}
+                        isChecked={checkboxes?.title}
                         handleCheckboxChange={handleCheckboxChange}
                         applyFilters={applyFilters}
                     />
                     {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                         <Checkbox
-                            id="searchInText"
+                            id="description"
                             label="По тексту"
-                            isChecked={checkboxes?.searchInText}
+                            isChecked={checkboxes?.description}
                             handleCheckboxChange={handleCheckboxChange}
                             applyFilters={applyFilters}
                         />

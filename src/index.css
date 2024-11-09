@@ -232,6 +232,25 @@
   font-size: 14px;
 }
 
+.more-results {
+  font-size: 15px;
+  padding-top: 1.5rem;
+  padding-left: 0;
+  color: var(--color-primary-all);
+  transition: 0.3s ease;
+  border: none;
+}
+.more-results:hover, .more-results:focus, .more-results:active {
+  border: none;
+  color: var(--color-footer-highlight) !important;
+}
+.more-results:hover svg {
+  padding-left: 0.5rem;
+}
+.more-results svg {
+  transition: 0.3s ease;
+}
+
 .apply {
   position: absolute;
   left: -8.8rem;
@@ -507,9 +526,23 @@
   color: var(--color-primary-all);
 }
 
+.btn-paginate .btn {
+  color: var(--color-grey-dark);
+  border: none;
+}
+.btn-paginate .btn:disabled {
+  color: var(--color-grey-light);
+  border: none;
+}
+
+.paginate-text {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .card-item {
   box-shadow: 0 0 15px 0 var(--color-shadow);
-  padding: 1.5rem 1.5rem 1.5rem 3rem;
+  padding: 1.5rem;
   border-radius: 1rem;
   font-size: 15px;
 }
@@ -528,6 +561,12 @@
 .card-item a:hover {
   cursor: pointer;
   text-decoration: underline !important;
+}
+.card-item a.btn-primary, .card-item a.btn-outline-primary {
+  font-weight: 600 !important;
+}
+.card-item a.btn-primary:hover, .card-item a.btn-outline-primary:hover {
+  text-decoration: none !important;
 }
 .card-item p {
   margin-bottom: 0.25rem;
