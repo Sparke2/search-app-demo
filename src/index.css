@@ -540,6 +540,24 @@
   font-weight: 400;
 }
 
+.search-header h5 {
+  font-size: 18px;
+}
+.search-header h5 span {
+  font-weight: 500;
+}
+.search-header button {
+  font-size: 14px;
+}
+
+.filter-select .react-select-container {
+  min-width: 10rem;
+  width: auto;
+}
+.filter-select .react-select__control {
+  min-width: max-content;
+}
+
 .card-item {
   box-shadow: 0 0 15px 0 var(--color-shadow);
   padding: 1.5rem;

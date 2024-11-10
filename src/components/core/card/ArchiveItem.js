@@ -2,10 +2,9 @@ import React from "react";
 
 const ArchiveItem = () =>
     <div className="card-item position-relative">
-        <div className="position-absolute number-card text">1.</div>
         <div className="row">
             <div className="col-10">
-                <p className="text">К вопросу правового районирования Иваново-Вознесенской губернии</p>
+                <p className="text"><span className="pe-2">1.</span> К вопросу правового районирования Иваново-Вознесенской губернии</p>
                 <p className="text-grey">Костромская ученая архивная комиссия</p>
             </div>
             <div className="col-1">

@@ -10,6 +10,7 @@ function ReactSelect({
                          isMulti = false,
                          defaultValue,
                          onChange,
+                         styles = [],
                          applyFilters = () => {
                          }
                      }) {
@@ -53,7 +54,7 @@ function ReactSelect({
                 classNamePrefix="react-select"
                 onMenuOpen={() => setMenuIsOpen(true)}
                 onMenuClose={() => setMenuIsOpen(false)}
-                onChange={handleChange} // Trigger button on option change
+                onChange={handleChange}
                 components={{
                     DropdownIndicator: () => (
                         <div className="react-select__dropdown-indicator">

@@ -2,8 +2,7 @@ import React from "react";
 
 const PeriodicalItem = () =>
     <div className="card-item position-relative">
-        <div className="position-absolute number-card text">1.</div>
-        <p className="text">Научно-методический электронный журнал «Концепт права»</p>
+        <p className="text"><span className="pe-2">1.</span> Научно-методический электронный журнал «Концепт права»</p>
         <p className="text-grey fw-600">2024 год, №1</p>
         <p className="text-small fw-600">Организация практических занятий по курсу "Основы проектирования информационных
             систем"</p>

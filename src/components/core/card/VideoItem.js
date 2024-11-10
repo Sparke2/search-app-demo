@@ -3,7 +3,6 @@ import ShareButtons from '../../ShareButtons';
 
 const VideoItem = () =>
     <div className="card-item video position-relative">
-        <div className="position-absolute number-card text">1.</div>
         <div className="row">
             <div className="col-4">
                 <iframe width="250" height="140" src="https://www.youtube.com/embed/CDD0Qt-x44o?si=k4BLe6mbLIqM39hZ"

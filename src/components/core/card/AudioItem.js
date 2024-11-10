@@ -3,10 +3,9 @@ import {AudioFilesModalRoot} from "../../../data/audio-files/ui/AudioFilesModal"
 
 const AudioItem = () =>
     <div className="card-item position-relative">
-        <div className="position-absolute number-card text">1.</div>
         <div className="row">
             <div className="col-6">
-                <p className="text">Теория права</p>
+                <p className="text"><span className="pe-2">1.</span> Теория права</p>
                 <p className="text-small-grey desc">В учебном пособии рассматриваются основные проблемы права,
                     а именно: какую роль играет право в условиях глобализации, какое место занимает общая теория права в системе юридических наук. </p>
             </div>

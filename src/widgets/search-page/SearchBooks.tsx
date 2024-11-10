@@ -6,6 +6,8 @@ import ReactSelect from "../../components/ReactSelect";
 import {useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
+import SearchResultText from "../../hooks/SearchResultText";
 
 export function SearchBooks() {
     const location = useLocation();
@@ -31,19 +33,60 @@ export function SearchBooks() {
     } = useAllBook({query, queryBy}, {start: page + 1, rows: count});
 
     return (
-        <div>
+        <div className="pe-4">
+            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                <SearchResultText resultCount={233}/>
+                <button className="btn btn-outline-primary px-4">
+                    <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                </button>
+            </div>
+            <div className="d-flex justify-content-between mb-5">
+                <div className="d-flex gap-4 align-items-center">
+                    <span className="paginate-text">Элементов на странице:</span>
+                    <ReactSelect
+                        shouldApplyButtonRender={false}
+                        options={[{value: 10, label: '10'}, {value: 25, label: '25'}, {value: 50, label: '50'}, {
+                            value: 100,
+                            label: '100'
+                        }]}
+                        defaultValue={count}
+                        placeholder={10}
+                        onChange={({value}) => {
+                            setCount(value);
+                        }}
+                    />
+                </div>
+                <div className="d-flex gap-4 align-items-center filter-select">
+                    <span className="paginate-text">Сортировка по: </span>
+                    <ReactSelect
+                        shouldApplyButtonRender={false}
+                        options={[
+                            { value: 'newSort', label: 'новизне' },
+                            { value: 'availSort', label: 'доступности' },
+                            { value: 'relSort', label: 'релевантности' },
+                            { value: 'alfSort', label: 'алфавиту' },
+                            { value: 'yearSort', label: 'году' }
+                        ]}
+                        defaultValue={{ value: 'newSort', label: 'новизне' }}
+                        placeholder={'новизне'}
+                    />
+
+                </div>
+            </div>
             {isPending ? (
                 new Array(count).fill(null).map((_, i) => (
                     <Skeleton style={{width: '100%', height: 30}} key={i}/>
                 ))
             ) : (
-                <div className="row g-4 pe-4">
+                <div className="row g-4">
                     {data?.map((book, index) => (
-                        <BookItem key={book.id} index={(page * count) + index + 1} book={book}/>
+                        <div className="col-12" key={book.id}>
+                            <BookItem index={(page * count) + index + 1} book={book}/>
+                        </div>
                     ))}
                 </div>
             )}
-            <div className='d-flex justify-content-between align-items-center pt-4 pe-4'>
+            <div className='d-flex justify-content-between align-items-center pt-4'>
                 <div className="d-flex gap-4 flex-col align-items-center btn-paginate">
                     <div>
                         <button className="btn"
