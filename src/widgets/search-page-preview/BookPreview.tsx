@@ -20,7 +20,7 @@ export function BookPreview () {
     }, [location.search]);
 
 
-    const {data:books = []} = useAllBook({query, queryBy},{start: 1, rows: 3})
+    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query, queryBy},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <>
@@ -33,7 +33,7 @@ export function BookPreview () {
                 className="btn more-results"
                 onClick={() => removeCategoriesFromUrl('searchBooks')}
             >
-                Еще результаты (0) <FontAwesomeIcon icon={faChevronRight} />
+                Еще результаты ({total}) <FontAwesomeIcon icon={faChevronRight} />
             </button>
         </>
     );
