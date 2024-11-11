@@ -14,23 +14,6 @@ import {AudioPreview} from "../widgets/search-page-preview/AudioPreview";
 import {VideoPreview} from "../widgets/search-page-preview/VideoPreview";
 import {ArchivePreview} from "../widgets/search-page-preview/ArchivePreview";
 
-const renderItem = (cat, index) => {
-    switch (cat) {
-        case 'searchBooks':
-            return <BookPreview cat={cat} index={index}/>;
-        case 'searchPeriodicals':
-            return <PeriodicalPreview cat={cat} index={index}/>;
-        case 'searchAudio':
-            return <AudioPreview cat={cat} index={index}/>;
-        case 'searchVideo':
-            return <VideoPreview cat={cat} index={index}/>;
-        case 'searchArchives':
-            return <ArchivePreview cat={cat} index={index}/>;
-        default:
-            return null;
-    }
-};
-
 const ResultsAccordion = () => {
     const currentCategories = useCategoriesArray();
     const variant = currentCategories.length === 1 ? 'paginated' : currentCategories.length > 1 ? 'some-accordion' : 'all-accordion';
@@ -54,10 +37,24 @@ const ResultsAccordion = () => {
     };
 
     const renderAccordionItems = (categoriesList) => {
-        return categoriesList.map((cat, index) => (
-            renderItem(cat, index)
-        ));
+        return categoriesList.map((cat, index) => {
+            switch (cat) {
+                case 'searchBooks':
+                    return <BookPreview key={index} index={index} cat={cat} />;
+                case 'searchPeriodicals':
+                    return <PeriodicalPreview key={index} index={index} cat={cat} />;
+                case 'searchAudio':
+                    return <AudioPreview key={index} index={index} cat={cat} />;
+                case 'searchVideo':
+                    return <VideoPreview key={index} index={index} cat={cat} />;
+                case 'searchArchives':
+                    return <ArchivePreview key={index} index={index} cat={cat} />;
+                default:
+                    return null;
+            }
+        });
     };
+
 
     return (
         <div className="py-4">
