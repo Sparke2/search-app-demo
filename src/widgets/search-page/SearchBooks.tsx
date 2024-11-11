@@ -26,7 +26,7 @@ export function SearchBooks() {
     }, [location.search]);
 
     const {
-        data,
+        data: {pagination: {rows = 0, start = 0, total = 0} = {}, data: books = []} = {},
         isPending,
         isFetching,
         isPlaceholderData,
@@ -61,13 +61,13 @@ export function SearchBooks() {
                     <ReactSelect
                         shouldApplyButtonRender={false}
                         options={[
-                            { value: 'newSort', label: 'новизне' },
-                            { value: 'availSort', label: 'доступности' },
-                            { value: 'relSort', label: 'релевантности' },
-                            { value: 'alfSort', label: 'алфавиту' },
-                            { value: 'yearSort', label: 'году' }
+                            {value: 'newSort', label: 'новизне'},
+                            {value: 'availSort', label: 'доступности'},
+                            {value: 'relSort', label: 'релевантности'},
+                            {value: 'alfSort', label: 'алфавиту'},
+                            {value: 'yearSort', label: 'году'}
                         ]}
-                        defaultValue={{ value: 'newSort', label: 'новизне' }}
+                        defaultValue={{value: 'newSort', label: 'новизне'}}
                         placeholder={'новизне'}
                     />
 
@@ -79,7 +79,7 @@ export function SearchBooks() {
                 ))
             ) : (
                 <div className="row g-4">
-                    {data?.map((book, index) => (
+                    {books?.map((book, index) => (
                         <div className="col-12" key={book.id}>
                             <BookItem index={(page * count) + index + 1} book={book}/>
                         </div>
