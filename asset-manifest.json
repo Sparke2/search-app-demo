@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/search-app-demo/static/css/main.ad12cf46.css",
-    "main.js": "/search-app-demo/static/js/main.111f7b67.js",
+    "main.css": "/search-app-demo/static/css/main.601401dc.css",
+    "main.js": "/search-app-demo/static/js/main.9c6d3ba4.js",
     "static/js/453.03e4e911.chunk.js": "/search-app-demo/static/js/453.03e4e911.chunk.js",
     "static/media/primeicons.svg": "/search-app-demo/static/media/primeicons.6ed59f962963a4a73af2.svg",
     "static/media/primeicons.eot": "/search-app-demo/static/media/primeicons.ff0c4cd79b2ffca2de54.eot",
@@ -29,20 +29,18 @@
     "static/media/montserrat-vietnamese-400-normal.woff2": "/search-app-demo/static/media/montserrat-vietnamese-400-normal.176348415471f3e062e6.woff2",
     "static/media/montserrat-vietnamese-400-italic.woff2": "/search-app-demo/static/media/montserrat-vietnamese-400-italic.bc1e3ae9cbfe88134bcc.woff2",
     "static/media/logo.svg": "/search-app-demo/static/media/logo.7d3d9229ca5f074c812ddd64ea19c147.svg",
-    "static/media/ok.svg": "/search-app-demo/static/media/ok.30382948237c74b117c5e3cde195d326.svg",
     "static/media/vk.svg": "/search-app-demo/static/media/vk.35b774aba67c51103a5f35aaf1cbe85c.svg",
-    "static/media/tg.svg": "/search-app-demo/static/media/tg.198660a58a4eba41748a05d2d95465e6.svg",
-    "static/media/copy.svg": "/search-app-demo/static/media/copy.c17c2b001be0a6b1ee19cc7c1d2bc627.svg",
     "static/media/check.svg": "/search-app-demo/static/media/check.9f678ef7917b85e9d09d.svg",
     "static/media/youtube.svg": "/search-app-demo/static/media/youtube.ec587f26b39d10e18934e741d7b9e4e5.svg",
     "index.html": "/search-app-demo/index.html",
+    "static/media/tg.svg": "/search-app-demo/static/media/tg.198660a58a4eba41748a05d2d95465e6.svg",
     "static/media/breadcrumb-icon.svg": "/search-app-demo/static/media/breadcrumb-icon.0e6d797035c535bb2e41.svg",
-    "main.ad12cf46.css.map": "/search-app-demo/static/css/main.ad12cf46.css.map",
-    "main.111f7b67.js.map": "/search-app-demo/static/js/main.111f7b67.js.map",
+    "main.601401dc.css.map": "/search-app-demo/static/css/main.601401dc.css.map",
+    "main.9c6d3ba4.js.map": "/search-app-demo/static/js/main.9c6d3ba4.js.map",
     "453.03e4e911.chunk.js.map": "/search-app-demo/static/js/453.03e4e911.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ad12cf46.css",
-    "static/js/main.111f7b67.js"
+    "static/css/main.601401dc.css",
+    "static/js/main.9c6d3ba4.js"
   ]
 }
