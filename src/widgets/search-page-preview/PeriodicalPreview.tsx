@@ -1,8 +1,8 @@
-import BookItem from "../../components/core/card/BookItem";
+import PeriodicalItem from "../../components/core/card/PeriodicalItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {useRemoveCategoriesFromUrl} from "../../hooks/useRemoveCategoriesFromUrl";
-import {useAllBook} from "../../data/book/model/queries";
+import {useAllPeriodical} from "../../data/periodical/model/queries";
 import React, {useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
@@ -21,15 +21,15 @@ export function PeriodicalPreview ({cat, index}:{cat:string, index:string}) {
         return fields;
     }, [location.search]);
 
-    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query, queryBy},{start: 0, rows: 10})
+    const {data:{data:periodicals = [],pagination:{total = 0} = {}} = {}} = useAllPeriodical({query, queryBy},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>
             <Accordion.Header> {`${CATEGORIES_LABELS[cat]}:`} <span className="ps-2">{total}</span></Accordion.Header>
             <Accordion.Body className="me-3">
                 <div className="row g-4">
-                    {books.slice(0, 3).map((book, index) => (
-                        <BookItem key={book.id} index={index + 1} book={book}/>
+                    {periodicals.slice(0, 3).map((periodical, index) => (
+                        <PeriodicalItem key={periodical.id} index={index + 1} periodical={periodical}/>
                     ))}
                 </div>
                 <button
