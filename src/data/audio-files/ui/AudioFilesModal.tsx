@@ -4,24 +4,29 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentAudioFiles} from "../model/hooks";
 import {ListGroup} from "react-bootstrap";
+import {Audio} from "../../audio/model/types";
 
-export const AudioFilesModalRoot = memo(() => {
+export const AudioFilesModalRoot = memo(({audio} : {audio:Audio}) => {
     const [isModalAudioFilesOpen, setModalAudioFilesOpen] = useState(false);
     const toggle = () => {
-        setModalAudioFilesOpen(v => !v)
-    }
-    const {audioFiles} = useCurrentAudioFiles()
-    const {data} = useAllAudioFiles(!!audioFiles.length)
-    return <>
-        <button onClick={toggle} className="btn btn-primary btn-small">Перейти к прослушиванию</button>
-        <AudioFilesModal isOpen={isModalAudioFilesOpen} toggleModal={toggle}/>
-    </>
+        setModalAudioFilesOpen(v => !v);
+    };
+    const { audioFiles } = useCurrentAudioFiles();
+    const { data } = useAllAudioFiles(!!audioFiles.length);
 
-
-})
-const AudioFilesModal = ({isOpen, toggleModal}: {
+    return (
+        <>
+            <button onClick={toggle} className="btn btn-primary btn-small">
+                Перейти к прослушиванию
+            </button>
+            <AudioFilesModal isOpen={isModalAudioFilesOpen} toggleModal={toggle} audio={audio} />
+        </>
+    );
+});
+const AudioFilesModal = ({isOpen, toggleModal, audio}: {
     isOpen: boolean,
-    toggleModal: () => void;
+    toggleModal: () => void,
+    audio: Audio;
 }) => {
     const {data: NodesAudioFiles = []} = useAllAudioFiles()
 
@@ -61,46 +66,38 @@ const AudioFilesModal = ({isOpen, toggleModal}: {
                             <div className="row g-4">
                                 <div className="col-lg-6">
                                     <div className="ind-block">
-                                        <h4>10 класс. Литература</h4>
+                                        <h4>{audio.title}</h4>
                                         <div className="row g-3">
                                             <div className="col-4">Авторы</div>
-                                            <div className="col-8">Булгаков М.А., Васильев Б.Л., Гоголь Н.В., Гончаров
-                                                И.А., Достоевский Ф.М., Лесков Н.С., Оноре де Бальзак, Салтыков-Щедрин
-                                                М.Е., Толстой А.Н., Толстой Л.Н., Тургенев И.С., Чехов А.П., Чингиз
-                                                Торекулович Айматов
-                                            </div>
+                                            <div className="col-8">{audio.executants}</div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4">Аннотация</div>
-                                            <div className="col-8">Издание содержит краткое изложение художественных
-                                                произведений по программе литературы за 10 класс.
-                                            </div>
+                                            <div className="col-8">{audio.description}</div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4">Назначение</div>
-                                            <div className="col-8">Учебная литература</div>
+                                            <div className="col-8"></div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4">Жанры</div>
-                                            <div className="col-8">Зарубежная классика, Русская классическая проза,
-                                                Учебная литература
-                                            </div>
+                                            <div className="col-8">{audio.genres}</div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4">Издательство</div>
-                                            <div className="col-8">ИДДК</div>
+                                            <div className="col-8">{audio.pubhouses}</div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4">Исполнители</div>
-                                            <div className="col-8">Серебрянская В.</div>
+                                            <div className="col-8">{audio.executants}</div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4">Год записи</div>
-                                            <div className="col-8">2007</div>
+                                            <div className="col-8">{audio.recordyear}</div>
                                         </div>
                                         <div className="row g-3">
                                             <div className="col-4" style={{ borderBottom: 'none' }}>Время звучания</div>
-                                            <div className="col-8" style={{ borderBottom: 'none' }}>6:43:16</div>
+                                            <div className="col-8" style={{ borderBottom: 'none' }}>{audio.recordtime}</div>
                                         </div>
                                     </div>
                                 </div>

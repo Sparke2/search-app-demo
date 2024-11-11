@@ -8,7 +8,7 @@ import {useLocation} from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
 import {CATEGORIES_LABELS} from "../../data/consts";
 
-export function BookPreview ({cat, index}:{cat:string, index:string}) {
+export function VideoPreview ({cat, index}:{cat:string, index:string}) {
     const location = useLocation();
     const query = useMemo(() => new URLSearchParams(location.search).get('query') || '', [location.search]);
     const queryBy = useMemo(() => {

@@ -2,30 +2,30 @@ import React from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useCategoriesArray} from '../hooks/useCategoriesArray';
-import {categories, CATEGORIES_LABELS} from '../data/consts';
-import ArchiveItem from './core/card/ArchiveItem';
-import PeriodicalItem from './core/card/PeriodicalItem';
-import AudioItem from './core/card/AudioItem';
-import VideoItem from './core/card/VideoItem';
+import {categories} from '../data/consts';
 import {SearchBooks} from '../widgets/search-page/SearchBooks';
 import SearchPeriodicals from '../widgets/search-page/SearchPeriodicals';
-import SearchAudio from '../widgets/search-page/SearchAudio';
+import {SearchAudio} from '../widgets/search-page/SearchAudio';
 import SearchVideo from '../widgets/search-page/SearchVideo';
 import SearchArchives from '../widgets/search-page/SearchArchives';
 import {BookPreview} from "../widgets/search-page-preview/BookPreview";
+import {PeriodicalPreview} from "../widgets/search-page-preview/PeriodicalPreview";
+import {AudioPreview} from "../widgets/search-page-preview/AudioPreview";
+import {VideoPreview} from "../widgets/search-page-preview/VideoPreview";
+import {ArchivePreview} from "../widgets/search-page-preview/ArchivePreview";
 
-const renderItem = (category) => {
-    switch (category) {
+const renderItem = (cat, index) => {
+    switch (cat) {
         case 'searchBooks':
-            return <BookPreview/>;
+            return <BookPreview cat={cat} index={index}/>;
         case 'searchPeriodicals':
-            return <PeriodicalItem/>;
+            return <PeriodicalPreview cat={cat} index={index}/>;
         case 'searchAudio':
-            return <AudioItem/>;
+            return <AudioPreview cat={cat} index={index}/>;
         case 'searchVideo':
-            return <VideoItem/>;
+            return <VideoPreview cat={cat} index={index}/>;
         case 'searchArchives':
-            return <ArchiveItem/>;
+            return <ArchivePreview cat={cat} index={index}/>;
         default:
             return null;
     }
@@ -55,12 +55,7 @@ const ResultsAccordion = () => {
 
     const renderAccordionItems = (categoriesList) => {
         return categoriesList.map((cat, index) => (
-            <Accordion.Item key={cat} eventKey={index}>
-                <Accordion.Header> {`${CATEGORIES_LABELS[cat]}:`} <span className="ps-2">{0}</span></Accordion.Header>
-                <Accordion.Body className="me-3">
-                    {renderItem(cat)}
-                </Accordion.Body>
-            </Accordion.Item>
+            renderItem(cat, index)
         ));
     };
 
