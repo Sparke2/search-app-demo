@@ -13,4 +13,13 @@ export type Book =
     pubhouses: string[],
     pubtype: string,
     pageCount: number,
+    price: number,
+}
+export type PagintionResponse<T extends Record<string, unknown>> = {
+    data: T[],
+    pagination: {
+        total: number,
+        rows: number,
+        start: number,
+    }
 }

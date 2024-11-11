@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAreaSearchArray} from "./useAreaSearchArray";
 
-const SearchResultText = ({resultCount}) => {
+const SearchResultTextBook = ({resultCount}) => {
     const searchArray = useAreaSearchArray();
 
     const renderText = () => {
@@ -66,4 +66,4 @@ const SearchResultText = ({resultCount}) => {
     return renderText();
 };
 
-export default SearchResultText;
+export default SearchResultTextBook;

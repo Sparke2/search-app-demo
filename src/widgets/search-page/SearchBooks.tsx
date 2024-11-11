@@ -7,12 +7,14 @@ import {useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
-import SearchResultText from "../../hooks/SearchResultText";
+import SearchResultTextBook from "../../hooks/SearchResultTextBook";
 
 export function SearchBooks() {
     const location = useLocation();
     const [page, setPage] = useState(0);
     const [count, setCount] = useState(10);
+
+    const handleCountChange = (value) => setCount(value);
 
     const query = useMemo(() => new URLSearchParams(location.search).get('query') || '', [location.search]);
     const queryBy = useMemo(() => {
@@ -35,7 +37,7 @@ export function SearchBooks() {
     return (
         <div className="pe-4">
             <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultText resultCount={233}/>
+                <SearchResultTextBook resultCount={233}/>
                 <button className="btn btn-outline-primary px-4">
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
@@ -44,16 +46,16 @@ export function SearchBooks() {
                 <div className="d-flex gap-4 align-items-center">
                     <span className="paginate-text">Элементов на странице:</span>
                     <ReactSelect
+                        key={`count-${count}`}
                         shouldApplyButtonRender={false}
-                        options={[{value: 10, label: '10'}, {value: 25, label: '25'}, {value: 50, label: '50'}, {
-                            value: 100,
-                            label: '100'
+                        options={[
+                            {value: 10, label: '10'},
+                            {value: 25, label: '25'},
+                            {value: 50, label: '50'},
+                            {value: 100, label: '100'
                         }]}
-                        defaultValue={count}
-                        placeholder={10}
-                        onChange={({value}) => {
-                            setCount(value);
-                        }}
+                        defaultValue={{ value: count, label: count }}
+                        onChange={({ value }) => handleCountChange(value)}
                     />
                 </div>
                 <div className="d-flex gap-4 align-items-center filter-select">
@@ -97,32 +99,32 @@ export function SearchBooks() {
                         </button>
                         <button className="btn"
                                 onClick={() => {
-                                    if (!isPlaceholderData && data) {
+                                    if (!isPlaceholderData && books) {
                                         setPage((old) => old + 1);
                                     }
                                 }}
-                                disabled={isPlaceholderData || !data}
+                                disabled={isPlaceholderData || !books}
                         >
                             <FontAwesomeIcon icon={faChevronRight}/>
                         </button>
                     </div>
                     <span
-                        className="paginate-text">{page * count + 1} - {(count * page) + count} из {data?.count || 0}</span>
+                        className="paginate-text">{page * count + 1} - {(count * page) + count} из {total || 0}</span>
                 </div>
 
                 <div className="d-flex gap-4 flex-col align-items-center">
                     <span className="paginate-text">Элементов на странице:</span>
                     <ReactSelect
+                        key={`count-${count}`}
                         shouldApplyButtonRender={false}
-                        options={[{value: 10, label: '10'}, {value: 25, label: '25'}, {value: 50, label: '50'}, {
-                            value: 100,
-                            label: '100'
-                        }]}
-                        defaultValue={count}
-                        placeholder={10}
-                        onChange={({value}) => {
-                            setCount(value);
-                        }}
+                        options={[
+                            {value: 10, label: '10'},
+                            {value: 25, label: '25'},
+                            {value: 50, label: '50'},
+                            {value: 100, label: '100'}
+                        ]}
+                        defaultValue={{ value: count, label: count }}
+                        onChange={({ value }) => handleCountChange(value)}
                     />
                 </div>
             </div>
