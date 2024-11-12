@@ -7,7 +7,7 @@ import {SearchBooks} from '../widgets/search-page/SearchBooks';
 import {SearchPeriodicals} from '../widgets/search-page/SearchPeriodicals';
 import {SearchAudio} from '../widgets/search-page/SearchAudio';
 import {SearchVideo} from '../widgets/search-page/SearchVideo';
-import SearchArchives from '../widgets/search-page/SearchArchives';
+import {SearchArchives} from '../widgets/search-page/SearchArchives';
 import {BookPreview} from "../widgets/search-page-preview/BookPreview";
 import {PeriodicalPreview} from "../widgets/search-page-preview/PeriodicalPreview";
 import {AudioPreview} from "../widgets/search-page-preview/AudioPreview";
