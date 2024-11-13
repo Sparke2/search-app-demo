@@ -27,6 +27,7 @@ import {LibraryList} from "../../../data/library/ui/LibraryList";
 import {LibraryModalRoot} from "../../../data/library/ui/LibraryModal";
 import {useFilter} from "../../../data/filter/model/queries";
 import {Filter} from "../../../data/filter/model/types";
+import {useCheckboxQueryParams} from "../../../hooks/useCheckboxQueryParams";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -42,6 +43,7 @@ function Filters() {
         isLoading: boolean
     };
     const optionsCheckboxForGenre = genres.map(({val}) => ({value: val, label: val}))
+    const genresValue = useCheckboxQueryParams('genre');
 
     const searchParams = new URLSearchParams(location.search);
     const getOption = (key, options) => {
@@ -110,13 +112,9 @@ function Filters() {
         author: false,
         title: false,
         description: false,
-        ...Object.fromEntries(optionsCheckboxForGenre.map(option => [`genre-${option.value}`, false])),
+        ...Object.fromEntries((genresValue).map(option => [`genre-${option}`, true])),
         ...Object.fromEntries(OptionsCheckboxForCollections.map(option => [`collection-${option.value}`, false])),
     });
-    // useEffect(() => {
-    //     setCheckboxes(old=>({...old, ...Object.fromEntries(optionsCheckboxForGenre.map(option => [`genre-${option.value}`, false]))}));
-    //     },[optionsCheckboxForGenre]
-    // )
 
     const [isbn, setIsbn] = useState(searchParams.get('isbn') || '');
     const handleIsbnChange = (value) => {
@@ -246,8 +244,6 @@ function Filters() {
             />
         ));
     };
-    console.log({optionsCheckboxForGenre});
-    console.log({xxx: optionsCheckboxForGenre.map(option => option.value).join(',')});
 
     // @ts-ignore
     return (
