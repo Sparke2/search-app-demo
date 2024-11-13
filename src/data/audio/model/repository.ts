@@ -10,12 +10,12 @@ export namespace AudioRepository {
             value: string,
             by: ("title" | "description")[]
         }
-        filter: {
+        filter: Partial<{
             executants: string[],
             genres: string[],
             pubhouses: string[],
             purposes: number[]
-        }
+        }>
         sorts: {
             field: string,
             modifier: string

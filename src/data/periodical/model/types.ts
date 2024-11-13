@@ -10,7 +10,7 @@ export type Periodical = {
     numbers: {
         year: number,
         issue: number
-    }
+    }[]
 }
 
 export type PagintionResponse<T extends Record<string, unknown>> = {

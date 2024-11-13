@@ -10,6 +10,10 @@ export const useSearchAreaQueryParam = () => {
         if (searchParams.get('title')) fields.push('title');
         if (searchParams.get('description')) fields.push('description');
 
+        if (fields.length === 0) {
+            fields.push('title', 'description');
+        }
+
         return fields;
     }, [location.search]);
 };

@@ -12,8 +12,6 @@ import OptionsForAdditionals from '../../../filterdata/OptionsForAdditionals';
 import OptionsForVAK from '../../../filterdata/OptionsForVAK';
 import OptionsForSubscribe from "../../../filterdata/OptionsForSubscribe";
 import OptionsForAppointment from "../../../filterdata/OptionsForAppointment";
-import OptionsForPerformers from "../../../filterdata/OptionsForPerformers";
-import OptionsCheckboxForGenre from "../../../filterdata/OptionsCheckboxForGenre";
 import OptionsCheckboxForCollections from "../../../filterdata/OptionsCheckboxForCollections";
 import {BBKModalRoot} from '../../../data/bbk/ui/BBKModal';
 import InputISBN from "../../InputISBN";
@@ -27,11 +25,24 @@ import {ChannelList} from "../../../data/channel/ui/ChannelList";
 import {ChannelModalRoot} from "../../../data/channel/ui/ChannelModal";
 import {LibraryList} from "../../../data/library/ui/LibraryList";
 import {LibraryModalRoot} from "../../../data/library/ui/LibraryModal";
+import {useFilter} from "../../../data/filter/model/queries";
+import {Filter} from "../../../data/filter/model/types";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
     const location = useLocation();
     const navigate = useNavigate();
+    const {data: performers = [], isLoading: performLoad} = useFilter("audios", "executants") as {
+        data: Filter[],
+        isLoading: boolean
+    };
+    const optionsForPerformers = performers.map(({val}) => ({value: val, label: val}))
+    const {data: genres = [], isLoading: genLoad} = useFilter("audios", "genres") as {
+        data: Filter[],
+        isLoading: boolean
+    };
+    const optionsCheckboxForGenre = genres.map(({val}) => ({value: val, label: val}))
+
     const searchParams = new URLSearchParams(location.search);
     const getOption = (key, options) => {
         const value = searchParams.get(key);
@@ -64,7 +75,7 @@ function Filters() {
 
     const defaultSelectedOptions = {
         appointments: getMultyOptions('appointments', OptionsForAppointment),
-        performers: getMultyOptions('performers', OptionsForPerformers),
+        performers: getMultyOptions('performers', optionsForPerformers),
         vak: getOption('vak', OptionsForVAK) || OptionsForVAK.find(option => option.selected),
         subscribe: getOption('subscribe', OptionsForSubscribe) || OptionsForSubscribe.find(option => option.selected),
         availability: getOption('availability', OptionsForAvailability) || OptionsForAvailability.find(option => option.selected),
@@ -99,9 +110,13 @@ function Filters() {
         author: false,
         title: false,
         description: false,
-        ...Object.fromEntries(OptionsCheckboxForGenre.map(option => [`genre-${option.value}`, false])),
+        ...Object.fromEntries(optionsCheckboxForGenre.map(option => [`genre-${option.value}`, false])),
         ...Object.fromEntries(OptionsCheckboxForCollections.map(option => [`collection-${option.value}`, false])),
     });
+    // useEffect(() => {
+    //     setCheckboxes(old=>({...old, ...Object.fromEntries(optionsCheckboxForGenre.map(option => [`genre-${option.value}`, false]))}));
+    //     },[optionsCheckboxForGenre]
+    // )
 
     const [isbn, setIsbn] = useState(searchParams.get('isbn') || '');
     const handleIsbnChange = (value) => {
@@ -155,7 +170,6 @@ function Filters() {
             newSearchParams.delete('vak');
         }
         if (selectedOptions.subscribe && selectedOptions.subscribe.value !== "") {
-            console.log(selectedOptions.subscribe);
             newSearchParams.set('subscribe', selectedOptions.subscribe.value);
         } else {
             newSearchParams.delete('subscribe');
@@ -208,7 +222,7 @@ function Filters() {
     }, [location.search, checkboxes, selectedOptions, isbn, navigate]);
 
     const renderGenreCheckboxes = () => {
-        return OptionsCheckboxForGenre.map(option => (
+        return optionsCheckboxForGenre.map(option => (
             <Checkbox
                 key={`genre-${option.value}`}
                 id={`genre-${option.value}`}
@@ -232,6 +246,8 @@ function Filters() {
             />
         ));
     };
+    console.log({optionsCheckboxForGenre});
+    console.log({xxx: optionsCheckboxForGenre.map(option => option.value).join(',')});
 
     // @ts-ignore
     return (
@@ -281,7 +297,9 @@ function Filters() {
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Жанры</h6>
-                    {renderGenreCheckboxes()}
+                    {(!genLoad) && (
+                        renderGenreCheckboxes()
+                    )}
                 </div>
             )}
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
@@ -302,19 +320,24 @@ function Filters() {
                     />
                 </div>
             )}
-            {(['searchAudio'].some(category => currentCategories.includes(category))) && (
-                <div className="col-12">
-                    <h6 className='mb-3'>Исполнители</h6>
-                    <ReactSelect
-                        options={OptionsForPerformers}
-                        placeholder="Введите фамилию автора"
-                        isMulti
-                        defaultValue={selectedOptions.performers}
-                        onChange={option => setSelectedOptions(prev => ({...prev, performers: option}))}
-                        applyFilters={applyFilters}
-                    />
-                </div>
-            )}
+            {
+                (['searchAudio'].some(category => currentCategories.includes(category))) && (
+                    <div className="col-12">
+                        <h6 className='mb-3'>Исполнители</h6>
+                        {(!performLoad) && (
+                            <ReactSelect
+                                options={optionsForPerformers}
+                                placeholder="Введите фамилию автора"
+                                isMulti
+                                defaultValue={defaultSelectedOptions.performers}
+                                onChange={option => setSelectedOptions(prev => ({...prev, performers: option}))}
+                                applyFilters={applyFilters}
+                            />
+                        )}
+                    </div>
+                )
+            }
+
             {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Издательство</h6>

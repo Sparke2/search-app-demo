@@ -9,6 +9,8 @@ import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
 import SearchResultTextAudio from "../../hooks/SearchResultTextAudio";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
+import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
+import {useCheckboxQueryParams} from "../../hooks/useCheckboxQueryParams";
 
 export function SearchAudio() {
     const [page, setPage] = useState(0);
@@ -18,13 +20,15 @@ export function SearchAudio() {
     const handleCountChange = (value) => setCount(value);
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
+    const executants = useArrayQueryParam('performers');
+    const genres = useCheckboxQueryParams('genre');
 
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: audios = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllAudio({query:{value,by}}, { start: page * count, rows: count });
+    } = useAllAudio({query:{value,by}, filter:{executants,genres}}, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
