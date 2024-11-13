@@ -6,9 +6,17 @@ import {PaginationResponse} from "../../../shared/api/types";
 export namespace ArchiveRepository {
 
     export type archiveBody = Partial<{
-        query: string,
-        queryBy: ("title" | "description")[],
-        collections: string[]
+        query: {
+            value: string,
+            by: ("title" | "description")[]
+        }
+        filter: {
+            collections: string[]
+        }
+        sorts: {
+            field: string,
+            modifier: string
+        }
     }>
 
     export const getAllArchive = async (body: archiveBody, query: { rows: number, start: number }) => {

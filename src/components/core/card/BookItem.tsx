@@ -22,7 +22,8 @@ const BookItem = ({index, book}: {index:number, book:Book}) =>{
                             </span>
                         ))}
                     </p>
-                    <p className="text">{book.title}. {book.additTitle}</p>
+                    <p className="text"
+                       dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
                     {book.pubtype && (
                         <p className="text-small"><span className="text-small-grey">Тип:</span> {book.pubtype}</p>
                     )}
@@ -35,7 +36,7 @@ const BookItem = ({index, book}: {index:number, book:Book}) =>{
                             ))}
                         </p>
                     )}
-                    <p className="text-small-grey desc">{book.description}</p>
+                    <p className="text-small-grey desc" dangerouslySetInnerHTML={{__html:book.description}}/>
                 </div>
                 <div className="col-1">
                     <p className="text-grey">Стр.</p>

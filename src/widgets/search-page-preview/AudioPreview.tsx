@@ -1,27 +1,19 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {useRemoveCategoriesFromUrl} from "../../hooks/useRemoveCategoriesFromUrl";
-import React, {useMemo} from "react";
-import {useLocation} from "react-router-dom";
+import React from "react";
 import Accordion from "react-bootstrap/Accordion";
 import {CATEGORIES_LABELS} from "../../data/consts";
 import {useAllAudio} from "../../data/audio/model/queries";
 import AudioItem from "../../components/core/card/AudioItem";
+import {useQueryParam} from "../../hooks/useQueryParam";
+import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
 
 export function AudioPreview ({cat, index}:{cat:string, index:string}) {
-    const location = useLocation();
-    const query = useMemo(() => new URLSearchParams(location.search).get('query') || '', [location.search]);
-    const queryBy = useMemo(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const fields: ("title" | "description")[] = [];
+    const value = useQueryParam('query');
+    const by = useSearchAreaQueryParam();
 
-        if (searchParams.get('title')) fields.push('title');
-        if (searchParams.get('description')) fields.push('description');
-
-        return fields;
-    }, [location.search]);
-
-    const {data:{data:audios = [],pagination:{total = 0} = {}} = {}} = useAllAudio({query, queryBy},{start: 0, rows: 10})
+    const {data:{data:audios = [],pagination:{total = 0} = {}} = {}} = useAllAudio({query:{value,by}},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>

@@ -4,14 +4,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentLibrary} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
+import {Filter} from "../../filter/model/types";
 
 export const LibraryModalRoot = memo(() => {
     const [isModalLibraryOpen, setModalLibraryOpen] = useState(false);
     const toggle = () => {
         setModalLibraryOpen(v => !v)
     }
-    const {library} = useCurrentLibrary()
-    const {data} = useAllLibrary(!!library.length)
     return <>
         <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите издание</button>
         <LibraryModal isOpen={isModalLibraryOpen} toggleModal={toggle}/>
@@ -23,18 +22,18 @@ const LibraryModal = ({isOpen, toggleModal}: {
     isOpen: boolean,
     toggleModal: () => void;
 }) => {
-    const {data: NodesLibrary = []} = useAllLibrary()
+    const {data: NodesLibrary = []} = useAllLibrary() as { data: Filter[] };
 
     const {library = [], set} = useCurrentLibrary()
     const [selected, setSelected] = useState<string[] | undefined>();
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredNodesLibrary = NodesLibrary.filter(node =>
-        node.label.toLowerCase().includes(searchTerm.toLowerCase())
+        node.val.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const recordLibrary = NodesLibrary.reduce((acc, cur) => {
-        acc[cur.value] = (selected || library).includes(cur.value);
+        acc[cur.val] = (selected || library).includes(cur.val);
         return acc;
     }, {}) as Record<string, boolean> | {}
 
@@ -95,16 +94,16 @@ const LibraryModal = ({isOpen, toggleModal}: {
                             </div>
                         </div>
                         <div className="modal-body px-3">
-                            {filteredNodesLibrary.map(({value, label}, index) => (
+                            {filteredNodesLibrary.map(({val}, index) => (
                                 <Checkbox
                                     shouldShowApply={false}
-                                    key={`library-${value}`}
-                                    id={`library-${value}`}
-                                    label={label}
-                                    isChecked={(selected || library).includes(value)}
+                                    key={`library-${val}`}
+                                    id={`library-${val}`}
+                                    label={val}
+                                    isChecked={(selected || library).includes(val)}
                                     handleCheckboxChange={() => {
-                                        const isCheked = recordLibrary[value]
-                                        setSelected((v = library || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                        const isCheked = recordLibrary[val]
+                                        setSelected((v = library || []) => isCheked ? v.filter(v => v !== val) : [...v, val])
                                     }}
                                     applyFilters={handleApply}
                                 />

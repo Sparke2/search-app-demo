@@ -1,4 +1,3 @@
 export namespace LibraryEndpoints {
-    export const getAllLibrary = () => `/api/entries/library/`
+    export const getAllLibrary = () => `/api/v1/archives/facet/collections/`
 }
-//${querystring.stringify({ foo: true, baz: ['qux', 'quux'], corge: '' } )

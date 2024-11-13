@@ -1,4 +1,4 @@
 export namespace VideoEndpoints {
-    export const getAllVideo = ({rows,start}:{rows:number, start:number}) => `/api/v1/videos/filter/?rows=${rows}&start=${start}`;
+    export const getAllVideo = ({rows,start}:{rows:number, start:number}) => `/api/v1/videos/search/?rows=${rows}&start=${start}`;
 }
 

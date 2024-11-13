@@ -1,4 +1,4 @@
 export namespace PeriodicalEndpoints {
-    export const getAllPeriodical = ({rows,start}:{rows:number, start:number}) => `/api/v1/periodicals/filter/?rows=${rows}&start=${start}`;
+    export const getAllPeriodical = ({rows,start}:{rows:number, start:number}) => `/api/v1/periodicals/search/?rows=${rows}&start=${start}`;
 }
 

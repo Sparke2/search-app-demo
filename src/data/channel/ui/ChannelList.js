@@ -9,7 +9,7 @@ export const ChannelList = memo(({Component, ComponentClassName}) => {
     const {data: allChannel = [], isLoading} = useAllChannel()
     const recordChannel = useMemo(() => {
         return allChannel.reduce((acc, curChannel) => {
-            acc[curChannel.value] = curChannel.label;
+            acc[curChannel.val] = curChannel.val;
             return acc;
         }, {})
     }, [allChannel])

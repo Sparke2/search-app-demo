@@ -598,6 +598,9 @@
 .card-item .text {
   font-weight: 600;
 }
+.card-item .text b {
+  color: var(--color-primary-all);
+}
 .card-item .number-card {
   left: 2rem;
 }

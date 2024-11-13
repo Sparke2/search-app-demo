@@ -2,12 +2,20 @@ import React from "react";
 import {Archive} from "../../../data/archive/model/types";
 
 const ArchiveItem = ({ index, archive }: { index: number, archive: Archive }) => {
+    const collections = archive.collections || [];
     return (
         <div className="card-item position-relative">
             <div className="row">
                 <div className="col-10">
-                    <p className="text"><span className="pe-2">{index}.</span> {archive.title}</p>
-                    <p className="text-grey">{archive.collections}</p>
+                    <p className="text"
+                       dangerouslySetInnerHTML={{__html: `<span class="pe-2">${index}.</span> ${archive.title}`}}/>
+                    <p className="text-grey">
+                        {collections.map((collection, index) => (
+                            <span key={index}>
+                                {collection}{index < archive.collections.length - 1 && ', '}
+                            </span>
+                        ))}
+                    </p>
                     <p className="text-grey">{archive.description}</p>
                 </div>
                 <div className="col-1">

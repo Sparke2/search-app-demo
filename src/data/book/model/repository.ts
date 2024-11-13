@@ -6,18 +6,26 @@ import {PaginationResponse} from "../../../shared/api/types";
 export namespace BookRepository {
 
     export type bookBody = Partial<{
-        query: string,
-        queryBy: ("title" | "description")[],
-        authors: string[],
-        pubtypes: string[],
-        collections: string[],
-        pubhouses: string[],
-        pubyearMin: number,
-        pubyearMax: number,
-        pageCountMin: number,
-        pageCountMax: number,
-        priceMin: number,
-        priceMax: number
+        query: {
+            value: string,
+            by: ("title" | "description")[]
+        }
+        filter: {
+            authors: string[],
+            pubtypes: string[],
+            collections: string[],
+            pubhouses: string[],
+            pubyearMin: number,
+            pubyearMax: number,
+            pageCountMin: number,
+            pageCountMax: number,
+            priceMin: number,
+            priceMax: number
+        }
+        sorts: {
+            field: string,
+            modifier: string
+        }
     }>
 
     export const getAllBook = async (body: bookBody, query: { rows: number, start: number }) => {

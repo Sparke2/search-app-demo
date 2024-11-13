@@ -6,10 +6,18 @@ import {PaginationResponse} from "../../../shared/api/types";
 export namespace PeriodicalRepository {
 
     export type periodicalBody = Partial<{
-        query: string,
-        queryBy: ("title" | "description")[],
-        publishers: string[],
-        ugnps: string[]
+        query: {
+            value: string,
+            by: ("title" | "description")[]
+        }
+        filter: {
+            publishers: string[],
+            ugnps: string[]
+        }
+        sorts: {
+            field: string,
+            modifier: string
+        }
     }>
 
     export const getAllPeriodical = async (body: periodicalBody, query: { rows: number, start: number }) => {

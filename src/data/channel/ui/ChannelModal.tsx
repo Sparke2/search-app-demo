@@ -4,37 +4,35 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentChannel} from "../model/hooks";
 import Checkbox from "../../../components/Checkbox";
+import {Filter} from "../../filter/model/types";
 
 export const ChannelModalRoot = memo(() => {
     const [isModalChannelOpen, setModalChannelOpen] = useState(false);
     const toggle = () => {
         setModalChannelOpen(v => !v)
     }
-    const {channel} = useCurrentChannel()
-    const {data} = useAllChannel(!!channel.length)
     return <>
         <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите канал</button>
         <ChannelModal isOpen={isModalChannelOpen} toggleModal={toggle}/>
     </>
-
-
 })
+
 const ChannelModal = ({isOpen, toggleModal}: {
     isOpen: boolean,
     toggleModal: () => void;
 }) => {
-    const {data: NodesChannel = []} = useAllChannel()
+    const {data: NodesChannel = []} = useAllChannel() as { data: Filter[] };
 
     const {channel = [], set} = useCurrentChannel()
     const [selected, setSelected] = useState<string[] | undefined>();
     const [searchTerm, setSearchTerm] = useState("");
 
     const filteredNodesChannel = NodesChannel.filter(node =>
-        node.label.toLowerCase().includes(searchTerm.toLowerCase())
+        node.val.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const recordChannel = NodesChannel.reduce((acc, cur) => {
-        acc[cur.value] = (selected || channel).includes(cur.value);
+        acc[cur.val] = (selected || channel).includes(cur.val);
         return acc;
     }, {}) as Record<string, boolean> | {}
 
@@ -95,16 +93,16 @@ const ChannelModal = ({isOpen, toggleModal}: {
                             </div>
                         </div>
                         <div className="modal-body px-3">
-                            {filteredNodesChannel.map(({value, label}, index) => (
+                            {filteredNodesChannel.map(({val}, index) => (
                                 <Checkbox
                                     shouldShowApply={false}
-                                    key={`channel-${value}`}
-                                    id={`channel-${value}`}
-                                    label={label}
-                                    isChecked={(selected || channel).includes(value)}
+                                    key={`channel-${val}`}
+                                    id={`channel-${val}`}
+                                    label={val}
+                                    isChecked={(selected || channel).includes(val)}
                                     handleCheckboxChange={() => {
-                                        const isCheked = recordChannel[value]
-                                        setSelected((v = channel || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                        const isCheked = recordChannel[val]
+                                        setSelected((v = channel || []) => isCheked ? v.filter(v => v !== val) : [...v, val])
                                     }}
                                     applyFilters={handleApply}
                                 />

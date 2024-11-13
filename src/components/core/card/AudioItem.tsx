@@ -9,8 +9,9 @@ const AudioItem = ({index, audio}: { index: number, audio: Audio }) => {
         <div className="card-item position-relative">
             <div className="row">
                 <div className="col-6">
-                    <p className="text"><span className="pe-2">{index}.</span> {audio.title}</p>
-                    <p className="text-small-grey desc">{audio.description}</p>
+                    <p className="text"
+                       dangerouslySetInnerHTML={{__html: `<span class="pe-2">${index}.</span> ${audio.title}`}}/>
+                    <p className="text-small-grey desc" dangerouslySetInnerHTML={{__html: audio.description}}/>
                 </div>
                 <div className="col-2">
                     <p className="text-grey">Время звучания</p>

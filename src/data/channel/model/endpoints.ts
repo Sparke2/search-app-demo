@@ -1,4 +1,3 @@
 export namespace ChannelEndpoints {
-    export const getAllChannel = () => `/api/entries/channel/`
+    export const getAllChannel = () => `/api/v1/videos/facet/channel/`
 }
-//${querystring.stringify({ foo: true, baz: ['qux', 'quux'], corge: '' } )

@@ -1,37 +1,30 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAllBook} from "../../data/book/model/queries";
 import {Skeleton} from "@mui/material";
 import BookItem from "../../components/core/card/BookItem";
 import ReactSelect from "../../components/ReactSelect";
-import {useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
 import SearchResultTextBook from "../../hooks/SearchResultTextBook";
+import {useQueryParam} from "../../hooks/useQueryParam";
+import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
 
 export function SearchBooks() {
-    const location = useLocation();
     const [page, setPage] = useState(0);
     const [count, setCount] = useState(10);
     const [hasMore, setHasMore] = useState(true);
 
     const handleCountChange = (value) => setCount(value);
-
-    const query = useMemo(() => new URLSearchParams(location.search).get('query') || '', [location.search]);
-    const queryBy = useMemo(() => {
-        const searchParams = new URLSearchParams(location.search);
-        const fields = [];
-        if (searchParams.get('title')) fields.push('title');
-        if (searchParams.get('description')) fields.push('description');
-        return fields;
-    }, [location.search]);
+    const value = useQueryParam('query');
+    const by = useSearchAreaQueryParam();
 
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: books = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllBook({ query, queryBy }, { start: page * count, rows: count });
+    } = useAllBook({query:{value,by}}, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);

@@ -6,9 +6,17 @@ import {PaginationResponse} from "../../../shared/api/types";
 export namespace VideoRepository {
 
     export type videoBody = Partial<{
-        query: string,
-        queryBy: ("title" | "description")[],
-        channels: string[]
+        query: {
+            value: string,
+            by: ("title" | "description")[]
+        }
+        filter: {
+            channels: string[]
+        }
+        sorts: {
+            field: string,
+            modifier: string
+        }
     }>
 
     export const getAllVideo = async (body: videoBody, query: { rows: number, start: number }) => {

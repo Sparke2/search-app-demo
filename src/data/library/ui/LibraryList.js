@@ -9,7 +9,7 @@ export const LibraryList = memo(({Component, ComponentClassName}) => {
     const {data: allLibrary = [], isLoading} = useAllLibrary()
     const recordLibrary = useMemo(() => {
         return allLibrary.reduce((acc, curLibrary) => {
-            acc[curLibrary.value] = curLibrary.label;
+            acc[curLibrary.val] = curLibrary.val;
             return acc;
         }, {})
     }, [allLibrary])
@@ -32,7 +32,7 @@ export const LibraryList = memo(({Component, ComponentClassName}) => {
     const props = Component ? {className: ComponentClassName} : undefined;
     return (
         <Comp {...props}>
-            <h6 className="mb-3">Каталог видеоресурсов</h6>
+            <h6 className="mb-3">Каталог архивных фондов</h6>
             <div className="selected-items-modal">
                 {renderSelectedLibrary()}
             </div>

@@ -664,6 +664,9 @@
 
   .text {
     font-weight: 600;
+    b {
+      color: var(--color-primary-all);
+    }
   }
 
   .number-card {
