@@ -17,7 +17,7 @@ export namespace PeriodicalRepository {
         sorts: {
             field: string,
             modifier: string
-        }
+        }[]
     }>
 
     export const getAllPeriodical = async (body: periodicalBody, query: { rows: number, start: number }) => {

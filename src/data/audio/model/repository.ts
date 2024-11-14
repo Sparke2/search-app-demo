@@ -19,7 +19,7 @@ export namespace AudioRepository {
         sorts: {
             field: string,
             modifier: string
-        }
+        }[]
     }>
 
     export const getAllAudio = async (body: audioBody, query: { rows: number, start: number }) => {

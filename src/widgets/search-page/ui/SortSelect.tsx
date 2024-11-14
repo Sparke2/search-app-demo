@@ -19,10 +19,10 @@ export function SearchPage({ name }: { name: string }) {
                 shouldApplyButtonRender={false}
                 options={[
                     {value: 'id', label: 'новизне'},
-                    {value: 'available', label: 'доступности'},
+                    ...(false ? [{value: 'available', label: 'доступности'}] : []),
                     {value: 'score', label: 'релевантности'},
-                    {value: 'title', label: 'алфавиту'},
-                    {value: `${name}year`, label: 'году'},
+                    ...(false ? [{value: 'title', label: 'алфавиту'}] : []),
+                    ...(name !== "video" ? [{value: `${name}year`, label: 'году'}] : []),
                 ]}
                 defaultValue={{value: 'score', label: 'релевантности'}}
                 placeholder={'релевантности'}

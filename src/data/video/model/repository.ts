@@ -16,7 +16,7 @@ export namespace VideoRepository {
         sorts: {
             field: string,
             modifier: string
-        }
+        }[]
     }>
 
     export const getAllVideo = async (body: videoBody, query: { rows: number, start: number }) => {

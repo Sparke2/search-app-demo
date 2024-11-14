@@ -16,7 +16,7 @@ export namespace ArchiveRepository {
         sorts: {
             field: string,
             modifier: string
-        }
+        }[]
     }>
 
     export const getAllArchive = async (body: archiveBody, query: { rows: number, start: number }) => {
