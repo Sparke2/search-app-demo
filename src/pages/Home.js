@@ -1,10 +1,10 @@
 import React from 'react';
 import Breadcrumb from '../components/core/Breadcrumb';
 import SearchForm from '../components/SearchForm';
-import ResultsAccordion from '../components/ResultsAccordion';
-import Filters from '../components/filter/ui/Filters';
+import ResultsAccordion from '../components/core/ResultsAccordion';
+import Filters from '../components/core/filter/Filters';
 
-import CheckboxFilterShow from '../components/CheckboxFilterShow';
+import CheckboxFilterShow from '../components/core/filter/CheckboxFilterShow';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons';
 import {AppLayout} from '../layout/AppLayout';

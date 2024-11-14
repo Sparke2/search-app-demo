@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useAllAudio} from "../../data/audio/model/queries";
 import {Skeleton} from "@mui/material";
 import AudioItem from "../../components/core/card/AudioItem";
-import ReactSelect from "../../components/ReactSelect";
+import ReactSelect from "../../components/core/filter/ReactSelect";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";

@@ -1,4 +1,4 @@
-import Checkbox from "../../../Checkbox";
+import Checkbox from "../../../core/filter/Checkbox";
 import React from "react";
 
 export function CheckboxSearchParam({handleCheckboxChange, applyFilters, checkboxes})

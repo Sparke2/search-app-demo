@@ -1,10 +1,10 @@
 import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import copy from '../img/shared/copy.svg';
-import vk from '../img/shared/vk.svg';
-import tg from '../img/shared/tg.svg';
-import ok from '../img/shared/ok.svg';
+import copy from '../../../img/shared/copy.svg';
+import vk from '../../../img/shared/vk.svg';
+import tg from '../../../img/shared/tg.svg';
+import ok from '../../../img/shared/ok.svg';
 
 const ShareButtons = ({ url, title }) => {
     const vkShareUrl = `https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;

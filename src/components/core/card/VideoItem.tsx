@@ -1,6 +1,6 @@
 import React from "react";
 import {Video} from "../../../data/video/model/types";
-import ShareButtons from "../../ShareButtons";
+import ShareButtons from "./ShareButtons";
 import ReactPlayer from "react-player";
 
 const VideoItem = ({ index, video }: { index: number, video: Video }) => {

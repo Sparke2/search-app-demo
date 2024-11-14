@@ -10,7 +10,7 @@ export namespace BookRepository {
             value: string,
             by: ("title" | "description")[]
         }
-        filter: {
+        filter: Partial<{
             authors: string[],
             pubtypes: string[],
             collections: string[],
@@ -21,11 +21,11 @@ export namespace BookRepository {
             pageCountMax: number,
             priceMin: number,
             priceMax: number
-        }
+        }>
         sorts: {
             field: string,
             modifier: string
-        }
+        }[]
     }>
 
     export const getAllBook = async (body: bookBody, query: { rows: number, start: number }) => {

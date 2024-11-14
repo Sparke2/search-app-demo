@@ -1,4 +1,4 @@
-import {useCategoriesArray} from "../hooks/useCategoriesArray";
+import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
 import {ReactNode, useMemo} from "react";
 
 export const CurrentCategoriesExclusive = ({categories, children}: {

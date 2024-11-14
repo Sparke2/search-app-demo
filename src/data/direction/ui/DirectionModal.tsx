@@ -3,7 +3,7 @@ import {useAllDirection} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentDirection} from "../model/hooks";
-import Checkbox from "../../../components/Checkbox";
+import Checkbox from "../../../components/core/filter/Checkbox";
 
 export const DirectionModalRoot = memo(() => {
     const [isModalDirectionOpen, setModalDirectionOpen] = useState(false);

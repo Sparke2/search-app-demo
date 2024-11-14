@@ -2,29 +2,33 @@ import React, {useEffect, useState} from "react";
 import {useAllBook} from "../../data/book/model/queries";
 import {Skeleton} from "@mui/material";
 import BookItem from "../../components/core/card/BookItem";
-import ReactSelect from "../../components/ReactSelect";
+import ReactSelect from "../../components/core/filter/ReactSelect";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
 import SearchResultTextBook from "../../hooks/SearchResultTextBook";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
+import {SearchPage} from "./ui/SortSelect";
 
 export function SearchBooks() {
     const [page, setPage] = useState(0);
     const [count, setCount] = useState(10);
     const [hasMore, setHasMore] = useState(true);
-
     const handleCountChange = (value) => setCount(value);
     const value = useQueryParam('query');
+    const field = useQueryParam('sort') || "score";
+    const pubyearMin = Number(useQueryParam('fromYear'));
+    const pubyearMax = Number(useQueryParam('toYear'));
     const by = useSearchAreaQueryParam();
+    const modifier = "desc"
 
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: books = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllBook({query:{value,by}}, { start: page * count, rows: count });
+    } = useAllBook({query:{value,by}, sorts:[{field,modifier}]}, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
@@ -54,21 +58,7 @@ export function SearchBooks() {
                         onChange={({ value }) => handleCountChange(value)}
                     />
                 </div>
-                <div className="d-flex gap-4 align-items-center filter-select">
-                    <span className="paginate-text">Сортировка по: </span>
-                    <ReactSelect
-                        shouldApplyButtonRender={false}
-                        options={[
-                            { value: 'newSort', label: 'новизне' },
-                            { value: 'availSort', label: 'доступности' },
-                            { value: 'relSort', label: 'релевантности' },
-                            { value: 'alfSort', label: 'алфавиту' },
-                            { value: 'yearSort', label: 'году' },
-                        ]}
-                        defaultValue={{ value: 'newSort', label: 'новизне' }}
-                        placeholder={'новизне'}
-                    />
-                </div>
+                <SearchPage name="pub"/>
             </div>
             {isPending ? (
                 new Array(count).fill(null).map((_, i) => (

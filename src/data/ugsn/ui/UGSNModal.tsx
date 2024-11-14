@@ -3,7 +3,7 @@ import {useAllUGSN} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentUGSN} from "../model/hooks";
-import Checkbox from "../../../components/Checkbox";
+import Checkbox from "../../../components/core/filter/Checkbox";
 
 export const UGSNModalRoot = memo(() => {
     const [isModalUGSNOpen, setModalUGSNOpen] = useState(false);

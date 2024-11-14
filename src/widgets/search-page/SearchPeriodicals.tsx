@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useAllPeriodical} from "../../data/periodical/model/queries";
 import {Skeleton} from "@mui/material";
 import PeriodicalItem from "../../components/core/card/PeriodicalItem";
-import ReactSelect from "../../components/ReactSelect";
+import ReactSelect from "../../components/core/filter/ReactSelect";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";

@@ -3,7 +3,7 @@ import {useAllLibrary} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentLibrary} from "../model/hooks";
-import Checkbox from "../../../components/Checkbox";
+import Checkbox from "../../../components/core/filter/Checkbox";
 import {Filter} from "../../filter/model/types";
 
 export const LibraryModalRoot = memo(() => {

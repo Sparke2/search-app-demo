@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useAllVideo} from "../../data/video/model/queries";
 import {Skeleton} from "@mui/material";
 import VideoItem from "../../components/core/card/VideoItem";
-import ReactSelect from "../../components/ReactSelect";
+import ReactSelect from "../../components/core/filter/ReactSelect";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";

@@ -3,7 +3,7 @@ import {useAllDestiplini} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentDestiplini} from "../model/hooks";
-import Checkbox from "../../../components/Checkbox";
+import Checkbox from "../../../components/core/filter/Checkbox";
 
 export const DestipliniModalRoot = memo(() => {
     const [isModalDestipliniOpen, setModalDestipliniOpen] = useState(false);

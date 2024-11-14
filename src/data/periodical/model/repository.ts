@@ -10,10 +10,10 @@ export namespace PeriodicalRepository {
             value: string,
             by: ("title" | "description")[]
         }
-        filter: {
+        filter: Partial<{
             publishers: string[],
             ugnps: string[]
-        }
+        }>
         sorts: {
             field: string,
             modifier: string
