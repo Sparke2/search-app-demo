@@ -15,12 +15,8 @@ export namespace BookRepository {
             pubtypes: string[],
             collections: string[],
             pubhouses: string[],
-            pubyearMin: number,
-            pubyearMax: number,
-            pageCountMin: number,
-            pageCountMax: number,
-            priceMin: number,
-            priceMax: number
+            pubyear: number[],
+            isbn: string,
         }>
         sorts: {
             field: string,

@@ -1,33 +1,32 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import ReactSelect from './ReactSelect';
-import Checkbox from './Checkbox';
-import ReactSelectWithLabel from './ReactSelectWithLabel';
-import OptionsForEditions from '../../../mock/OptionsForEditions';
-import OptionsForPublishers from '../../../mock/OptionsForPublishers';
-import OptionsForAvailability from '../../../mock/OptionsForAvailability';
-import OptionsForYears from '../../../mock/OptionsForYears';
-import OptionsForTarget from '../../../mock/OptionsForTarget';
-import OptionsForAdditionals from '../../../mock/OptionsForAdditionals';
-import OptionsForVAK from '../../../mock/OptionsForVAK';
-import OptionsForSubscribe from "../../../mock/OptionsForSubscribe";
-import OptionsForAppointment from "../../../mock/OptionsForAppointment";
-import OptionsCheckboxForCollections from "../../../mock/OptionsCheckboxForCollections";
-import {BBKModalRoot} from '../../../data/bbk/ui/BBKModal';
-import InputISBN from "./InputISBN";
-import {useCategoriesArray} from "../../../hooks/useCategoriesArray";
-import {NodesBBKList} from "../../../data/bbk/ui/NodesBBKList";
-import {GroupModalsChain} from "../../filter/ui/GroupModals/GroupModals";
-import {CurrentCategoriesExclusive} from "./CurrentCategoriesExclusive";
-import {CheckboxSearchParam} from "../../filter/model/contst/CheckboxSearchParam";
-import {CheckboxSearchArea} from "../../filter/model/contst/CheckboxSearchArea";
-import {ChannelList} from "../../../data/channel/ui/ChannelList";
-import {ChannelModalRoot} from "../../../data/channel/ui/ChannelModal";
-import {LibraryList} from "../../../data/library/ui/LibraryList";
-import {LibraryModalRoot} from "../../../data/library/ui/LibraryModal";
-import {useFilter} from "../../../data/filter/model/queries";
-import {Filter} from "../../../data/filter/model/types";
-import {useCheckboxQueryParams} from "../../../hooks/useCheckboxQueryParams";
+import ReactSelect from '../core/filter/ReactSelect';
+import Checkbox from '../core/filter/Checkbox';
+import ReactSelectWithLabel from '../core/filter/ReactSelectWithLabel';
+import OptionsForEditions from '../../mock/OptionsForEditions';
+import OptionsForPublishers from '../../mock/OptionsForPublishers';
+import OptionsForAvailability from '../../mock/OptionsForAvailability';
+import OptionsForYears from '../../mock/OptionsForYears';
+import OptionsForTarget from '../../mock/OptionsForTarget';
+import OptionsForAdditionals from '../../mock/OptionsForAdditionals';
+import OptionsForVAK from '../../mock/OptionsForVAK';
+import OptionsForSubscribe from "../../mock/OptionsForSubscribe";
+import OptionsForAppointment from "../../mock/OptionsForAppointment";
+import {BBKModalRoot} from '../../data/bbk/ui/BBKModal';
+import InputISBN from "../core/filter/InputISBN";
+import {useCategoriesArray} from "../../hooks/useCategoriesArray";
+import {NodesBBKList} from "../../data/bbk/ui/NodesBBKList";
+import {GroupModalsChain} from "./ui/GroupModals/GroupModals";
+import {CurrentCategoriesExclusive} from "../core/filter/CurrentCategoriesExclusive";
+import {CheckboxSearchParam} from "./model/contst/CheckboxSearchParam";
+import {CheckboxSearchArea} from "./model/contst/CheckboxSearchArea";
+import {ChannelList} from "../../data/channel/ui/ChannelList";
+import {ChannelModalRoot} from "../../data/channel/ui/ChannelModal";
+import {LibraryList} from "../../data/library/ui/LibraryList";
+import {LibraryModalRoot} from "../../data/library/ui/LibraryModal";
+import {useFilter} from "../../data/filter/model/queries";
+import {Filter} from "../../data/filter/model/types";
+import {useCheckboxQueryParams} from "../../hooks/useCheckboxQueryParams";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -44,6 +43,12 @@ function Filters() {
     };
     const optionsCheckboxForGenre = genres.map(({val}) => ({value: val, label: val}))
     const genresValue = useCheckboxQueryParams('genre');
+    const {data: collections = [], isLoading: colLoad} = useFilter("audios", "collections") as {
+        data: Filter[],
+        isLoading: boolean
+    };
+    const optionsCheckboxForCollection = collections.map(({val}) => ({value: val, label: val}))
+    const collectionsValue = useCheckboxQueryParams('collections');
 
     const searchParams = new URLSearchParams(location.search);
     const getOption = (key, options) => {
@@ -112,8 +117,8 @@ function Filters() {
         author: false,
         title: false,
         description: false,
-        ...Object.fromEntries((genresValue).map(option => [`genre-${option}`, true])),
-        ...Object.fromEntries(OptionsCheckboxForCollections.map(option => [`collection-${option.value}`, false])),
+        ...Object.fromEntries(genresValue.map(option => [`genre-${option}`, true])),
+        ...Object.fromEntries(collectionsValue.map(option => [`collection-${option}`, true])),
     });
 
     const [isbn, setIsbn] = useState(searchParams.get('isbn') || '');
@@ -233,7 +238,7 @@ function Filters() {
     };
 
     const renderCollectionCheckboxes = () => {
-        return OptionsCheckboxForCollections.map(option => (
+        return optionsCheckboxForCollection.map(option => (
             <Checkbox
                 key={`collection-${option.value}`}
                 id={`collection-${option.value}`}
@@ -301,7 +306,9 @@ function Filters() {
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Коллекции</h6>
-                    {renderCollectionCheckboxes()}
+                    {(!colLoad) && (
+                        renderCollectionCheckboxes()
+                    )}
                 </div>
             )}
             {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (

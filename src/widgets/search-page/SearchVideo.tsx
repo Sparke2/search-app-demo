@@ -22,7 +22,7 @@ export function SearchVideo() {
     const by = useSearchAreaQueryParam();
     const channels = useArrayQueryParam('channel');
     const field = useQueryParam('sort')?.trim() || "score";
-    const modifier = "desc";
+    const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
 
     const {
         data: {pagination: {rows = 0, start = 0, total = 0} = {}, data: videos = []} = {},

@@ -21,7 +21,7 @@ export function SearchPage({ name }: { name: string }) {
                     {value: 'id', label: 'новизне'},
                     ...(false ? [{value: 'available', label: 'доступности'}] : []),
                     {value: 'score', label: 'релевантности'},
-                    ...(false ? [{value: 'title', label: 'алфавиту'}] : []),
+                    {value: '_title_', label: 'алфавиту'},
                     ...(name !== "video" ? [{value: `${name}year`, label: 'году'}] : []),
                 ]}
                 defaultValue={{value: 'score', label: 'релевантности'}}

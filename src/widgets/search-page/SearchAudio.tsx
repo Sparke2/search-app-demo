@@ -22,16 +22,18 @@ export function SearchAudio() {
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
     const executants = useArrayQueryParam('performers');
+    const collections = useCheckboxQueryParams('collection');
     const genres = useCheckboxQueryParams('genre');
     const field = useQueryParam('sort')?.trim() || "score";
-    const modifier = "desc";
+    const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
+    const recordyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
 
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: audios = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllAudio({query:{value,by}, filter:{executants,genres}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
+    } = useAllAudio({query:{value,by}, filter:{executants,genres,recordyear,collections}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);

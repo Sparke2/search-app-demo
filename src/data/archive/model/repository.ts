@@ -11,7 +11,8 @@ export namespace ArchiveRepository {
             by: ("title" | "description")[]
         }
         filter: {
-            collections: string[]
+            collections: string[],
+            year: number[],
         }
         sorts: {
             field: string,

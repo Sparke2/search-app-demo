@@ -2,7 +2,7 @@ import React from 'react';
 import Breadcrumb from '../components/core/Breadcrumb';
 import SearchForm from '../components/SearchForm';
 import ResultsAccordion from '../components/core/ResultsAccordion';
-import Filters from '../components/core/filter/Filters';
+import Filters from '../components/filter/Filters';
 
 import CheckboxFilterShow from '../components/core/filter/CheckboxFilterShow';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

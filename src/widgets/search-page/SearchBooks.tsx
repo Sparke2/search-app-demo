@@ -17,18 +17,18 @@ export function SearchBooks() {
     const [hasMore, setHasMore] = useState(true);
     const handleCountChange = (value) => setCount(value);
     const value = useQueryParam('query');
-    const field = useQueryParam('sort')?.trim() || "score";
-    const pubyearMin = Number(useQueryParam('fromYear'));
-    const pubyearMax = Number(useQueryParam('toYear'));
+    const isbn = useQueryParam('isbn');
+    const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const by = useSearchAreaQueryParam();
-    const modifier = "desc";
+    const field = useQueryParam('sort')?.trim() || "score";
+    const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
 
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: books = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllBook({ query: { value, by }, sorts: [{ field, modifier }] }, { start: page * count, rows: count });
+    } = useAllBook({ query: { value, by }, filter:{pubyear,isbn}, sorts: [{ field, modifier }] }, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);

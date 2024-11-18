@@ -22,14 +22,14 @@ export function SearchArchives() {
     const by = useSearchAreaQueryParam();
     const collections = useArrayQueryParam('library');
     const field = useQueryParam('sort')?.trim() || "score";
-    const modifier = "desc";
-
+    const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
+    const year = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: archives = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllArchive({query:{value,by}, filter:{collections}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
+    } = useAllArchive({query:{value,by}, filter:{collections, year}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);

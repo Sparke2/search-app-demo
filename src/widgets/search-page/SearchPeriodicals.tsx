@@ -19,14 +19,14 @@ export function SearchPeriodicals() {
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
     const field = useQueryParam('sort')?.trim() || "score";
-    const modifier = "desc";
-
+    const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
+    const year = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const {
         data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: periodicals = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllPeriodical({query:{value,by}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
+    } = useAllPeriodical({query:{value,by}, filter:{"numbers.year":year}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
@@ -42,7 +42,7 @@ export function SearchPeriodicals() {
             </div>
             <div className="d-flex justify-content-between mb-5">
                 <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                <SearchPage name="pub"/>
+                <SearchPage name="numbers."/>
             </div>
             {isPending ? (
                 new Array(count).fill(null).map((_, i) => (
