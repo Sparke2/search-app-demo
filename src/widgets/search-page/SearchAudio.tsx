@@ -17,7 +17,7 @@ export function SearchAudio() {
     const [page, setPage] = useState(0);
     const [count, setCount] = useState(10);
     const [hasMore, setHasMore] = useState(true);
-
+    const [total, setTotal] = useState(0);
     const handleCountChange = (value) => setCount(value);
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
@@ -29,7 +29,7 @@ export function SearchAudio() {
     const recordyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
 
     const {
-        data: {pagination: {rows = 0, start = 0, total = 0} = {}, data: audios = []} = {},
+        data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: audios = []} = {},
         isPending,
         isFetching,
         isPlaceholderData,
@@ -40,12 +40,19 @@ export function SearchAudio() {
     }, {start: page * count, rows: count});
 
     useEffect(() => {
+        if (!isPending && fetchedTotal !== total) {
+            setTotal(fetchedTotal);
+            setPage(0);
+        }
+    }, [fetchedTotal, total, isPending]);
+
+    useEffect(() => {
         setHasMore((page + 1) * count < total);
     }, [page, total, count]);
 
     return (
         <div className="pe-4">
-            {total !== 0 ? (
+            {total !== 0 && (
                 <>
                     <div className="d-flex justify-content-between align-items-center mb-4 search-header">
                         <SearchResultTextAudio resultCount={total}/>
@@ -57,19 +64,27 @@ export function SearchAudio() {
                         <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                         <SearchPage name="record"/>
                     </div>
-                    {isPending ? (
-                        new Array(count).fill(null).map((_, i) => (
-                            <Skeleton style={{width: '100%', height: 30}} key={i}/>
-                        ))
-                    ) : (
-                        <div className="row g-4">
-                            {audios.map((audio, index) => (
-                                <div className="col-12" key={audio.id}>
-                                    <AudioItem index={(page * count) + index + 1} audio={audio}/>
-                                </div>
-                            ))}
+                </>
+            )}
+            {isPending ? (
+                new Array(count).fill(null).map((_, i) => (
+                    <Skeleton style={{width: '100%', height: 30}} key={i}/>
+                ))
+            ) : audios.length === 0 && total === 0 ? (
+                <div className="search-header">
+                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
+                </div>
+            ) : (
+                <div className="row g-4">
+                    {audios.map((audio, index) => (
+                        <div className="col-12" key={audio.id}>
+                            <AudioItem index={(page * count) + index + 1} audio={audio}/>
                         </div>
-                    )}
+                    ))}
+                </div>
+            )}
+            {total !== 0 && (
+                <>
                     <div className="d-flex justify-content-between align-items-center pt-4">
                         <Pagination
                             page={page}
@@ -82,10 +97,6 @@ export function SearchAudio() {
                         <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                     </div>
                 </>
-            ) : (
-                <div className="search-header">
-                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
-                </div>
             )}
         </div>
     );

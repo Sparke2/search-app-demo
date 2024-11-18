@@ -15,6 +15,7 @@ export function SearchBooks() {
     const [page, setPage] = useState(0);
     const [count, setCount] = useState(10);
     const [hasMore, setHasMore] = useState(true);
+    const [total, setTotal] = useState(0);
     const handleCountChange = (value) => setCount(value);
     const value = useQueryParam('query');
     const isbn = useQueryParam('isbn');
@@ -24,11 +25,22 @@ export function SearchBooks() {
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
 
     const {
-        data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: books = [] } = {},
+        data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllBook({ query: { value, by }, filter:{pubyear, ...(isbn ? { isbn } : {})}, sorts: [{ field, modifier }] }, { start: page * count, rows: count });
+    } = useAllBook({
+        query: {value, by},
+        filter: {pubyear, ...(isbn ? {isbn} : {})},
+        sorts: [{field, modifier}]
+    }, {start: page * count, rows: count});
+
+    useEffect(() => {
+        if (!isPending && fetchedTotal !== total) {
+            setTotal(fetchedTotal);
+            setPage(0);
+        }
+    }, [fetchedTotal, total, isPending]);
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
@@ -36,7 +48,7 @@ export function SearchBooks() {
 
     return (
         <div className="pe-4">
-            {total !== 0 ? (
+            {total !== 0 && (
                 <>
                     <div className="d-flex justify-content-between align-items-center mb-4 search-header">
                         <SearchResultTextBook resultCount={total}/>
@@ -48,19 +60,27 @@ export function SearchBooks() {
                         <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                         <SearchPage name="pub"/>
                     </div>
-                    {isPending ? (
-                        new Array(count).fill(null).map((_, i) => (
-                            <Skeleton style={{width: '100%', height: 30}} key={i}/>
-                        ))
-                    ) : (
-                        <div className="row g-4">
-                            {books.map((book, index) => (
-                                <div className="col-12" key={book.id}>
-                                    <BookItem index={(page * count) + index + 1} book={book}/>
-                                </div>
-                            ))}
+                </>
+            )}
+            {isPending ? (
+                new Array(count).fill(null).map((_, i) => (
+                    <Skeleton style={{width: '100%', height: 30}} key={i}/>
+                ))
+            ) : books.length === 0 && total === 0 ? (
+                <div className="search-header">
+                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
+                </div>
+            ) : (
+                <div className="row g-4">
+                    {books.map((book, index) => (
+                        <div className="col-12" key={book.id}>
+                            <BookItem index={(page * count) + index + 1} book={book}/>
                         </div>
-                    )}
+                    ))}
+                </div>
+            )}
+            {total !== 0 && (
+                <>
                     <div className="d-flex justify-content-between align-items-center pt-4">
                         <Pagination
                             page={page}
@@ -73,10 +93,6 @@ export function SearchBooks() {
                         <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                     </div>
                 </>
-            ) : (
-                <div className="search-header">
-                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
-                </div>
             )}
         </div>
     );
