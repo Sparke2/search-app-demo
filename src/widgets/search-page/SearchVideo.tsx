@@ -40,17 +40,19 @@ export function SearchVideo() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextVideo resultCount={total}/>
-                <button className="btn btn-outline-primary px-4">
-                    <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
-                </button>
-            </div>
-            <div className="d-flex justify-content-between mb-5">
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                <SearchPage name="video"/>
-            </div>
-            {
+            {total !== 0 ? (
+                <>
+                    <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                        <SearchResultTextVideo resultCount={total}/>
+                        <button className="btn btn-outline-primary px-4">
+                            <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                        </button>
+                    </div>
+                    <div className="d-flex justify-content-between mb-5">
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                        <SearchPage name="video"/>
+                    </div>
+                    {
                 isPending ? (
                     new Array(count).fill(null).map((_, i) => (
                         <Skeleton style={{width: '100%', height: 30}} key={i}/>
@@ -64,17 +66,23 @@ export function SearchVideo() {
                         ))}
                     </div>
                 )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
-                <Pagination
-                    page={page}
-                    setPage={setPage}
-                    hasMore={hasMore}
-                    isPlaceholderData={isPlaceholderData}
-                    total={total}
-                    count={count}
-                />
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange} />
-            </div>
+                    <div className="d-flex justify-content-between align-items-center pt-4">
+                        <Pagination
+                            page={page}
+                            setPage={setPage}
+                            hasMore={hasMore}
+                            isPlaceholderData={isPlaceholderData}
+                            total={total}
+                            count={count}
+                        />
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                    </div>
+                </>
+            ) : (
+                <div className="search-header">
+                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
+                </div>
+            )}
         </div>
     );
 }

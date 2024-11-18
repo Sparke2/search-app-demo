@@ -25,11 +25,15 @@ export function SearchArchives() {
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const year = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const {
-        data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: archives = [] } = {},
+        data: {pagination: {rows = 0, start = 0, total = 0} = {}, data: archives = []} = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllArchive({query:{value,by}, filter:{collections, year}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
+    } = useAllArchive({
+        query: {value, by},
+        filter: {collections, year},
+        sorts: [{field, modifier}]
+    }, {start: page * count, rows: count});
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
@@ -37,40 +41,48 @@ export function SearchArchives() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextArchive resultCount={total}/>
-                <button className="btn btn-outline-primary px-4">
-                    <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
-                </button>
-            </div>
-            <div className="d-flex justify-content-between mb-5">
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                <SearchPage name=""/>
-            </div>
-            {isPending ? (
-                new Array(count).fill(null).map((_, i) => (
-                    <Skeleton style={{width: '100%', height: 30}} key={i}/>
-                ))
-            ) : (
-                <div className="row g-4">
-                    {archives.map((archive, index) => (
-                        <div className="col-12" key={archive.id}>
-                            <ArchiveItem index={(page * count) + index + 1} archive={archive}/>
+            {total !== 0 ? (
+                <>
+                    <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                        <SearchResultTextArchive resultCount={total}/>
+                        <button className="btn btn-outline-primary px-4">
+                            <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                        </button>
+                    </div>
+                    <div className="d-flex justify-content-between mb-5">
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                        <SearchPage name=""/>
+                    </div>
+                    {isPending ? (
+                        new Array(count).fill(null).map((_, i) => (
+                            <Skeleton style={{width: '100%', height: 30}} key={i}/>
+                        ))
+                    ) : (
+                        <div className="row g-4">
+                            {archives.map((archive, index) => (
+                                <div className="col-12" key={archive.id}>
+                                    <ArchiveItem index={(page * count) + index + 1} archive={archive}/>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
+                    <div className="d-flex justify-content-between align-items-center pt-4">
+                        <Pagination
+                            page={page}
+                            setPage={setPage}
+                            hasMore={hasMore}
+                            isPlaceholderData={isPlaceholderData}
+                            total={total}
+                            count={count}
+                        />
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                    </div>
+                </>
+            ) : (
+                <div className="search-header">
+                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
-                <Pagination
-                    page={page}
-                    setPage={setPage}
-                    hasMore={hasMore}
-                    isPlaceholderData={isPlaceholderData}
-                    total={total}
-                    count={count}
-                />
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange} />
-            </div>
         </div>
     );
 }

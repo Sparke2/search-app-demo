@@ -29,11 +29,15 @@ export function SearchAudio() {
     const recordyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
 
     const {
-        data: { pagination: { rows = 0, start = 0, total = 0 } = {}, data: audios = [] } = {},
+        data: {pagination: {rows = 0, start = 0, total = 0} = {}, data: audios = []} = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllAudio({query:{value,by}, filter:{executants,genres,recordyear,collections}, sorts: [{ field, modifier }]}, { start: page * count, rows: count });
+    } = useAllAudio({
+        query: {value, by},
+        filter: {executants, genres, recordyear, collections},
+        sorts: [{field, modifier}]
+    }, {start: page * count, rows: count});
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
@@ -41,40 +45,48 @@ export function SearchAudio() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextAudio resultCount={total}/>
-                <button className="btn btn-outline-primary px-4">
-                    <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
-                </button>
-            </div>
-            <div className="d-flex justify-content-between mb-5">
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                <SearchPage name="record"/>
-            </div>
-            {isPending ? (
-                new Array(count).fill(null).map((_, i) => (
-                    <Skeleton style={{width: '100%', height: 30}} key={i}/>
-                ))
-            ) : (
-                <div className="row g-4">
-                    {audios.map((audio, index) => (
-                        <div className="col-12" key={audio.id}>
-                            <AudioItem index={(page * count) + index + 1} audio={audio}/>
+            {total !== 0 ? (
+                <>
+                    <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                        <SearchResultTextAudio resultCount={total}/>
+                        <button className="btn btn-outline-primary px-4">
+                            <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                        </button>
+                    </div>
+                    <div className="d-flex justify-content-between mb-5">
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                        <SearchPage name="record"/>
+                    </div>
+                    {isPending ? (
+                        new Array(count).fill(null).map((_, i) => (
+                            <Skeleton style={{width: '100%', height: 30}} key={i}/>
+                        ))
+                    ) : (
+                        <div className="row g-4">
+                            {audios.map((audio, index) => (
+                                <div className="col-12" key={audio.id}>
+                                    <AudioItem index={(page * count) + index + 1} audio={audio}/>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
+                    <div className="d-flex justify-content-between align-items-center pt-4">
+                        <Pagination
+                            page={page}
+                            setPage={setPage}
+                            hasMore={hasMore}
+                            isPlaceholderData={isPlaceholderData}
+                            total={total}
+                            count={count}
+                        />
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                    </div>
+                </>
+            ) : (
+                <div className="search-header">
+                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
-                <Pagination
-                    page={page}
-                    setPage={setPage}
-                    hasMore={hasMore}
-                    isPlaceholderData={isPlaceholderData}
-                    total={total}
-                    count={count}
-                />
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange} />
-            </div>
         </div>
     );
 }

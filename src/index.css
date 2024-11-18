@@ -8,6 +8,7 @@
   --color-label-text: #333;
   --color-border: #DFE2E6;
   --color-primary-all: #FF8906;
+  --color-primary-pale: #FF89060D;
   --color-primary-all-pale: rgb(255 220 181 / 34%);
   --color-grey: #70797d;
   --color-grey-light: #ced4da;
@@ -153,6 +154,32 @@
 }
 .input-group.search svg {
   color: var(--color-primary-all);
+}
+.input-group.search svg:hover {
+  color: var(--color-footer-highlight);
+}
+.input-group.search .btn.btn-clear svg {
+  color: var(--color-grey);
+  font-size: 20px;
+}
+.input-group.search .btn.btn-clear svg:hover {
+  color: var(--color-grey-dark);
+}
+
+.correct-text {
+  background-color: var(--color-primary-pale);
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+}
+.correct-text strong {
+  color: var(--color-primary-all);
+}
+.correct-text .btn {
+  border: none;
+  font-size: 14px;
+}
+.correct-text .btn:focus, .correct-text .btn:active {
+  border: none;
 }
 
 .form-check-label {

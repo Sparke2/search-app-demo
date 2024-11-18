@@ -28,7 +28,7 @@ export function SearchBooks() {
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllBook({ query: { value, by }, filter:{pubyear,isbn}, sorts: [{ field, modifier }] }, { start: page * count, rows: count });
+    } = useAllBook({ query: { value, by }, filter:{pubyear, ...(isbn ? { isbn } : {})}, sorts: [{ field, modifier }] }, { start: page * count, rows: count });
 
     useEffect(() => {
         setHasMore((page + 1) * count < total);
@@ -36,40 +36,48 @@ export function SearchBooks() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextBook resultCount={total} />
-                <button className="btn btn-outline-primary px-4">
-                    <FontAwesomeIcon icon={faFileExcel} className="pe-2" /> Экспорт в Excel
-                </button>
-            </div>
-            <div className="d-flex justify-content-between mb-5">
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange} />
-                <SearchPage name="pub" />
-            </div>
-            {isPending ? (
-                new Array(count).fill(null).map((_, i) => (
-                    <Skeleton style={{ width: '100%', height: 30 }} key={i} />
-                ))
-            ) : (
-                <div className="row g-4">
-                    {books.map((book, index) => (
-                        <div className="col-12" key={book.id}>
-                            <BookItem index={(page * count) + index + 1} book={book} />
+            {total !== 0 ? (
+                <>
+                    <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                        <SearchResultTextBook resultCount={total}/>
+                        <button className="btn btn-outline-primary px-4">
+                            <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                        </button>
+                    </div>
+                    <div className="d-flex justify-content-between mb-5">
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                        <SearchPage name="pub"/>
+                    </div>
+                    {isPending ? (
+                        new Array(count).fill(null).map((_, i) => (
+                            <Skeleton style={{width: '100%', height: 30}} key={i}/>
+                        ))
+                    ) : (
+                        <div className="row g-4">
+                            {books.map((book, index) => (
+                                <div className="col-12" key={book.id}>
+                                    <BookItem index={(page * count) + index + 1} book={book}/>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
+                    <div className="d-flex justify-content-between align-items-center pt-4">
+                        <Pagination
+                            page={page}
+                            setPage={setPage}
+                            hasMore={hasMore}
+                            isPlaceholderData={isPlaceholderData}
+                            total={total}
+                            count={count}
+                        />
+                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                    </div>
+                </>
+            ) : (
+                <div className="search-header">
+                    <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
-                <Pagination
-                    page={page}
-                    setPage={setPage}
-                    hasMore={hasMore}
-                    isPlaceholderData={isPlaceholderData}
-                    total={total}
-                    count={count}
-                />
-                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange} />
-            </div>
         </div>
     );
 }

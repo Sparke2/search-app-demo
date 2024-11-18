@@ -13,7 +13,9 @@ export namespace PeriodicalRepository {
         filter: Partial<{
             publishers: string[],
             ugnps: string[],
-            "numbers.year": number[]
+            "numbers.year": number[],
+            isbn: string,
+            vak: boolean
         }>
         sorts: {
             field: string,
