@@ -6,7 +6,9 @@ import {useLocation, useNavigate} from "react-router-dom";
 function SearchForm() {
   const location = useLocation();
   const navigate = useNavigate();
+
   const [searchText, setSearchText] = useState("");
+  const [originalQuery, setOriginalQuery] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [correctedText, setCorrectedText] = useState("");
   const [isCorrected, setIsCorrected] = useState(false);
@@ -18,10 +20,11 @@ function SearchForm() {
   );
 
   useEffect(() => {
-    if (query !== searchText) {
+    if (query !== originalQuery) {
+      setOriginalQuery(query);
       setSearchText(query);
     }
-  }, [query]);
+  }, [query, originalQuery]);
 
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
@@ -66,8 +69,12 @@ function SearchForm() {
     setIsCheckingSpelling(false);
 
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set("query", corrected !== searchText.trim() ? corrected : searchText.trim());
+    searchParams.set(
+        "query",
+        corrected !== searchText.trim() ? corrected : searchText.trim()
+    );
     navigate(`?${searchParams.toString()}`, { replace: true });
+    setOriginalQuery(corrected !== searchText.trim() ? corrected : searchText.trim());
   };
 
   const clearSearch = () => {

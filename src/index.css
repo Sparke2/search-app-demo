@@ -148,6 +148,9 @@
 .input-group.search .search-main::placeholder {
   color: var(--color-grey);
 }
+.input-group.search .search-main:disabled {
+  background-color: transparent;
+}
 .input-group.search .btn {
   border: none !important;
   z-index: 100;
