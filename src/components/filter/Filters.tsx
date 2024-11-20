@@ -4,7 +4,6 @@ import ReactSelect from '../core/filter/ReactSelect';
 import Checkbox from '../core/filter/Checkbox';
 import ReactSelectWithLabel from '../core/filter/ReactSelectWithLabel';
 import OptionsForEditions from '../../mock/OptionsForEditions';
-import OptionsForPublishers from '../../mock/OptionsForPublishers';
 import OptionsForAvailability from '../../mock/OptionsForAvailability';
 import OptionsForYears from '../../mock/OptionsForYears';
 import OptionsForTarget from '../../mock/OptionsForTarget';
@@ -27,6 +26,7 @@ import {LibraryModalRoot} from "../../data/library/ui/LibraryModal";
 import {useFilter} from "../../data/filter/model/queries";
 import {Filter} from "../../data/filter/model/types";
 import {useCheckboxQueryParams} from "../../hooks/useCheckboxQueryParams";
+import {useCombinedPubhouses} from "../../hooks/useCombinedPubhouses";
 
 function Filters() {
     const currentCategories = useCategoriesArray();
@@ -37,6 +37,8 @@ function Filters() {
         isLoading: boolean
     };
     const optionsForPerformers = performers.map(({val}) => ({value: val, label: val}))
+    const { data: pubhouses, isLoading: pubhousesLoad } = useCombinedPubhouses();
+    const optionsForPubhouses = pubhouses.map(({val}) => ({value: val, label: val}))
     const {data: genres = [], isLoading: genLoad} = useFilter("audios", "genres") as {
         data: Filter[],
         isLoading: boolean
@@ -83,10 +85,10 @@ function Filters() {
     const defaultSelectedOptions = {
         appointments: getMultyOptions('appointments', OptionsForAppointment),
         performers: getMultyOptions('performers', optionsForPerformers),
+        pubhouses: getMultyOptions('pubhouses', optionsForPubhouses),
         vak: getOption('vak', OptionsForVAK) || OptionsForVAK.find(option => option.selected),
         subscribe: getOption('subscribe', OptionsForSubscribe) || OptionsForSubscribe.find(option => option.selected),
         availability: getOption('availability', OptionsForAvailability) || OptionsForAvailability.find(option => option.selected),
-        publishers: getMultyOptions('publishers', OptionsForPublishers),
         editions: getMultyArrayOptions('editions', OptionsForEditions),
         targets: getMultyArrayOptions('targets', OptionsForTarget),
         additionals: getMultyOptions('additionals', OptionsForAdditionals),
@@ -97,10 +99,10 @@ function Filters() {
     const [selectedOptions, setSelectedOptions] = useState({
         vak: defaultSelectedOptions.vak,
         performers: defaultSelectedOptions.performers,
+        pubhouses: defaultSelectedOptions.pubhouses,
         appointments: defaultSelectedOptions.appointments,
         subscribe: defaultSelectedOptions.subscribe,
         availability: defaultSelectedOptions.availability,
-        publishers: defaultSelectedOptions.publishers,
         editions: defaultSelectedOptions.editions,
         additionals: defaultSelectedOptions.additionals,
         targets: defaultSelectedOptions.targets,
@@ -189,11 +191,11 @@ function Filters() {
         } else {
             newSearchParams.delete('performers');
         }
-        if (selectedOptions.publishers.length > 0) {
-            const publishersValues = selectedOptions.publishers.map(option => option.value).join(',');
-            newSearchParams.set('publishers', publishersValues);
+        if (selectedOptions.pubhouses.length > 0) {
+            const publishersValues = selectedOptions.pubhouses.map(option => option.value).join(',');
+            newSearchParams.set('pubhouses', publishersValues);
         } else {
-            newSearchParams.delete('publishers');
+            newSearchParams.delete('pubhouses');
         }
         if (selectedOptions.editions.length > 0) {
             const editionsValues = selectedOptions.editions.map(option => option.value).join(',');
@@ -341,17 +343,19 @@ function Filters() {
                 )
             }
 
-            {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
+            {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Издательство</h6>
-                    <ReactSelect
-                        options={OptionsForPublishers}
-                        placeholder="Введите или выберите из списка"
-                        isMulti
-                        defaultValue={selectedOptions.publishers}
-                        onChange={option => setSelectedOptions(prev => ({...prev, publishers: option}))}
-                        applyFilters={applyFilters}
-                    />
+                    {(!pubhousesLoad)&&(
+                        <ReactSelect
+                            options={optionsForPubhouses}
+                            placeholder="Введите или выберите из списка"
+                            isMulti
+                            defaultValue={selectedOptions.pubhouses}
+                            onChange={option => setSelectedOptions(prev => ({...prev, pubhouses: option}))}
+                            applyFilters={applyFilters}
+                        />
+                    )}
                 </div>
             )}
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (

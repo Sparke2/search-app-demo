@@ -8,8 +8,10 @@ import CheckboxFilterShow from '../components/core/filter/CheckboxFilterShow';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons';
 import {AppLayout} from '../layout/AppLayout';
+import {useSyncSortParam} from "../hooks/useSyncSortParam";
 
 function Home() {
+  useSyncSortParam()
   return (
     <AppLayout>
     <main>

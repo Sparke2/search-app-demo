@@ -10,6 +10,7 @@ import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
 import {SearchPage} from "./ui/SortSelect";
 import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
 import Pagination from "./ui/Pagination";
+import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 
 export function SearchBooks() {
     const [page, setPage] = useState(0);
@@ -23,6 +24,7 @@ export function SearchBooks() {
     const by = useSearchAreaQueryParam();
     const field = useQueryParam('sort')?.trim() || "score";
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
+    const pubhouses = useArrayQueryParam('pubhouses');
 
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
@@ -31,7 +33,7 @@ export function SearchBooks() {
         isPlaceholderData,
     } = useAllBook({
         query: {value, by},
-        filter: {pubyear, ...(isbn ? {isbn} : {})},
+        filter: {pubyear, pubhouses, ...(isbn ? {isbn} : {})},
         sorts: [{field, modifier}]
     }, {start: page * count, rows: count});
 

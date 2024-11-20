@@ -10,6 +10,7 @@ import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
 import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
 import {SearchPage} from "./ui/SortSelect";
 import Pagination from "./ui/Pagination";
+import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 
 export function SearchPeriodicals() {
     const [page, setPage] = useState(0);
@@ -25,6 +26,7 @@ export function SearchPeriodicals() {
     const field = useQueryParam('sort')?.trim() || "score";
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const year = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
+    const publishers = useArrayQueryParam('publishers');
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: periodicals = []} = {},
         isPending,
@@ -32,7 +34,7 @@ export function SearchPeriodicals() {
         isPlaceholderData,
     } = useAllPeriodical({
         query: {value, by},
-        filter: {"numbers.year": year, ...(isbn ? {isbn} : {}), ...(vakParam ? {vak} : {})},
+        filter: {"numbers.year": year, publishers, ...(isbn ? {isbn} : {}), ...(vakParam ? {vak} : {})},
         sorts: [{field, modifier}]
     }, {start: page * count, rows: count});
 

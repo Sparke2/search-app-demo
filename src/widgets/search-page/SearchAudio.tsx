@@ -27,6 +27,7 @@ export function SearchAudio() {
     const field = useQueryParam('sort')?.trim() || "score";
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const recordyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
+    const pubhouses = useArrayQueryParam('pubhouses');
 
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: audios = []} = {},
@@ -35,7 +36,7 @@ export function SearchAudio() {
         isPlaceholderData,
     } = useAllAudio({
         query: {value, by},
-        filter: {executants, genres, recordyear, collections},
+        filter: {executants, pubhouses, genres, recordyear, collections},
         sorts: [{field, modifier}]
     }, {start: page * count, rows: count});
 
