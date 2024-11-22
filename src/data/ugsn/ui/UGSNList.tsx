@@ -3,10 +3,17 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import React, {Fragment, memo, useMemo} from "react";
 import {useAllUGSN} from "../model/queries";
-// memo - если копмопнент не принимает объекты в виде пропсов - кеширует компонент
-export const UGSNList = memo(({Component, ComponentClassName}) => {
+import {UGSN} from "../model/types";
+
+export const UGSNList = memo(() => {
     const {ugsn, remove} = useCurrentUGSN()
-    const {data: allUgsn = [], isLoading} = useAllUGSN(!!ugsn?.length)
+    const { data: rawUgsnData, isLoading } = useAllUGSN() as { data: UGSN, isLoading: boolean };
+    const allUgsnData = rawUgsnData?.data || [];
+    const allUgsn = allUgsnData.map(({ id, code, name }) => ({
+        value: Number(id),
+        label: `${code} ${name}`
+    }));
+
     const recordUgsn = useMemo(() => {
         return allUgsn.reduce((acc, curUgsn) => {
             acc[curUgsn.value] = curUgsn.label;
@@ -29,15 +36,12 @@ export const UGSNList = memo(({Component, ComponentClassName}) => {
             );
         });
     };
-    const Comp = Component ? Component : Fragment; //Fragment - <></>
-    const props = Component ? {className: ComponentClassName} : undefined;
-    //если Component задала - можно кидать classnAME, иначе - <></> без className
     return (
-        <Comp {...props}>
+        <>
             <h6 className="mb-3">Укрепленная группа специальностей</h6>
             <div className="selected-items-modal">
                 {renderSelectedUGSN()}
             </div>
-        </Comp>
+        </>
     )
 })

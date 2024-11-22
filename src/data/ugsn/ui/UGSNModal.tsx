@@ -1,89 +1,87 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from "react";
 import {useAllUGSN} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentUGSN} from "../model/hooks";
 import Checkbox from "../../../components/core/filter/Checkbox";
+import {UGSN} from "../model/types";
 
 export const UGSNModalRoot = memo(() => {
     const [isModalUGSNOpen, setModalUGSNOpen] = useState(false);
-    const toggle = () => {
-        setModalUGSNOpen(v => !v)
-    }
-    const {ugsn} = useCurrentUGSN()
-    // если есть в урле угсн - фетч на бэк до открытия
-    const {data} = useAllUGSN(!!ugsn.length || isModalUGSNOpen)
-    return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите УГСН</button>
-        {isModalUGSNOpen && <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle}/>}
-    </>
+    const toggle = () => setModalUGSNOpen((v) => !v);
 
+    return (
+        <>
+            <button onClick={toggle} className="btn btn-outline-primary w-100">
+                Выберите УГСН
+            </button>
+            {isModalUGSNOpen && (
+                <UGSNModal isOpen={isModalUGSNOpen} toggleModal={toggle} />
+            )}
+        </>
+    );
+});
 
-})
-const UGSNModal = ({isOpen, toggleModal}: {
-    isOpen: boolean,
-    toggleModal: () => void;
-}) => {
-    const {data: NodesUGSN = []} = useAllUGSN(isOpen)
+const UGSNModal = ({ isOpen, toggleModal }: { isOpen: boolean; toggleModal: () => void }) => {
+    const { data: rawUgsnData, isLoading } = useAllUGSN() as { data: UGSN; isLoading: boolean };
+    const allUgsnData = rawUgsnData?.data || [];
+    const NodesUGSN = allUgsnData.map(({ id, code, name }) => ({
+        value: String(id),
+        label: `${code} ${name}`,
+    }));
 
-    const {ugsn = [], set} = useCurrentUGSN()
+    const { ugsn = [], set } = useCurrentUGSN();
 
-    const [selected, setSelected] = useState<string[] | undefined>();
+    const [selected, setSelected] = useState<string[]>(ugsn);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredNodesUGSN = NodesUGSN.filter(node =>
+    const filteredNodesUGSN = NodesUGSN.filter((node) =>
         node.label.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const recordUGSN = NodesUGSN.reduce((acc, cur) => {
-        acc[cur.value] = (selected || ugsn).includes(cur.value);
-        return acc;
-    }, {}) as Record<string, boolean> | {}
-
-    const modalRef = useRef(null);
+    const modalRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
                 toggleModal();
             }
         };
 
         if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.addEventListener("mousedown", handleClickOutside);
         }
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isOpen, toggleModal]);
 
     const handleApply = () => {
-        // applyBBK(localSelectedKeys);
         toggleModal();
-        set(selected || ugsn || [])
+        set(selected);
     };
 
     const handleClearSelection = () => {
-        // setLocalSelectedKeys({});
-        setSelected([])
-        // applyBBK({})
+        setSelected([]);
     };
 
+    const handleCheckboxChange = (value: string) => {
+        setSelected((prev) =>
+            prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+        );
+    };
 
     if (!isOpen) return null;
 
     return (
         <>
-
-            <div className="modal fade show" style={{display: 'block'}} tabIndex={-1} role="dialog">
+            <div className="modal fade show" style={{ display: "block" }} tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
                             <h5 className="modal-title">Выберите УГСН из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
-                                <FontAwesomeIcon icon={faXmark}/>
+                                <FontAwesomeIcon icon={faXmark} />
                             </button>
                         </div>
                         <div className="px-3 mb-4">
@@ -96,32 +94,31 @@ const UGSNModal = ({isOpen, toggleModal}: {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                                 <button className="btn" type="submit" id="search">
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20"/>
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20" />
                                 </button>
                             </div>
                         </div>
                         <div className="modal-body px-3">
-                            {filteredNodesUGSN.map(({value, label}, index) => (
+                            {filteredNodesUGSN.map(({ value, label }) => (
                                 <Checkbox
-                                    shouldShowApply={false}
                                     key={`ugsn-${value}`}
                                     id={`ugsn-${value}`}
                                     label={label}
-                                    isChecked={(selected || ugsn).includes(value)}
-                                    handleCheckboxChange={() => {
-                                        const isCheked = recordUGSN[value]
-                                        setSelected((v = ugsn || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
-                                    }}
-                                    applyFilters={handleApply}
+                                    isChecked={selected.includes(value)}
+                                    handleCheckboxChange={() => handleCheckboxChange(value)}
                                 />
                             ))}
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>
+                            <button
+                                type="button"
+                                className="btn btn-outline-primary"
+                                onClick={handleClearSelection}
+                            >
                                 Очистить
                             </button>
                             <button type="button" className="btn btn-primary" onClick={handleApply}>
-                            Применить
+                                Применить
                             </button>
                         </div>
                     </div>
@@ -131,5 +128,3 @@ const UGSNModal = ({isOpen, toggleModal}: {
         </>
     );
 };
-
-

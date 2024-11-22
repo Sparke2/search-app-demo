@@ -1,4 +1,3 @@
 export namespace UGSNEndpoints {
-    export const getAllUGSN = () => `/api/entries/ugsn/`
+    export const getAllUGSN = () => `/search-api?method=ugsn`
 }
-//${querystring.stringify({ foo: true, baz: ['qux', 'quux'], corge: '' } )

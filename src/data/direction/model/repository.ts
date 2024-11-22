@@ -1,13 +1,10 @@
-import {$api} from "../../../shared/lib/fetch-client";
+import {$apiSmart} from "../../../shared/lib/fetch-client";
 import {DirectionEndpoints} from "./endpoints";
-import {OptionsCheckboxForDirection} from "./mock";
+import {Direction} from "./types";
 
 export namespace DirectionRepository {
-    //тут фетч делать настойщий
-    export const getAllDirection = async () => {
-        return $api.get<{
-            value: string,
-            label: string
-        }[]>(DirectionEndpoints.getAllDirection()).then(v => v.data).catch(v => OptionsCheckboxForDirection)
+    export const getAllDirection = async (ugsn_ids: string[]) => {
+        return $apiSmart.get<Direction>(DirectionEndpoints.getAllDirection(ugsn_ids)).then(v => v.data);
     };
 }
+

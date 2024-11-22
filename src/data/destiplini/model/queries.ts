@@ -2,16 +2,13 @@ import {queryOptions, useQuery} from "@tanstack/react-query";
 import {DestipliniKeys} from "./keys";
 import {DestipliniRepository} from "./repository";
 
-const getAllDestipliniOptions = (enabled?: boolean) => queryOptions({
-    queryKey: DestipliniKeys.getAll.DestipliniAll(),
-    queryFn: () => DestipliniRepository.getAllDestiplini(),
+const getAllDestipliniOptions = (direction_ids:string []) => queryOptions({
+    queryKey: [...DestipliniKeys.getAll.DestipliniAll(), {direction_ids}],
+    queryFn: () => DestipliniRepository.getAllDestiplini(direction_ids),
     staleTime: Infinity,
-    gcTime: Infinity,
-    enabled: enabled,
     refetchOnWindowFocus: true
 })
 
-export const useAllDestiplini = (enabled?: boolean) => {
-    return useQuery(getAllDestipliniOptions(enabled))
+export const useAllDestiplini = (direction_ids:string[]) => {
+    return useQuery(getAllDestipliniOptions(direction_ids))
 }
-//staleTimeInfinty - всегда запрашивать из кеша, так как всегда NodesBbk одинаковые,+ переиспользуется

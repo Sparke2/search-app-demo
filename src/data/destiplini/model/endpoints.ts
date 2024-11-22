@@ -1,4 +1,4 @@
 export namespace DestipliniEndpoints {
-    export const getAllDestiplini = () => `/api/entries/destiplini/`
+    export const getAllDestiplini = (disciplines_ids: string[]) =>
+        `/search-api?method=disciplines${disciplines_ids.map(id => `&direction_ids[]=${id}`).join('')}`;
 }
-//${querystring.stringify({ foo: true, baz: ['qux', 'quux'], corge: '' } )

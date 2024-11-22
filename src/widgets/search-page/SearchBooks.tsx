@@ -11,6 +11,10 @@ import {SearchPage} from "./ui/SortSelect";
 import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
 import Pagination from "./ui/Pagination";
 import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
+import {useUGSNSearch} from "../../hooks/useUGSNSearch";
+import {useAllUGSN} from "../../data/ugsn/model/queries";
+import {useDirectionSearch} from "../../hooks/useDirectionSearch";
+import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
 
 export function SearchBooks() {
     const [page, setPage] = useState(0);
@@ -25,17 +29,30 @@ export function SearchBooks() {
     const field = useQueryParam('sort')?.trim() || "score";
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const pubhouses = useArrayQueryParam('pubhouses');
+    const ugnps = useUGSNSearch();
+    const profiles = useDirectionSearch();
+    const disciplines = useDisciplinesSearch();
+    const { isPending: isUgsnPending } = useAllUGSN();
 
     const {
-        data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
+        data: { pagination: { rows = 0, start = 0, total: fetchedTotal = 0 } = {}, data: books = [] } = {},
         isPending,
         isFetching,
         isPlaceholderData,
-    } = useAllBook({
-        query: {value, by},
-        filter: {pubyear, pubhouses, ...(isbn ? {isbn} : {})},
-        sorts: [{field, modifier}]
-    }, {start: page * count, rows: count});
+    } = useAllBook(
+        isUgsnPending
+            ? {
+                query: { value, by },
+                filter: { pubyear, pubhouses, ...(isbn ? { isbn } : {}) },
+                sorts: [{ field, modifier }]
+            }
+            : {
+                query: { value, by },
+                filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
+                sorts: [{ field, modifier }]
+            },
+        { start: page * count, rows: count }
+    );
 
     useEffect(() => {
         if (!isPending && fetchedTotal !== total) {

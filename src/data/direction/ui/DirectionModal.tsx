@@ -1,90 +1,98 @@
-import React, {memo, useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from "react";
 import {useAllDirection} from "../model/queries";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass, faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useCurrentDirection} from "../model/hooks";
 import Checkbox from "../../../components/core/filter/Checkbox";
+import {Direction} from "../model/types";
+import {useArrayQueryParam} from "../../../hooks/useArrayQueryParam";
 
 export const DirectionModalRoot = memo(() => {
     const [isModalDirectionOpen, setModalDirectionOpen] = useState(false);
-    const toggle = () => {
-        setModalDirectionOpen(v => !v)
-    }
+    const toggleModal = () => setModalDirectionOpen((prev) => !prev);
 
-    const {direction} = useCurrentDirection()
-    // если есть направления в урле - грузим их, чо нам ждать то
-    const {data} = useAllDirection(!!direction?.length)
+    const arrUGSN: string[] = useArrayQueryParam("ugsn");
+    const { data: rawDirectionData } = useAllDirection(arrUGSN) as {
+        data: Direction;
+    };
 
-    return <>
-        <button onClick={toggle} className="btn btn-outline-primary w-100">Выберите направление</button>
-        {isModalDirectionOpen && <DirectionModal isOpen={isModalDirectionOpen} toggleModal={toggle}/>}
-    </>
+    const allDirectionData = rawDirectionData?.data || [];
+    const allDirections = allDirectionData.map(({ id, code, name }) => ({
+        value: Number(id),
+        label: `${code} ${name}`,
+    }));
 
+    return allDirections.length > 0 ? (
+        <>
+            <button onClick={toggleModal} className="btn btn-outline-primary w-100">
+                Выберите направление
+            </button>
+            {isModalDirectionOpen && (
+                <DirectionModal
+                    isOpen={isModalDirectionOpen}
+                    toggleModal={toggleModal}
+                    allDirections={allDirections}
+                />
+            )}
+        </>
+    ) : null;
+});
 
-})
-const DirectionModal = ({isOpen, toggleModal}: {
-    isOpen: boolean,
+const DirectionModal = ({
+                            isOpen,
+                            toggleModal,
+                            allDirections,
+                        }: {
+    isOpen: boolean;
     toggleModal: () => void;
+    allDirections: { value: number; label: string }[];
 }) => {
-    const {data: NodesDirection = []} = useAllDirection()
-
-    const {direction = [], set} = useCurrentDirection()
-    const [selected, setSelected] = useState<string[] | undefined>();
+    const { direction = [], set } = useCurrentDirection();
+    const [selected, setSelected] = useState<string[]>(direction);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const filteredNodesDirection = NodesDirection.filter(node =>
-        node.label.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const modalRef = useRef<HTMLDivElement | null>(null);
 
-    const recordDirection = NodesDirection.reduce((acc, cur) => {
-        acc[cur.value] = (selected || direction).includes(cur.value);
-        return acc;
-    }, {}) as Record<string, boolean> | {}
-
-    const modalRef = useRef(null);
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
                 toggleModal();
             }
         };
 
         if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.addEventListener("mousedown", handleClickOutside);
         }
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isOpen, toggleModal]);
 
     const handleApply = () => {
-        // applyBBK(localSelectedKeys);
+        set(selected);
         toggleModal();
-        set(selected || direction || [])
     };
 
     const handleClearSelection = () => {
-        // setLocalSelectedKeys({});
-        setSelected([])
-        // applyBBK({})
+        setSelected([]);
     };
 
+    const filteredDirections = allDirections.filter((direction) =>
+        direction.label.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (!isOpen) return null;
 
     return (
         <>
-
-            <div className="modal fade show" style={{display: 'block'}} tabIndex={-1} role="dialog">
+            <div className="modal fade show" style={{ display: "block" }} tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
                             <h5 className="modal-title">Выберите направление подготовки</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
-                                <FontAwesomeIcon icon={faXmark}/>
+                                <FontAwesomeIcon icon={faXmark} />
                             </button>
                         </div>
                         <div className="px-3 mb-4">
@@ -96,29 +104,34 @@ const DirectionModal = ({isOpen, toggleModal}: {
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
-                                <button className="btn" type="submit" id="search">
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20"/>
+                                <button className="btn" type="submit">
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className="fs-20" />
                                 </button>
                             </div>
                         </div>
                         <div className="modal-body px-3">
-                            {filteredNodesDirection.map(({value, label}, index) => (
+                            {filteredDirections.map(({ value, label }) => (
                                 <Checkbox
-                                    shouldShowApply={false}
                                     key={`direction-${value}`}
                                     id={`direction-${value}`}
                                     label={label}
-                                    isChecked={(selected || direction).includes(value)}
+                                    isChecked={selected.includes(value.toString())}
                                     handleCheckboxChange={() => {
-                                        const isCheked = recordDirection[value];
-                                        setSelected((v = direction || []) => isCheked ? v.filter(v => v !== value) : [...v, value])
+                                        setSelected((prev) =>
+                                            prev.includes(value.toString())
+                                                ? prev.filter((v) => v !== value.toString())
+                                                : [...prev, value.toString()]
+                                        );
                                     }}
-                                    applyFilters={handleApply}
                                 />
                             ))}
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>
+                            <button
+                                type="button"
+                                className="btn btn-outline-primary"
+                                onClick={handleClearSelection}
+                            >
                                 Очистить
                             </button>
                             <button type="button" className="btn btn-primary" onClick={handleApply}>
@@ -132,5 +145,3 @@ const DirectionModal = ({isOpen, toggleModal}: {
         </>
     );
 };
-
-

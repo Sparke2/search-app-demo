@@ -17,6 +17,9 @@ export namespace BookRepository {
             pubhouses: string[],
             pubyear: number[],
             isbn: string,
+            ugnps: string[],
+            profiles: string[],
+            disciplines: string[],
         }>
         sorts: {
             field: string,

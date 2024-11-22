@@ -2,16 +2,14 @@ import {queryOptions, useQuery} from "@tanstack/react-query";
 import {DirectionKeys} from "./keys";
 import {DirectionRepository} from "./repository";
 
-const getAllDirectionOptions = (enabled?: boolean) => queryOptions({
-    queryKey: DirectionKeys.getAll.DirectionAll(),
-    queryFn: () => DirectionRepository.getAllDirection(),
+const getAllDirectionOptions = (ugsn_ids: string[]) => queryOptions({
+    queryKey: [...DirectionKeys.getAll.DirectionAll(), { ugsn_ids }],
+    queryFn: () => DirectionRepository.getAllDirection(ugsn_ids),
     staleTime: Infinity,
-    gcTime: Infinity,
-    enabled: enabled,
     refetchOnWindowFocus: true
-})
+});
 
-export const useAllDirection = (enabled?: boolean) => {
-    return useQuery(getAllDirectionOptions(enabled))
-}
-//staleTimeInfinty - всегда запрашивать из кеша, так как всегда NodesBbk одинаковые,+ переиспользуется
+export const useAllDirection = (ugsn_ids: string[]) => {
+    return useQuery(getAllDirectionOptions(ugsn_ids));
+};
+

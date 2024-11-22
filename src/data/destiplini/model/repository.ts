@@ -1,13 +1,9 @@
-import {$api} from "../../../shared/lib/fetch-client";
+import {$apiSmart} from "../../../shared/lib/fetch-client";
 import {DestipliniEndpoints} from "./endpoints";
-import {OptionsCheckboxForDestiplini} from "./mock";
+import {Disciplini} from "./types";
 
 export namespace DestipliniRepository {
-    //тут фетч делать настойщий
-    export const getAllDestiplini = async () => {
-        return $api.get<{
-            value: string,
-            label: string
-        }[]>(DestipliniEndpoints.getAllDestiplini()).then(v => v.data).catch(v => OptionsCheckboxForDestiplini)
+    export const getAllDestiplini = async (direction_ids:string[]) => {
+        return $apiSmart.get<Disciplini>(DestipliniEndpoints.getAllDestiplini(direction_ids)).then(v => v.data)
     };
 }

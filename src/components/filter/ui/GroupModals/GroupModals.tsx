@@ -5,11 +5,11 @@ import {useCurrentDirection} from "../../../../data/direction/model/hooks";
 import {useCurrentDestiplini} from "../../../../data/destiplini/model/hooks";
 import React, {memo, ReactNode} from "react";
 import {UGSNList} from "../../../../data/ugsn/ui/UGSNList";
-import {DestipliniList} from "../../../../data/destiplini/ui/DestipliniList";
 import {useCategoriesArray} from "../../../../hooks/useCategoriesArray";
-import {DirectionModalRoot} from "../../../../data/direction/ui/DirectionModal";
-import {DestipliniModalRoot} from "../../../../data/destiplini/ui/DestipliniModal";
 import {DirectionList} from "../../../../data/direction/ui/DirectionList";
+import {DirectionModalRoot} from "../../../../data/direction/ui/DirectionModal";
+import {DestipliniList} from "../../../../data/destiplini/ui/DestipliniList";
+import {DestipliniModalRoot} from "../../../../data/destiplini/ui/DestipliniModal";
 
 // const DirectionModalRoot = lazy(() => import('../../../../data/direction/ui/DirectionModal').then(v => ({default: v.DirectionModalRoot})))
 // const DestipliniModalRoot = lazy(() => import('../../../../data/destiplini/ui/DestipliniModal').then(v => ({default: v.DestipliniModalRoot})))
