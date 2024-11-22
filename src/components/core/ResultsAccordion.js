@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useCategoriesArray} from '../../hooks/useCategoriesArray';
@@ -18,7 +18,7 @@ const ResultsAccordion = () => {
     const currentCategories = useCategoriesArray();
     const variant = currentCategories.length === 1 ? 'paginated' : currentCategories.length > 1 ? 'some-accordion' : 'all-accordion';
 
-    const renderPaginated = () => {
+    const renderPaginated = useCallback(() => {
         const category = currentCategories[0];
         switch (category) {
             case 'searchBooks':
@@ -34,21 +34,22 @@ const ResultsAccordion = () => {
             default:
                 return null;
         }
-    };
+    }, [currentCategories]);
+    const paginated = useMemo(() => renderPaginated(), [currentCategories])
 
     const renderAccordionItems = (categoriesList) => {
         return categoriesList.map((cat, index) => {
             switch (cat) {
                 case 'searchBooks':
-                    return <BookPreview key={index} index={index} cat={cat} />;
+                    return <BookPreview key={index} index={index} cat={cat}/>;
                 case 'searchPeriodicals':
-                    return <PeriodicalPreview key={index} index={index} cat={cat} />;
+                    return <PeriodicalPreview key={index} index={index} cat={cat}/>;
                 case 'searchAudio':
-                    return <AudioPreview key={index} index={index} cat={cat} />;
+                    return <AudioPreview key={index} index={index} cat={cat}/>;
                 case 'searchVideo':
-                    return <VideoPreview key={index} index={index} cat={cat} />;
+                    return <VideoPreview key={index} index={index} cat={cat}/>;
                 case 'searchArchives':
-                    return <ArchivePreview key={index} index={index} cat={cat} />;
+                    return <ArchivePreview key={index} index={index} cat={cat}/>;
                 default:
                     return null;
             }
@@ -61,7 +62,7 @@ const ResultsAccordion = () => {
             <Accordion>
                 {(variant === 'some-accordion' || variant === 'all-accordion') &&
                     <h5 className="mb-4">Всего найдено:</h5>}
-                {variant === 'paginated' && renderPaginated()}
+                {variant === 'paginated' && paginated}
                 {variant === 'some-accordion' && renderAccordionItems(currentCategories)}
                 {variant === 'all-accordion' && renderAccordionItems(categories)}
             </Accordion>

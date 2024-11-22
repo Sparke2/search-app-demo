@@ -29,21 +29,20 @@ export function SearchBooks() {
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const pubhouses = useArrayQueryParam('pubhouses');
     const ugnps = useUGSNSearch();
+
     const profiles = useDirectionSearch();
     const disciplines = useDisciplinesSearch();
-
     const {
-        data: { pagination: { rows = 0, start = 0, total: fetchedTotal = 0 } = {}, data: books = [] } = {},
+        data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
         isPending,
-        isFetching,
         isPlaceholderData,
     } = useAllBook(
         {
-            query: { value, by },
-            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
-            sorts: [{ field, modifier }]
+            query: {value, by},
+            filter: {pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? {isbn} : {})},
+            sorts: [{field, modifier}]
         },
-        { start: page * count, rows: count }
+        {start: page * count, rows: count},
     );
 
     useEffect(() => {
