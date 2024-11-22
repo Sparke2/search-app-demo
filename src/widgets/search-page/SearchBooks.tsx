@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useAllBook} from "../../data/book/model/queries";
-import {Skeleton} from "@mui/material";
 import BookItem from "../../components/core/card/BookItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
@@ -14,6 +13,7 @@ import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 import {useUGSNSearch} from "../../hooks/useUGSNSearch";
 import {useDirectionSearch} from "../../hooks/useDirectionSearch";
 import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
+import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 
 export function SearchBooks() {
     const [page, setPage] = useState(0);
@@ -73,9 +73,12 @@ export function SearchBooks() {
                 </>
             )}
             {isPending ? (
-                new Array(count).fill(null).map((_, i) => (
-                    <Skeleton style={{width: '100%', height: 30}} key={i}/>
-                ))
+                <div className="row g-4">
+                    {new Array(count).fill(null).map((_, i) => (
+                        <BookSkeleton index={i} key={i}/>
+                        // <Skeleton style={{width: '100%', height: 30}} key={i}/>
+                    ))}
+                </div>
             ) : books.length === 0 && total === 0 ? (
                 <div className="search-header">
                     <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
