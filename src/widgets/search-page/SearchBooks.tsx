@@ -12,7 +12,6 @@ import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
 import Pagination from "./ui/Pagination";
 import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 import {useUGSNSearch} from "../../hooks/useUGSNSearch";
-import {useAllUGSN} from "../../data/ugsn/model/queries";
 import {useDirectionSearch} from "../../hooks/useDirectionSearch";
 import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
 
@@ -32,7 +31,6 @@ export function SearchBooks() {
     const ugnps = useUGSNSearch();
     const profiles = useDirectionSearch();
     const disciplines = useDisciplinesSearch();
-    const { isPending: isUgsnPending } = useAllUGSN();
 
     const {
         data: { pagination: { rows = 0, start = 0, total: fetchedTotal = 0 } = {}, data: books = [] } = {},
@@ -40,17 +38,11 @@ export function SearchBooks() {
         isFetching,
         isPlaceholderData,
     } = useAllBook(
-        isUgsnPending
-            ? {
-                query: { value, by },
-                filter: { pubyear, pubhouses, ...(isbn ? { isbn } : {}) },
-                sorts: [{ field, modifier }]
-            }
-            : {
-                query: { value, by },
-                filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
-                sorts: [{ field, modifier }]
-            },
+        {
+            query: { value, by },
+            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
+            sorts: [{ field, modifier }]
+        },
         { start: page * count, rows: count }
     );
 
