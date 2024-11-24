@@ -2,11 +2,11 @@ import React from 'react';
 import Breadcrumb from '../components/core/Breadcrumb';
 import SearchForm from '../components/SearchForm';
 import ResultsAccordion from '../components/core/ResultsAccordion';
-import Filters from '../components/filter/Filters';
 
 import CheckboxFilterShow from '../components/core/filter/CheckboxFilterShow';
 import {AppLayout} from '../layout/AppLayout';
 import {useSyncSortParam} from "../hooks/useSyncSortParam";
+import {ResponsiveFilters} from "../components/filter/ui/ResponsiveFilters";
 
 function Home() {
   useSyncSortParam()
@@ -31,14 +31,12 @@ function Home() {
               {/*</div>*/}
             </div>
             <div className="row mt-1 g-4">
-              <div className="col-lg-9 result-field">
-                <SearchForm />
-                <CheckboxFilterShow />
-                <ResultsAccordion />
+              <div className="col-lg-9 result-field order-lg-1 order-2">
+                <SearchForm/>
+                <CheckboxFilterShow/>
+                <ResultsAccordion/>
               </div>
-              <div className="col-lg-3 filter-field">
-                  <Filters />
-              </div>
+              <ResponsiveFilters/>
             </div>
           </div>
         </div>

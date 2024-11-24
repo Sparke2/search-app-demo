@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import ReactSelect from '../core/filter/ReactSelect';
 import Checkbox from '../core/filter/Checkbox';
@@ -28,7 +28,7 @@ import {Filter} from "../../data/filter/model/types";
 import {useCheckboxQueryParams} from "../../hooks/useCheckboxQueryParams";
 import {useCombinedPubhouses} from "../../hooks/useCombinedPubhouses";
 
-function Filters() {
+const Filters = forwardRef((_, ref) => {
     const currentCategories = useCategoriesArray();
     const location = useLocation();
     const navigate = useNavigate();
@@ -252,6 +252,10 @@ function Filters() {
         ));
     };
 
+    useImperativeHandle(ref, () => ({
+        applyFilters,
+    }));
+
     // @ts-ignore
     return (
         <div className="row g-4 pt-4">
@@ -459,11 +463,11 @@ function Filters() {
                     <ChannelModalRoot/>
                 </div>
             )}
-            <div className='col-12'>
+            <div className='col-12 d-xl-block d-none'>
                 <button className='btn btn-primary w-100' onClick={applyFilters}>Применить параметры</button>
             </div>
         </div>
     );
-}
+});
 
 export default Filters;

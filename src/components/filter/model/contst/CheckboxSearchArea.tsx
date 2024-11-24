@@ -7,7 +7,7 @@ export function CheckboxSearchArea({handleCheckboxChange, applyFilters, checkbox
     return (
         <>
             {(['searchBooks', 'searchPeriodicals', 'searchAudio'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
-                <div className="col-12">
+                <div className="col-lg-12 col-6">
                     <h6 className='mb-3'>Область поиска</h6>
                     <Checkbox
                         id="author"

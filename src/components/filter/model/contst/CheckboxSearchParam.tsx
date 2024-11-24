@@ -4,7 +4,7 @@ import React from "react";
 export function CheckboxSearchParam({handleCheckboxChange, applyFilters, checkboxes})
 {
     return (
-        <div className="col-12">
+        <div className="col-lg-12 col-6">
             <h6 className='mb-3'>Поиск по</h6>
             {
                 [
