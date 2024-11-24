@@ -5,8 +5,9 @@ import {Button} from "primereact/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleQuestion} from "@fortawesome/free-regular-svg-icons";
 import {Tooltip} from "primereact/tooltip";
+import ReadMore from "./ui/ReadMore";
 
-const BookItem = ({index, book}: {index:number, book:Book}) =>{
+const BookItem = ({index, book}: { index: number, book: Book }) => {
     const authors = book.authors || [];
     const collections = book.collections || [];
     const pubhouse = book.pubhouses || [];
@@ -16,27 +17,25 @@ const BookItem = ({index, book}: {index:number, book:Book}) =>{
                 <div className="col-8">
                     <p className="text">
                         <span className="pe-2">{index}.</span>
+                        <span className="text"
+                              dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
+                    </p>
+                    <p className="text desc">
                         {authors.map((author, index) => (
-                            <span key={index}>
+                            <span key={index} className="text-grey">
                                 {author}{index < book.authors.length - 1 && ', '}
                             </span>
                         ))}
                     </p>
-                    <p className="text"
-                       dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
                     {book.pubtype && (
                         <p className="text-small"><span className="text-small-grey">Тип:</span> {book.pubtype}</p>
                     )}
-                    {collections.length > 0 && (
-                        <p className="m-0"><span className="text-small-grey">Коллекция: </span>
-                            {collections.map((collection, index) => (
-                                <a key={index} href="#" /* eslint-disable-line jsx-a11y/anchor-is-valid */>
-                                    {collection}{index < book.collections.length - 1 && ', '}
-                                </a>
-                            ))}
-                        </p>
-                    )}
-                    <p className="text-small-grey desc" dangerouslySetInnerHTML={{__html:book.description}}/>
+                    <ReadMore
+                        content={collections}
+                        maxItems={3}
+                        label="Коллекция"
+                    />
+                    <ReadMore content={book.description} maxLines={2} />
                 </div>
                 <div className="col-1">
                     <p className="text-grey">Стр.</p>
@@ -66,12 +65,13 @@ const BookItem = ({index, book}: {index:number, book:Book}) =>{
                     <p><span>«Подробнее о книге»</span>.</p>
                 </Tooltip>
                 <Button className={`btn btn-disabled btn-${book.id} btn-small equal`}>
-                    Читать <FontAwesomeIcon icon={faCircleQuestion} />
+                    Читать <FontAwesomeIcon icon={faCircleQuestion}/>
                 </Button>
                 {/*<a href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank" className="btn btn-primary btn-small equal">*/}
                 {/*    Читать*/}
                 {/*</a>*/}
-                <a href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank" className="btn btn-outline-primary btn-small equal" rel="noreferrer">Подробнее о книге</a>
+                <a href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
+                   className="btn btn-outline-primary btn-small equal" rel="noreferrer">Подробнее о книге</a>
             </div>
         </div>
     )

@@ -29,9 +29,9 @@ export function SearchBooks() {
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const pubhouses = useArrayQueryParam('pubhouses');
     const ugnps = useUGSNSearch();
-
     const profiles = useDirectionSearch();
     const disciplines = useDisciplinesSearch();
+
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
         isPending,
@@ -58,25 +58,20 @@ export function SearchBooks() {
 
     return (
         <div className="pe-4">
-            {total !== 0 && (
-                <>
-                    <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                        <SearchResultTextBook resultCount={total}/>
-                        <button className="btn btn-outline-primary px-4">
-                            <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
-                        </button>
-                    </div>
-                    <div className="d-flex justify-content-between mb-5">
-                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                        <SearchPage name="pub"/>
-                    </div>
-                </>
-            )}
+            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                <SearchResultTextBook resultCount={total || 0}/>
+                <button className="btn btn-outline-primary px-4">
+                    <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                </button>
+            </div>
+            <div className="d-flex justify-content-between mb-5">
+                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                <SearchPage name="pub"/>
+            </div>
             {isPending ? (
                 <div className="row g-4">
                     {new Array(count).fill(null).map((_, i) => (
                         <BookSkeleton index={i} key={i}/>
-                        // <Skeleton style={{width: '100%', height: 30}} key={i}/>
                     ))}
                 </div>
             ) : books.length === 0 && total === 0 ? (
@@ -92,21 +87,17 @@ export function SearchBooks() {
                     ))}
                 </div>
             )}
-            {total !== 0 && (
-                <>
-                    <div className="d-flex justify-content-between align-items-center pt-4">
-                        <Pagination
-                            page={page}
-                            setPage={setPage}
-                            hasMore={hasMore}
-                            isPlaceholderData={isPlaceholderData}
-                            total={total}
-                            count={count}
-                        />
-                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                    </div>
-                </>
-            )}
+            <div className="d-flex justify-content-between align-items-center pt-4">
+                <Pagination
+                    page={page}
+                    setPage={setPage}
+                    hasMore={hasMore}
+                    isPlaceholderData={isPlaceholderData}
+                    total={total || 0}
+                    count={count}
+                />
+                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+            </div>
         </div>
     );
 }

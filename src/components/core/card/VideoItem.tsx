@@ -1,7 +1,8 @@
 import React from "react";
 import {Video} from "../../../data/video/model/types";
-import ShareButtons from "./ShareButtons";
+import ShareButtons from "./ui/ShareButtons";
 import ReactPlayer from "react-player";
+import ReadMore from "./ui/ReadMore";
 
 const VideoItem = ({ index, video }: { index: number, video: Video }) => {
     const formatText = (text) => {
@@ -42,7 +43,7 @@ const VideoItem = ({ index, video }: { index: number, video: Video }) => {
                 </div>
                 <div className="col-8">
                     <p className="text" dangerouslySetInnerHTML={{ __html: removeHtmlEntities(video.title)}}/>
-                    <p className="text-small-grey desc" dangerouslySetInnerHTML={{ __html: formatText(video.description) }}/>
+                    <ReadMore content={formatText(video.description)} maxLines={3} />
                     <div className="d-flex justify-content-between mt-4">
                         <a href={video.link} target="_blank" className="btn btn-primary btn-small" rel="noreferrer">Перейти к просмотру</a>
                         <ShareButtons title={removeHtmlEntities(video.title)} url={video.link} />

@@ -5,8 +5,6 @@ import ResultsAccordion from '../components/core/ResultsAccordion';
 import Filters from '../components/filter/Filters';
 
 import CheckboxFilterShow from '../components/core/filter/CheckboxFilterShow';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowRightLong} from '@fortawesome/free-solid-svg-icons';
 import {AppLayout} from '../layout/AppLayout';
 import {useSyncSortParam} from "../hooks/useSyncSortParam";
 
@@ -23,14 +21,14 @@ function Home() {
               <div className='col-lg-9 d-flex'>
                 <h1 className='my-auto'>Поиск по цифровой библиотеке</h1>
               </div>
-              <div className='col-lg-3'>
-                <p className='mb-2 ps-3'>
-                  <a href='#' /* eslint-disable-line jsx-a11y/anchor-is-valid */>Искать по коллекциям  <FontAwesomeIcon icon={faArrowRightLong} /></a>
-                </p>
-                <p className='m-0 ps-3'>
-                  <a href='#' /* eslint-disable-line jsx-a11y/anchor-is-valid */>Искать по каталогам <FontAwesomeIcon icon={faArrowRightLong} /></a>
-                </p>
-              </div>
+              {/*<div className='col-lg-3'>*/}
+              {/*  <p className='mb-2 ps-3'>*/}
+              {/*    <a href='#'>Искать по коллекциям  <FontAwesomeIcon icon={faArrowRightLong} /></a>*/}
+              {/*  </p>*/}
+              {/*  <p className='m-0 ps-3'>*/}
+              {/*    <a href='#'/>Искать по каталогам <FontAwesomeIcon icon={faArrowRightLong} /></a>*/}
+              {/*  </p>*/}
+              {/*</div>*/}
             </div>
             <div className="row mt-1 g-4">
               <div className="col-lg-9 result-field">

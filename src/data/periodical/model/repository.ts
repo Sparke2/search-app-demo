@@ -11,9 +11,11 @@ export namespace PeriodicalRepository {
             by: ("title" | "description")[]
         }
         filter: Partial<{
+            "numbers.year": number[],
             publishers: string[],
             ugnps: string[],
-            "numbers.year": number[],
+            profiles: string[],
+            disciplines: string[],
             isbn: string,
             vak: boolean
         }>

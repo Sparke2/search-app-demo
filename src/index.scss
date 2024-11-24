@@ -720,6 +720,9 @@
   p {
     margin-bottom: 0.25rem;
   }
+  span.text-prim {
+    color: var(--color-primary-all);
+  }
 
   .text-small-grey, .text-grey {
     color: var(--color-grey);
@@ -727,6 +730,7 @@
 
   .text-small, .text-small-grey {
     font-size: 14px;
+    overflow-wrap: anywhere;
   }
 
   .text {
@@ -1117,6 +1121,86 @@ header {
     .btn {
       padding: 0.7rem 5rem;
     }
+  }
+}
+
+.skeleton-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 4px 4px 10px #d6d6d6, -4px -4px 10px #ffffff;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 70%;
+  background: #e3e3e3;
+  border-radius: 8px;
+  animation: shimmer 1.6s infinite;
+}
+
+.skeleton-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-row {
+  height: 16px;
+  background: #e3e3e3;
+  border-radius: 8px;
+  animation: shimmer 1.6s infinite;
+  width: 100%;
+}
+
+.skeleton-row.short {
+  width: 60%;
+}
+
+.skeleton-footer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.skeleton-button {
+  height: 36px;
+  background: #e3e3e3;
+  border-radius: 20px;
+  animation: shimmer 1.6s infinite;
+  width: 30%;
+}
+
+.skeleton-button.wide {
+  width: 50%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
+
+.skeleton-title, .skeleton-row, .skeleton-button {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 

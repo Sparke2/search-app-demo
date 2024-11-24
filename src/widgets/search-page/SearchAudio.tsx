@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {useAllAudio} from "../../data/audio/model/queries";
-import {Skeleton} from "@mui/material";
 import AudioItem from "../../components/core/card/AudioItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
@@ -12,6 +11,7 @@ import {useCheckboxQueryParams} from "../../hooks/useCheckboxQueryParams";
 import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
 import {SearchPage} from "./ui/SortSelect";
 import Pagination from "./ui/Pagination";
+import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 
 export function SearchAudio() {
     const [page, setPage] = useState(0);
@@ -53,24 +53,22 @@ export function SearchAudio() {
 
     return (
         <div className="pe-4">
-            {total !== 0 && (
-                <>
-                    <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                        <SearchResultTextAudio resultCount={total}/>
-                        <button className="btn btn-outline-primary px-4">
-                            <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
-                        </button>
-                    </div>
-                    <div className="d-flex justify-content-between mb-5">
-                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                        <SearchPage name="record"/>
-                    </div>
-                </>
-            )}
+            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+                <SearchResultTextAudio resultCount={total || 0}/>
+                <button className="btn btn-outline-primary px-4">
+                    <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
+                </button>
+            </div>
+            <div className="d-flex justify-content-between mb-5">
+                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+                <SearchPage name="record"/>
+            </div>
             {isPending ? (
-                new Array(count).fill(null).map((_, i) => (
-                    <Skeleton style={{width: '100%', height: 30}} key={i}/>
-                ))
+                <div className="row g-4">
+                    {new Array(count).fill(null).map((_, i) => (
+                        <BookSkeleton index={i} key={i}/>
+                    ))}
+                </div>
             ) : audios.length === 0 && total === 0 ? (
                 <div className="search-header">
                     <h5><span>По вашему запросу</span> {value} <span>ничего не найдено</span></h5>
@@ -84,21 +82,17 @@ export function SearchAudio() {
                     ))}
                 </div>
             )}
-            {total !== 0 && (
-                <>
-                    <div className="d-flex justify-content-between align-items-center pt-4">
-                        <Pagination
-                            page={page}
-                            setPage={setPage}
-                            hasMore={hasMore}
-                            isPlaceholderData={isPlaceholderData}
-                            total={total}
-                            count={count}
-                        />
-                        <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
-                    </div>
-                </>
-            )}
+            <div className="d-flex justify-content-between align-items-center pt-4">
+                <Pagination
+                    page={page}
+                    setPage={setPage}
+                    hasMore={hasMore}
+                    isPlaceholderData={isPlaceholderData}
+                    total={total || 0}
+                    count={count}
+                />
+                <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
+            </div>
         </div>
     );
 }

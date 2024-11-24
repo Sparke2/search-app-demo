@@ -1,6 +1,7 @@
 import React from "react";
 import {AudioFilesModalRoot} from "../../../data/audio-files/ui/AudioFilesModal";
 import {Audio} from "../../../data/audio/model/types";
+import ReadMore from "./ui/ReadMore";
 
 const AudioItem = ({index, audio}: { index: number, audio: Audio }) => {
     const executants = audio.executants || [];
@@ -11,7 +12,7 @@ const AudioItem = ({index, audio}: { index: number, audio: Audio }) => {
                 <div className="col-6">
                     <p className="text"
                        dangerouslySetInnerHTML={{__html: `<span class="pe-2">${index}.</span> ${audio.title}`}}/>
-                    <p className="text-small-grey desc" dangerouslySetInnerHTML={{__html: audio.description}}/>
+                    <ReadMore content={audio.description} maxLines={3} />
                 </div>
                 <div className="col-2">
                     <p className="text-grey">Время звучания</p>
