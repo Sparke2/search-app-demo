@@ -30,4 +30,12 @@ export namespace BookRepository {
     export const getAllBook = async (body: bookBody, query: { rows: number, start: number }) => {
         return $api.post<PaginationResponse<Book>>(BookEndpoints.getAllBook(query), body).then(v => v.data)
     };
+
+    export const getExelBook = async (body: BookRepository.bookBody) => {
+        return $api.post<Blob>(
+            BookEndpoints.getExelBook(),
+            body,
+            { responseType: 'blob' }
+        ).then((v) => v.data);
+    };
 }

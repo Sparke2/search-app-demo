@@ -5,24 +5,24 @@ const ArchiveItem = ({ index, archive }: { index: number, archive: Archive }) =>
     const collections = archive.collections || [];
     return (
         <div className="card-item position-relative">
-            <div className="row">
-                <div className="col-10">
+            <div className="row g-3">
+                <div className="col-xl-10 col-lg-9 col-md-8 col-6">
                     <p className="text"
                        dangerouslySetInnerHTML={{__html: `<span class="pe-2">${index}.</span> ${archive.title}`}}/>
                     <p className="text-grey">
                         {collections.map((collection, index) => (
-                            <span key={index}>
+                            <span className="" key={index}>
                                 {collection}{index < archive.collections.length - 1 && ', '}
                             </span>
                         ))}
                     </p>
                     <p className="text-grey">{archive.description}</p>
                 </div>
-                <div className="col-1">
+                <div className="col-xl-1 col-2 col-3">
                     <p className="text-grey">Год</p>
                     <p className="text-small">{archive.year}</p>
                 </div>
-                <div className="col-1">
+                <div className="col-lg-1 col-md-2 col-3">
                     <p className="text-grey">Стр.</p>
                     <p className="text-small">{archive.pageCount}</p>
                 </div>

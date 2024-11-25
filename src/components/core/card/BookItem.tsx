@@ -13,8 +13,8 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
     const pubhouse = book.pubhouses || [];
     return (
         <div className="card-item position-relative">
-            <div className="row">
-                <div className="col-8">
+            <div className="row g-3">
+                <div className="col-xxl-8 col-xl-7 col-12">
                     <p className="text">
                         <span className="pe-2">{index}.</span>
                         <span className="text"
@@ -37,21 +37,18 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                     />
                     <ReadMore content={book.description} maxLines={2} />
                 </div>
-                <div className="col-1">
+                <div className="col-xl-1 col-sm-4 col-3">
                     <p className="text-grey">Стр.</p>
                     <p className="text-small">{book.pageCount}</p>
                 </div>
-                <div className="col-2">
-                    <p className="text-grey">Издательство</p>
-                    <p className="text-small">
-                        {pubhouse.map((pubhouse, index) => (
-                            <span key={index}>
-                                {pubhouse}{index < book.pubhouses.length - 1 && ', '}
-                            </span>
-                        ))}
-                    </p>
+                <div className="col-xxl-2 col-xl-3 col-sm-4 col-6">
+                    <ReadMore
+                        content={pubhouse}
+                        maxItems={3}
+                        label="Издательство"
+                    />
                 </div>
-                <div className="col-1">
+                <div className="col-xl-1 col-sm-4 col-3">
                     <p className="text-grey">Год</p>
                     <p className="text-small">{book.pubyear}</p>
                 </div>

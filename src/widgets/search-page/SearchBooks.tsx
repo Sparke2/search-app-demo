@@ -14,6 +14,10 @@ import {useUGSNSearch} from "../../hooks/useUGSNSearch";
 import {useDirectionSearch} from "../../hooks/useDirectionSearch";
 import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
 import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
+import {BookRepository} from "../../data/book/model/repository";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import getExelBook = BookRepository.getExelBook;
 
 export function SearchBooks() {
     const [page, setPage] = useState(0);
@@ -45,6 +49,33 @@ export function SearchBooks() {
         {start: page * count, rows: count},
     );
 
+    const downloadExcel = async (body: BookRepository.bookBody) => {
+        await toast.promise(
+            getExelBook(body).then((blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'books.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }),
+            {
+                pending: 'Файл формируется...',
+                success: 'Файл успешно загружен',
+                error: 'Ошибка при генерации файла',
+            }
+        );
+    };
+
+    const handleDownloadExcel = () => {
+        downloadExcel({
+            query: { value, by },
+            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
+            sorts: [{ field, modifier }],
+        });
+    };
+
     useEffect(() => {
         if (!isPending && fetchedTotal !== total) {
             setTotal(fetchedTotal);
@@ -60,7 +91,11 @@ export function SearchBooks() {
         <div className="pe-4">
             <div className="d-flex justify-content-between align-items-center mb-4 search-header">
                 <SearchResultTextBook resultCount={total || 0}/>
-                <button className="btn btn-outline-primary px-4">
+                <ToastContainer position="top-right"
+                                autoClose={5000}
+                                closeOnClick
+                                draggable  />
+                <button className="btn btn-outline-primary px-4" onClick={handleDownloadExcel}>
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
             </div>

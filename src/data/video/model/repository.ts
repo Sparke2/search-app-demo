@@ -22,4 +22,8 @@ export namespace VideoRepository {
     export const getAllVideo = async (body: videoBody, query: { rows: number, start: number }) => {
         return $api.post<PaginationResponse<Video>>(VideoEndpoints.getAllVideo(query), body).then(v => v.data)
     };
+
+    export const getExelVideo = async (body: videoBody) => {
+        return $api.post<Blob>(VideoEndpoints.getExelVideo(), body, { responseType: 'blob' }).then(v => v.data)
+    };
 }

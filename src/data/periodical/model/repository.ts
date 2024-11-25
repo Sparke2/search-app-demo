@@ -28,4 +28,8 @@ export namespace PeriodicalRepository {
     export const getAllPeriodical = async (body: periodicalBody, query: { rows: number, start: number }) => {
         return $api.post<PaginationResponse<Periodical>>(PeriodicalEndpoints.getAllPeriodical(query), body).then(v => v.data)
     };
+
+    export const getExelPeriodical = async (body: periodicalBody) => {
+        return $api.post<Blob>(PeriodicalEndpoints.getExelPeriodical(), body, { responseType: 'blob' }).then(v => v.data)
+    };
 }

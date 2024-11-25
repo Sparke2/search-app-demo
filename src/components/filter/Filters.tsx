@@ -258,7 +258,7 @@ const Filters = forwardRef((_, ref) => {
 
     // @ts-ignore
     return (
-        <div className="row g-4 pt-4">
+        <div className="row g-4 pt-sm-4">
             <CheckboxSearchParam handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes}
                                  applyFilters={applyFilters}/>
             <CheckboxSearchArea handleCheckboxChange={handleCheckboxChange} checkboxes={checkboxes}

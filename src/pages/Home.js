@@ -30,7 +30,7 @@ function Home() {
               {/*  </p>*/}
               {/*</div>*/}
             </div>
-            <div className="row mt-1 g-4">
+            <div className="row mt-sm-1 g-4">
               <div className="col-lg-9 result-field order-lg-1 order-2">
                 <SearchForm/>
                 <CheckboxFilterShow/>

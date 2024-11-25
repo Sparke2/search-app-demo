@@ -152,16 +152,16 @@ function SearchForm() {
             </div>
         )}
 
-        <div className="form-check mt-2">
-          <input
-              className="form-check-input"
-              type="checkbox"
-              id="searchInFound"
-          />
-          <label className="form-check-label" htmlFor="searchInFound">
-            Искать в найденном: <strong>{query}</strong>
-          </label>
-        </div>
+        {/*<div className="form-check mt-2">*/}
+        {/*  <input*/}
+        {/*      className="form-check-input"*/}
+        {/*      type="checkbox"*/}
+        {/*      id="searchInFound"*/}
+        {/*  />*/}
+        {/*  <label className="form-check-label" htmlFor="searchInFound">*/}
+        {/*    Искать в найденном: <strong>{query}</strong>*/}
+        {/*  </label>*/}
+        {/*</div>*/}
       </div>
   );
 }

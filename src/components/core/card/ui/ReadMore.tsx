@@ -24,39 +24,70 @@ const ReadMore: React.FC<ReadMoreProps> = ({
     return (
         <div>
             {isArray ? (
-                <p className="m-0">
-                    {label && <span className="text-small-grey">{label}: </span>}
-                    {isExpanded
-                        ? content.map((item, index) => (
-                            <span className="text-prim" key={index}>
-                  {item}
-                                {index < content.length - 1 && ", "}
-                </span>
-                        ))
-                        : content.slice(0, maxItems).map((item, index) => (
-                            <span className="text-prim" key={index}>
-                  {item}
-                                {index < Math.min(content.length, maxItems) - 1 && ", "}
-                </span>
-                        ))}
-                    {content.length > maxItems && (
-                        <button
-                            onClick={toggleReadMore}
-                            style={{
-                                background: "none",
-                                color: "#70797d",
-                                fontSize: "14px",
-                                border: "none",
-                                fontWeight: "bold",
-                                cursor: "pointer",
-                            }}
-                        >
-                            {isExpanded ? "Скрыть" : `Ещё (${content.length - maxItems})`}
-                        </button>
-                    )}
-                </p>
-            ) : (
                 <>
+                    {
+                        label === 'Издательство' ? (
+                            <>
+                                {label && <p className="text-grey">{label}: </p>}
+                                <p className="text-small">
+                                    {isExpanded
+                                        ? content.map((item, index) => (
+                                            <span key={index}> {item} {index < content.length - 1 && ", "}</span>
+                                        ))
+                                        : content.slice(0, maxItems).map((item, index) => (
+                                            <span
+                                                key={index}>{item} {index < Math.min(content.length, maxItems) - 1 && ", "}</span>
+                                        ))}
+                                    {content.length > maxItems && (
+                                        <button
+                                            onClick={toggleReadMore}
+                                            style={{
+                                                background: "none",
+                                                color: "#70797d",
+                                                fontSize: "14px",
+                                                border: "none",
+                                                fontWeight: "bold",
+                                                cursor: "pointer",
+                                                paddingLeft: "0"
+                                            }}
+                                        >
+                                            {isExpanded ? "Скрыть" : `Ещё (${content.length - maxItems})`}
+                                        </button>
+                                    )}
+                                </p>
+                                </>
+                                ) : (
+                                <p className="m-0">
+                                    {label && <span className="text-small-grey">{label}: </span>}
+                                    {isExpanded
+                                        ? content.map((item, index) => (
+                                            <span className="text-prim"
+                                                  key={index}> {item} {index < content.length - 1 && ", "}</span>
+                                        ))
+                                        : content.slice(0, maxItems).map((item, index) => (
+                                            <span className="text-prim"
+                                                  key={index}>{item} {index < Math.min(content.length, maxItems) - 1 && ", "}</span>
+                                        ))}
+                                    {content.length > maxItems && (
+                                        <button
+                                            onClick={toggleReadMore}
+                                            style={{
+                                                background: "none",
+                                                color: "#70797d",
+                                                fontSize: "14px",
+                                                border: "none",
+                                                fontWeight: "bold",
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            {isExpanded ? "Скрыть" : `Ещё (${content.length - maxItems})`}
+                                        </button>
+                                    )}
+                                </p>)
+                                }
+                            </>
+                        ) : (
+                            <>
                     <p
                         className={`text-small-grey ${!isExpanded ? "line-clamp" : ""}`}
                         dangerouslySetInnerHTML={{__html: content}}

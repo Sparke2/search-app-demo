@@ -11,6 +11,9 @@ import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
 import {SearchPage} from "./ui/SortSelect";
 import Pagination from "./ui/Pagination";
 import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
+import {toast, ToastContainer} from "react-toastify";
+import {VideoRepository} from "../../data/video/model/repository";
+import getExelVideo = VideoRepository.getExelVideo;
 
 export function SearchVideo() {
     const [page, setPage] = useState(0);
@@ -34,6 +37,29 @@ export function SearchVideo() {
         rows: count
     });
 
+    const downloadExcel = async (body: VideoRepository.videoBody) => {
+        await toast.promise(
+            getExelVideo(body).then((blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'videos.xlsx';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }),
+            {
+                pending: 'Файл формируется...',
+                success: 'Файл успешно загружен',
+                error: 'Ошибка при генерации файла',
+            }
+        );
+    };
+
+    const handleDownloadExcel = () => {
+        downloadExcel({query: {value, by}, filter: {channels}, sorts: [{field, modifier}]});
+    };
+
     useEffect(() => {
         if (!isPending && fetchedTotal !== total) {
             setTotal(fetchedTotal);
@@ -50,7 +76,11 @@ export function SearchVideo() {
         <div className="pe-4">
             <div className="d-flex justify-content-between align-items-center mb-4 search-header">
                 <SearchResultTextVideo resultCount={total || 0}/>
-                <button className="btn btn-outline-primary px-4">
+                <ToastContainer position="top-right"
+                                autoClose={5000}
+                                closeOnClick
+                                draggable  />
+                <button className="btn btn-outline-primary px-4" onClick={handleDownloadExcel}>
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
             </div>

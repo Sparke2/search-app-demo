@@ -12,3 +12,14 @@ const getAllVideoOptions = (body: VideoRepository.videoBody, query:{rows:number,
 export const useAllVideo = (body: VideoRepository.videoBody, query:{rows:number,start:number}) => {
     return useQuery(getAllVideoOptions(body, query))
 }
+
+const getExelVideoOptions = (body: VideoRepository.videoBody) => queryOptions({
+    queryKey: VideoKeys.getExel.VideoExel(body),
+    queryFn: () => VideoRepository.getExelVideo(body),
+    staleTime: Infinity,
+    refetchOnWindowFocus: true
+})
+
+export const useExelVideo = (body: VideoRepository.videoBody) => {
+    return useQuery(getExelVideoOptions(body))
+}

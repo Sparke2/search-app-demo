@@ -1229,6 +1229,16 @@ header {
 }
 
 @media (max-width: 500px) {
+  #search-page h1 {
+    font-size: 16px;
+  }
+  .filter-field h5, .result-field h5 {
+    font-size: 16px;
+  }
+  .input-group.search .search-main {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
   header {
     .navbar-brand.brandName img {
       max-height: unset;

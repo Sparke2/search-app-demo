@@ -20,3 +20,15 @@ export const useAllPeriodical = (body: PeriodicalRepository.periodicalBody, quer
 }, enabled?: boolean) => {
     return useSearchItemWithFiltersLoading(getAllPeriodicalOptions(body, query))
 }
+
+const getExelPeriodicalOptions = (body: PeriodicalRepository.periodicalBody, enabled?: boolean) => queryOptions({
+    queryKey: PeriodicalKeys.getExel.PeriodicalExel(body),
+    queryFn: () => PeriodicalRepository.getExelPeriodical(body),
+    staleTime: Infinity,
+    refetchOnWindowFocus: true,
+    enabled: enabled,
+})
+
+export const useExelPeriodical = (body: PeriodicalRepository.periodicalBody, enabled?: boolean) => {
+    return useSearchItemWithFiltersLoading(getExelPeriodicalOptions(body))
+}

@@ -27,4 +27,8 @@ export namespace AudioRepository {
     export const getAllAudio = async (body: audioBody, query: { rows: number, start: number }) => {
         return $api.post<PaginationResponse<Audio>>(AudioEndpoints.getAllAudio(query), body).then(v => v.data)
     };
+
+    export const getExelAudio = async (body: audioBody) => {
+        return $api.post<Blob>(AudioEndpoints.getExelAudio(), body,  { responseType: 'blob' }).then(v => v.data)
+    };
 }

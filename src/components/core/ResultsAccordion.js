@@ -61,7 +61,7 @@ const ResultsAccordion = () => {
         <div className="py-4">
             <Accordion>
                 {(variant === 'some-accordion' || variant === 'all-accordion') &&
-                    <h5 className="mb-4">Всего найдено:</h5>}
+                    <h5 className="mb-sm-4">Всего найдено:</h5>}
                 {variant === 'paginated' && paginated}
                 {variant === 'some-accordion' && renderAccordionItems(currentCategories)}
                 {variant === 'all-accordion' && renderAccordionItems(categories)}

@@ -31,8 +31,8 @@ const VideoItem = ({ index, video }: { index: number, video: Video }) => {
 
     return (
         <div className="card-item video position-relative">
-            <div className="row">
-                <div className="col-4">
+            <div className="row g-3">
+                <div className="col-xxl-4 col-xl-5">
                     <ReactPlayer
                         url={video.link}
                         width="250px"
@@ -41,10 +41,10 @@ const VideoItem = ({ index, video }: { index: number, video: Video }) => {
                         playing={false}
                     />
                 </div>
-                <div className="col-8">
+                <div className="col-xxl-8 col-xl-7">
                     <p className="text" dangerouslySetInnerHTML={{ __html: removeHtmlEntities(video.title)}}/>
                     <ReadMore content={formatText(video.description)} maxLines={3} />
-                    <div className="d-flex justify-content-between mt-4">
+                    <div className="d-flex flex-sm-row flex-column gap-3 justify-content-sm-between mt-4">
                         <a href={video.link} target="_blank" className="btn btn-primary btn-small" rel="noreferrer">Перейти к просмотру</a>
                         <ShareButtons title={removeHtmlEntities(video.title)} url={video.link} />
                     </div>

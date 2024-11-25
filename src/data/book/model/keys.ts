@@ -5,4 +5,8 @@ export namespace BookKeys {
         export const UNIQUE_PART = 'book-all'
         export const BookAll = (body: BookRepository.bookBody, query:{rows:number,start:number}) => [UNIQUE_PART, {body, query}]
     }
+    export namespace getExel {
+        export const UNIQUE_PART = 'book-exel'
+        export const BookExel = (body: BookRepository.bookBody) => [UNIQUE_PART, {body}]
+    }
 }
