@@ -9,16 +9,16 @@ const AudioItem = ({index, audio}: { index: number, audio: Audio }) => {
     return (
         <div className="card-item position-relative">
             <div className="row g-3">
-                <div className="col-6">
+                <div className="col-xxl-6 col-md-5">
                     <p className="text"
                        dangerouslySetInnerHTML={{__html: `<span class="pe-2">${index}.</span> ${audio.title}`}}/>
-                    <ReadMore content={audio.description} maxLines={3} />
+                    <ReadMore content={audio.description} maxLines={2} />
                 </div>
-                <div className="col-2">
+                <div className="col-md-2 col-sm-4">
                     <p className="text-grey">Время звучания</p>
                     <p className="text-small">{audio.recordtime}</p>
                 </div>
-                <div className="col-3">
+                <div className="col-md-3 col-sm-4">
                     <p className="text-grey">Исполнители</p>
                     <p className="text-small">
                         {executants.map((executant, index) => (
@@ -28,7 +28,7 @@ const AudioItem = ({index, audio}: { index: number, audio: Audio }) => {
                         ))}
                     </p>
                 </div>
-                <div className="col-1">
+                <div className="col-xxl-1 col-md-2 col-sm-4">
                     <p className="text-grey">Год</p>
                     <p className="text-small">{audio.recordyear}</p>
                 </div>

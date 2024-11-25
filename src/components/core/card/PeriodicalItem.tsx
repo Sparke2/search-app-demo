@@ -17,7 +17,7 @@ const PeriodicalItem = ({index, periodical}: { index: number, periodical: Period
                 {minYear} год — {maxYear} год, количество номеров: {totalIssues}
             </p>
             <ReadMore content={periodical.description} maxLines={3} />
-            <div className="d-flex flex-wrap gap-3 mt-3">
+            <div className="d-flex flex-md-row flex-column flex-wrap gap-3 mt-3">
                 <button className="btn btn-primary btn-small equal">Читать</button>
                 <a href={`https://www.iprbookshop.ru/${periodical.id}.html`} target="_blank"
                    className="btn btn-outline-primary btn-small equal" rel="noreferrer">Подробнее о журнале</a>

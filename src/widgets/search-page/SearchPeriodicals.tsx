@@ -3,7 +3,6 @@ import {useAllPeriodical} from "../../data/periodical/model/queries";
 import PeriodicalItem from "../../components/core/card/PeriodicalItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
-import SearchResultTextPeriodical from "../../hooks/SearchResultTextPeriodical";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
 import ItemsPerPageSelect from "./ui/ItemsPerPageSelect";
@@ -16,6 +15,7 @@ import {useDirectionSearch} from "../../hooks/useDirectionSearch";
 import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
 import {toast, ToastContainer} from "react-toastify";
 import {PeriodicalRepository} from "../../data/periodical/model/repository";
+import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
 import getExelPeriodical = PeriodicalRepository.getExelPeriodical;
 
 export function SearchPeriodicals() {
@@ -87,17 +87,17 @@ export function SearchPeriodicals() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextPeriodical resultCount={total || 0}/>
+            <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
+                <SearchResultTextArchive resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
                                 closeOnClick
-                                draggable  />
+                                draggable/>
                 <button className="btn btn-outline-primary px-4" onClick={handleDownloadExcel}>
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
             </div>
-            <div className="d-flex justify-content-between mb-5">
+            <div className="d-flex flex-md-row gap-3 flex-column justify-content-between mb-5">
                 <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                 <SearchPage name="numbers."/>
             </div>
@@ -120,7 +120,7 @@ export function SearchPeriodicals() {
                     ))}
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
+            <div className="d-flex flex-md-row flex-column gap-3 justify-content-between align-items-sm-center pt-4">
                 <Pagination
                     page={page}
                     setPage={setPage}

@@ -53,7 +53,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                     <p className="text-small">{book.pubyear}</p>
                 </div>
             </div>
-            <div className="d-flex flex-wrap gap-3 mt-3">
+            <div className="d-flex flex-sm-row flex-column flex-wrap gap-3 mt-3">
                 {/*<button className="btn btn-primary btn-small">Добавить в заказ • 3000 ₽</button>*/}
                 <Tooltip target={`.btn-${book.id}`} className="custom-tooltip">
                     <p>Недоступно для чтения.</p>

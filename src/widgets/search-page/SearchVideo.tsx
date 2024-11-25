@@ -3,7 +3,6 @@ import {useAllVideo} from "../../data/video/model/queries";
 import VideoItem from "../../components/core/card/VideoItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
-import SearchResultTextVideo from "../../hooks/SearchResultTextVideo";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
@@ -13,6 +12,7 @@ import Pagination from "./ui/Pagination";
 import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 import {toast, ToastContainer} from "react-toastify";
 import {VideoRepository} from "../../data/video/model/repository";
+import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
 import getExelVideo = VideoRepository.getExelVideo;
 
 export function SearchVideo() {
@@ -74,17 +74,17 @@ export function SearchVideo() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextVideo resultCount={total || 0}/>
+            <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
+                <SearchResultTextArchive resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
                                 closeOnClick
-                                draggable  />
+                                draggable/>
                 <button className="btn btn-outline-primary px-4" onClick={handleDownloadExcel}>
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
             </div>
-            <div className="d-flex justify-content-between mb-5">
+            <div className="d-flex flex-md-row gap-3 flex-column justify-content-between mb-5">
                 <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                 <SearchPage name="video"/>
             </div>
@@ -107,7 +107,7 @@ export function SearchVideo() {
                     ))}
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
+            <div className="d-flex flex-md-row flex-column gap-3 justify-content-between align-items-sm-center pt-4">
                 <Pagination
                     page={page}
                     setPage={setPage}

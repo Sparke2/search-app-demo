@@ -728,6 +728,10 @@
     color: var(--color-grey);
   }
 
+  .text-grey span {
+    overflow-wrap: anywhere;
+  }
+
   .text-small, .text-small-grey {
     font-size: 14px;
     overflow-wrap: anywhere;
@@ -1205,6 +1209,9 @@ header {
 }
 
 @media (max-width: 1199px) {
+  .card-item .row > div:first-child {
+    border-right: none;
+  }
   #search-intuitive {
     width: 100%;
     margin-bottom: 1rem;
@@ -1229,11 +1236,18 @@ header {
 }
 
 @media (max-width: 500px) {
+  .card-item .row > div {
+    border-right: none;
+  }
   #search-page h1 {
     font-size: 16px;
   }
   .filter-field h5, .result-field h5 {
     font-size: 16px;
+  }
+  .btn-small {
+    padding: 0.5314rem 1rem;
+    font-size: 14px;
   }
   .input-group.search .search-main {
     padding-top: 0.5rem;

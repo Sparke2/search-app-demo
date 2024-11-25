@@ -78,7 +78,7 @@ export function SearchArchives() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
+            <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
                 <SearchResultTextArchive resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
@@ -88,7 +88,7 @@ export function SearchArchives() {
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
             </div>
-            <div className="d-flex justify-content-between mb-5">
+            <div className="d-flex flex-md-row gap-3 flex-column justify-content-between mb-5">
                 <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                 <SearchPage name=""/>
             </div>
@@ -111,7 +111,7 @@ export function SearchArchives() {
                     ))}
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
+            <div className="d-flex flex-md-row flex-column gap-3 justify-content-between align-items-sm-center pt-4">
                 <Pagination
                     page={page}
                     setPage={setPage}

@@ -3,7 +3,6 @@ import {useAllBook} from "../../data/book/model/queries";
 import BookItem from "../../components/core/card/BookItem";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileExcel} from "@fortawesome/free-regular-svg-icons";
-import SearchResultTextBook from "../../hooks/SearchResultTextBook";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
 import {SearchPage} from "./ui/SortSelect";
@@ -17,6 +16,7 @@ import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 import {BookRepository} from "../../data/book/model/repository";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
 import getExelBook = BookRepository.getExelBook;
 
 export function SearchBooks() {
@@ -89,17 +89,17 @@ export function SearchBooks() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex justify-content-between align-items-center mb-4 search-header">
-                <SearchResultTextBook resultCount={total || 0}/>
+            <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
+                <SearchResultTextArchive resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
                                 closeOnClick
-                                draggable  />
+                                draggable/>
                 <button className="btn btn-outline-primary px-4" onClick={handleDownloadExcel}>
                     <FontAwesomeIcon icon={faFileExcel} className="pe-2"/> Экспорт в Excel
                 </button>
             </div>
-            <div className="d-flex justify-content-between mb-5">
+            <div className="d-flex flex-md-row gap-3 flex-column justify-content-between mb-5">
                 <ItemsPerPageSelect count={count} handleCountChange={handleCountChange}/>
                 <SearchPage name="pub"/>
             </div>
@@ -122,7 +122,7 @@ export function SearchBooks() {
                     ))}
                 </div>
             )}
-            <div className="d-flex justify-content-between align-items-center pt-4">
+            <div className="d-flex flex-md-row flex-column gap-3 justify-content-between align-items-sm-center pt-4">
                 <Pagination
                     page={page}
                     setPage={setPage}
