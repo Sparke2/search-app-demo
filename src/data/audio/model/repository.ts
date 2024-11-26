@@ -14,7 +14,7 @@ export namespace AudioRepository {
             executants: string[],
             genres: string[],
             pubhouses: string[],
-            purposes: number[],
+            purposes: string[],
             recordyear: number[],
             collections: string[],
         }>

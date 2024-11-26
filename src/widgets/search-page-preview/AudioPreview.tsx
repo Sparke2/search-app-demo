@@ -19,8 +19,9 @@ export function AudioPreview ({cat, index}:{cat:string, index:string}) {
     const pubhouses = useArrayQueryParam('pubhouses');
     const genres = useCheckboxQueryParams('genre');
     const recordyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
+    const purposes = useArrayQueryParam('appointments');
 
-    const {data:{data:audios = [],pagination:{total = 0} = {}} = {}} = useAllAudio({query:{value,by}, filter: {executants, pubhouses, genres, recordyear, collections},},{start: 0, rows: 10})
+    const {data:{data:audios = [],pagination:{total = 0} = {}} = {}} = useAllAudio({query:{value,by}, filter: {executants, pubhouses, purposes, genres, recordyear, collections},},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>

@@ -3,20 +3,16 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import ReactSelect from '../core/filter/ReactSelect';
 import Checkbox from '../core/filter/Checkbox';
 import ReactSelectWithLabel from '../core/filter/ReactSelectWithLabel';
-import OptionsForEditions from '../../mock/OptionsForEditions';
 import OptionsForAvailability from '../../mock/OptionsForAvailability';
 import OptionsForYears from '../../mock/OptionsForYears';
-import OptionsForTarget from '../../mock/OptionsForTarget';
 import OptionsForAdditionals from '../../mock/OptionsForAdditionals';
 import OptionsForVAK from '../../mock/OptionsForVAK';
 import OptionsForSubscribe from "../../mock/OptionsForSubscribe";
-import OptionsForAppointment from "../../mock/OptionsForAppointment";
 import {BBKModalRoot} from '../../data/bbk/ui/BBKModal';
 import InputISBN from "../core/filter/InputISBN";
 import {useCategoriesArray} from "../../hooks/useCategoriesArray";
 import {NodesBBKList} from "../../data/bbk/ui/NodesBBKList";
 import {GroupModalsChain} from "./ui/GroupModals/GroupModals";
-import {CurrentCategoriesExclusive} from "../core/filter/CurrentCategoriesExclusive";
 import {CheckboxSearchParam} from "./model/contst/CheckboxSearchParam";
 import {CheckboxSearchArea} from "./model/contst/CheckboxSearchArea";
 import {ChannelList} from "../../data/channel/ui/ChannelList";
@@ -32,6 +28,21 @@ const Filters = forwardRef((_, ref) => {
     const currentCategories = useCategoriesArray();
     const location = useLocation();
     const navigate = useNavigate();
+    const {data: purposeAudio = [], isLoading: purposeAudioLoad} = useFilter("audios", "purposes") as {
+        data: Filter[],
+        isLoading: boolean
+    };
+    const optionsForPurposeAudio = purposeAudio.map(({val}) => ({value: val, label: val}))
+    const {data: edithions = [], isLoading: edithionsLoad} = useFilter("books", "pubtype") as {
+        data: Filter[],
+        isLoading: boolean
+    };
+    const optionsForEditions = edithions.map(({val}) => ({value: val, label: val}))
+    const {data: purposeBook = [], isLoading: purposeBookLoad} = useFilter("books", "purposes") as {
+        data: Filter[],
+        isLoading: boolean
+    };
+    const optionsForPurposeBook = purposeBook.map(({val}) => ({value: val, label: val}))
     const {data: performers = [], isLoading: performLoad} = useFilter("audios", "executants") as {
         data: Filter[],
         isLoading: boolean
@@ -83,14 +94,14 @@ const Filters = forwardRef((_, ref) => {
     }
 
     const defaultSelectedOptions = {
-        appointments: getMultyOptions('appointments', OptionsForAppointment),
+        appointments: getMultyOptions('appointments', optionsForPurposeAudio),
         performers: getMultyOptions('performers', optionsForPerformers),
         pubhouses: getMultyOptions('pubhouses', optionsForPubhouses),
         vak: getOption('vak', OptionsForVAK) || OptionsForVAK.find(option => option.selected),
         subscribe: getOption('subscribe', OptionsForSubscribe) || OptionsForSubscribe.find(option => option.selected),
         availability: getOption('availability', OptionsForAvailability) || OptionsForAvailability.find(option => option.selected),
-        editions: getMultyArrayOptions('editions', OptionsForEditions),
-        targets: getMultyArrayOptions('targets', OptionsForTarget),
+        editions: getMultyOptions('editions', optionsForEditions),
+        targets: getMultyOptions('targets', optionsForPurposeBook),
         additionals: getMultyOptions('additionals', OptionsForAdditionals),
         fromYear: getYear('fromYear', OptionsForYears),
         toYear: getYear('toYear', OptionsForYears),
@@ -365,14 +376,16 @@ const Filters = forwardRef((_, ref) => {
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Назначение</h6>
-                    <ReactSelect
-                        options={OptionsForAppointment}
-                        placeholder="Выберите из списка"
-                        isMulti
-                        defaultValue={selectedOptions.appointments}
-                        onChange={option => setSelectedOptions(prev => ({...prev, appointments: option}))}
-                        applyFilters={applyFilters}
-                    />
+                    {(!purposeAudioLoad)&&(
+                        <ReactSelect
+                            options={optionsForPurposeAudio}
+                            placeholder="Выберите из списка"
+                            isMulti
+                            defaultValue={defaultSelectedOptions.appointments}
+                            onChange={option => setSelectedOptions(prev => ({...prev, appointments: option}))}
+                            applyFilters={applyFilters}
+                        />
+                    )}
                 </div>
             )}
             {(['searchBooks', 'searchPeriodicals'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
@@ -415,29 +428,33 @@ const Filters = forwardRef((_, ref) => {
             {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Вид издания</h6>
+                    {(!edithionsLoad)&&(
                     <ReactSelect
-                        options={OptionsForEditions}
+                        options={optionsForEditions}
                         placeholder="Выберите из списка"
                         isMulti
                         defaultValue={selectedOptions.editions}
                         onChange={options => setSelectedOptions(prev => ({...prev, editions: options}))}
                         applyFilters={applyFilters}
                     />
+                    )}
                 </div>
             )}
-            <CurrentCategoriesExclusive categories={['searchBooks']}>
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Целевое назначение</h6>
+                    {(!purposeBookLoad)&&(
                     <ReactSelect
-                        options={OptionsForTarget}
+                        options={optionsForPurposeBook}
                         placeholder="Выберите из списка"
-                        defaultValue={selectedOptions.targets}
+                        isMulti
+                        defaultValue={defaultSelectedOptions.targets}
                         onChange={options => setSelectedOptions(prev => ({...prev, targets: options}))}
                         applyFilters={applyFilters}
-                        isMulti
                     />
+                    )}
                 </div>
-            </CurrentCategoriesExclusive>
+            )}
             {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Дополнительно</h6>

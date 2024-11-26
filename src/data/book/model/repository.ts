@@ -15,9 +15,11 @@ export namespace BookRepository {
             pubtypes: string[],
             collections: string[],
             pubhouses: string[],
+            purposes: string[],
             pubyear: number[],
             isbn: string,
             ugnps: string[],
+            pubtype: string[],
             profiles: string[],
             disciplines: string[],
         }>

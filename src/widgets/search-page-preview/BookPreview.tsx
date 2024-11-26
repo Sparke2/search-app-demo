@@ -18,12 +18,14 @@ export function BookPreview ({cat, index}:{cat:string, index:string}) {
     const by = useSearchAreaQueryParam();
     const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const pubhouses = useArrayQueryParam('pubhouses');
+    const pubtype = useArrayQueryParam('editions');
     const ugnps = useUGSNSearch();
     const profiles = useDirectionSearch();
     const disciplines = useDisciplinesSearch();
     const isbn = useQueryParam('isbn');
+    const purposes = useArrayQueryParam('targets');
 
-    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by}, filter: {pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
+    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by}, filter: {pubyear, pubhouses, purposes, ugnps, pubtype, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>
