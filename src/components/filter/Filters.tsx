@@ -355,7 +355,7 @@ const Filters = forwardRef((_, ref) => {
                             options={optionsForPubhouses}
                             placeholder="Введите или выберите из списка"
                             isMulti
-                            defaultValue={selectedOptions.pubhouses}
+                            defaultValue={defaultSelectedOptions.pubhouses}
                             onChange={option => setSelectedOptions(prev => ({...prev, pubhouses: option}))}
                             applyFilters={applyFilters}
                         />
