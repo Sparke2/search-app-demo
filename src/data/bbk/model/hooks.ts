@@ -34,6 +34,7 @@ export const useBbk = () => {
                 return null;
             }
 
+
             if (curKey.checked && !curKey.partialChecked) {
                 node.children = [];
             } else if (node.children && node.children.length > 0) {
@@ -45,7 +46,7 @@ export const useBbk = () => {
         // @ts-ignore
         tree = tree.map(node => foo(node)).map(v => v && v.children ? v : undefined);
 
-        return tree;
+        return tree as TreeNode[];
     };
 
     const remove = (key: string) => {
