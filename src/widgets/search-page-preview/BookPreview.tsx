@@ -8,12 +8,22 @@ import Accordion from "react-bootstrap/Accordion";
 import {CATEGORIES_LABELS} from "../../data/consts";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
+import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
+import {useUGSNSearch} from "../../hooks/useUGSNSearch";
+import {useDirectionSearch} from "../../hooks/useDirectionSearch";
+import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
 
 export function BookPreview ({cat, index}:{cat:string, index:string}) {
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
+    const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
+    const pubhouses = useArrayQueryParam('pubhouses');
+    const ugnps = useUGSNSearch();
+    const profiles = useDirectionSearch();
+    const disciplines = useDisciplinesSearch();
+    const isbn = useQueryParam('isbn');
 
-    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by}},{start: 0, rows: 10})
+    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by}, filter: {pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>

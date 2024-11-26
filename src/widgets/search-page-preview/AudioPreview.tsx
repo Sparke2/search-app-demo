@@ -8,12 +8,19 @@ import {useAllAudio} from "../../data/audio/model/queries";
 import AudioItem from "../../components/core/card/AudioItem";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
+import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
+import {useCheckboxQueryParams} from "../../hooks/useCheckboxQueryParams";
 
 export function AudioPreview ({cat, index}:{cat:string, index:string}) {
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
+    const executants = useArrayQueryParam('performers');
+    const collections = useCheckboxQueryParams('collection');
+    const pubhouses = useArrayQueryParam('pubhouses');
+    const genres = useCheckboxQueryParams('genre');
+    const recordyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
 
-    const {data:{data:audios = [],pagination:{total = 0} = {}} = {}} = useAllAudio({query:{value,by}},{start: 0, rows: 10})
+    const {data:{data:audios = [],pagination:{total = 0} = {}} = {}} = useAllAudio({query:{value,by}, filter: {executants, pubhouses, genres, recordyear, collections},},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>

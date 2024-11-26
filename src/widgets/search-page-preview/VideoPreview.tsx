@@ -8,12 +8,14 @@ import Accordion from "react-bootstrap/Accordion";
 import {CATEGORIES_LABELS} from "../../data/consts";
 import {useQueryParam} from "../../hooks/useQueryParam";
 import {useSearchAreaQueryParam} from "../../hooks/useSearchAreaQueryParam";
+import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 
 export function VideoPreview ({cat, index}:{cat:string, index:string}) {
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
+    const channels = useArrayQueryParam('channel');
 
-    const {data:{data:videos = [],pagination:{total = 0} = {}} = {}} = useAllVideo({query:{value,by}},{start: 0, rows: 10})
+    const {data:{data:videos = [],pagination:{total = 0} = {}} = {}} = useAllVideo({query:{value,by}, filter: {channels}},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>
