@@ -2,7 +2,7 @@ import {queryOptions, useQuery} from "@tanstack/react-query";
 import {BbkKeys} from "./keys";
 import {BbkRepository} from "./repository";
 
-const getAllBkkOptions = () => queryOptions({
+export const getAllBkkOptions = () => queryOptions({
     queryKey: BbkKeys.getAll.bbkAll(),
     queryFn: () => BbkRepository.getAllBkk(),
     staleTime: Infinity,

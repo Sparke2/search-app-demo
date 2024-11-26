@@ -1,17 +1,18 @@
 import {useBbk} from "../model/hooks";
-import {mockNodesBbk as NodeBBK} from "../model/mock";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import React, {ComponentProps, ComponentType, Fragment, memo} from "react";
 import {TreeNode} from "../model/types";
+import {getAllBkkOptions} from "../model/queries";
+import {useQuery} from "@tanstack/react-query";
 // memo - если копмопнент не принимает объекты в виде пропсов - кеширует компонент
 export const NodesBBKList = memo(({Component, ComponentClassName}: {
     Component?: ComponentType<ComponentProps<'div'>>,
     ComponentClassName?: string
 }) => {
+    const {data: NodeBBK = []} = useQuery({...getAllBkkOptions(), select: v => v.data})
     const {filterNodesBbkByKeys, bkkSelectedKeys, remove} = useBbk()
     const selectedBBK = filterNodesBbkByKeys(bkkSelectedKeys).filter(Boolean);
-    console.log({selectedBBK});
 
     const flattenTree = (nodes: TreeNode[]) => {
         const result = [] as TreeNode[];
@@ -37,7 +38,6 @@ export const NodesBBKList = memo(({Component, ComponentClassName}: {
 
     const flatTreeNodes = flattenTree(selectedBBK);
     const renderSelectedBBK = () => {
-        console.log({flatTreeNodes})
         return flatTreeNodes.map((selectedItem, key) => {
             const nodeChildrenLength = NodeBBK[key]?.children?.length || 0;
             const selectedChildrenLength = selectedItem.childrenLen
@@ -64,7 +64,6 @@ export const NodesBBKList = memo(({Component, ComponentClassName}: {
     const Comp = Component ? Component : Fragment; //Fragment - <></>
     const props = Component ? {className: ComponentClassName} : undefined;
     //если Component задала - можно кидать classnAME, иначе - <></> без className
-    console.log({bkkSelectedKeys})
     return (
         <Comp {...props}>
             <h6 className="mb-3">ББК</h6>

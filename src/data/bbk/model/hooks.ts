@@ -1,7 +1,8 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {useAllBbk} from "./queries";
+import {getAllBkkOptions, useAllBbk} from "./queries";
 import {TreeChecked} from "../../../global";
 import {TreeNode} from "./types";
+import {useQuery} from "@tanstack/react-query";
 
 
 export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
@@ -9,9 +10,10 @@ export const isPartialCheckedBbkKey = (key: string) => key.at(0) === '-'
 export const useBbk = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const {data: NodesBBK = []} = useAllBbk()
+    const {data: {data: NodesBBK = []} = {}} = useAllBbk()
     const searchParams = new URLSearchParams(location.search)
-    const bbkRouter = searchParams.get('bbk')?.split?.(',')?.sort?.(((a, b) => +a[0] - +b[0])) || []
+    const bbkRouter = searchParams.get('bbk')?.split?.(',')?.sort?.(((a, b) => +a[0] - +b[0])) || [];
+    // console.log({bbkRouter})
     const bkkSelectedKeys = bbkRouter.reduce((acc, bbk) => {
         acc[isPartialCheckedBbkKey(bbk) ? bbk.slice(1) : bbk] = {
             checked: !isPartialCheckedBbkKey(bbk),
@@ -54,7 +56,6 @@ export const useBbk = () => {
             const keysToRemove = Object.keys(bkkSelectedKeys).filter(innerKey =>
                 innerKey === key || innerKey === key[0] || innerKey.startsWith(`${key}.`) || innerKey.startsWith(`${key}-`)
             );
-            console.log({keysToRemove})
 
             const newKeys = Object.keys(bkkSelectedKeys)
                 .filter(innerKey => !keysToRemove.includes(innerKey))
@@ -67,4 +68,14 @@ export const useBbk = () => {
     }
 
     return {apply, bkkSelectedKeys, filterNodesBbkByKeys, remove}
+}
+export const useBkkCurrent4Query = () => {
+    const {bkkSelectedKeys} = useBbk()
+    const {data: meta = {}, isPending} = useQuery({...getAllBkkOptions(), select: v => v.meta})
+    const bbks = Object.entries(bkkSelectedKeys).map(([key, node]) => {
+        console.log({meta: meta?.[key], key})
+        return node.checked || node.partialChecked ? meta?.[key] : null;
+    }).filter(Boolean) || []
+    console.log({dsddssd: bbks, bkkSelectedKeys})
+    return {bbks, isLoading: isPending} as { bbks: string[], isLoading: boolean }
 }

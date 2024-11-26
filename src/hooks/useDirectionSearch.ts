@@ -16,7 +16,7 @@ export const useDirectionSearch = () => {
         const params = new URLSearchParams(location.search).get('direction');
         if (!isPending) {
             const directionMap = new Map(
-                rawDirectionData.data.map(({id, code, name}) => [String(id), `${code} ${name}`]),
+                rawDirectionData?.data.map?.(({id, code, name}) => [String(id), `${code} ${name}`]),
             );
             return params
                 ? params.split(',').map((id) => directionMap.get(id)).filter(Boolean)

@@ -2095,5 +2095,5 @@ export const mockNodesBbk = [
             }
         ]
     }
-] satisfies TreeNode[];
+] as TreeNode[];
 

@@ -17,6 +17,7 @@ import {BookRepository} from "../../data/book/model/repository";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
+import {useBkkCurrent4Query} from "../../data/bbk/model/hooks";
 import getExelBook = BookRepository.getExelBook;
 
 export function SearchBooks() {
@@ -37,7 +38,8 @@ export function SearchBooks() {
     const ugnps = useUGSNSearch();
     const profiles = useDirectionSearch();
     const disciplines = useDisciplinesSearch();
-
+    const {bbks, isLoading: isBBkLoading} = useBkkCurrent4Query()
+    console.log({bbks})
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
         isPending,
@@ -45,7 +47,16 @@ export function SearchBooks() {
     } = useAllBook(
         {
             query: {value, by},
-            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, disciplines, purposes, ...(isbn ? {isbn} : {})},
+            filter: {
+                pubyear,
+                pubhouses,
+                ugnps,
+                bbks,
+                pubtypes,
+                profiles,
+                disciplines,
+                purposes, ...(isbn ? {isbn} : {})
+            },
             sorts: [{field, modifier}]
         },
         {start: page * count, rows: count},
@@ -72,9 +83,9 @@ export function SearchBooks() {
 
     const handleDownloadExcel = () => {
         downloadExcel({
-            query: { value, by },
-            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
-            sorts: [{ field, modifier }],
+            query: {value, by},
+            filter: {pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? {isbn} : {})},
+            sorts: [{field, modifier}],
         });
     };
 
@@ -91,7 +102,8 @@ export function SearchBooks() {
 
     return (
         <div className="pe-4">
-            <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
+            <div
+                className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
                 <SearchResultTextArchive resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}

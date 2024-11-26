@@ -12,8 +12,9 @@ import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 import {useUGSNSearch} from "../../hooks/useUGSNSearch";
 import {useDirectionSearch} from "../../hooks/useDirectionSearch";
 import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
+import {useBkkCurrent4Query} from "../../data/bbk/model/hooks";
 
-export function BookPreview ({cat, index}:{cat:string, index:string}) {
+export function BookPreview({cat, index}: { cat: string, index: string }) {
     const value = useQueryParam('query');
     const by = useSearchAreaQueryParam();
     const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
@@ -24,8 +25,11 @@ export function BookPreview ({cat, index}:{cat:string, index:string}) {
     const disciplines = useDisciplinesSearch();
     const isbn = useQueryParam('isbn');
     const purposes = useArrayQueryParam('targets');
-
-    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by}, filter: {pubyear, pubhouses, purposes, ugnps, pubtypes, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
+    const {bbks} = useBkkCurrent4Query()
+    const {data: {data: books = [], pagination: {total = 0} = {}} = {}} = useAllBook({
+        query: {value, by},
+        filter: {bbks, pubyear, pubhouses, purposes, ugnps, pubtypes, profiles, disciplines, ...(isbn ? {isbn} : {})},
+    }, {start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>
