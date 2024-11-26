@@ -36,22 +36,20 @@ export const NodesBBKList = memo(({Component, ComponentClassName}: {
     };
 
     const flatTreeNodes = flattenTree(selectedBBK);
-    console.log({flatTreeNodes})
     const renderSelectedBBK = () => {
+        console.log({flatTreeNodes})
         return flatTreeNodes.map((selectedItem, key) => {
             const nodeChildrenLength = NodeBBK[key]?.children?.length || 0;
             const selectedChildrenLength = selectedItem.childrenLen
-            if (nodeChildrenLength !== selectedChildrenLength) {
+            if (true) {
                 return (
                     <div className="list-items-modal" key={key}>
-                        {selectedItem.children.map((child, index) => (
-                            <div key={index}>{child.label}
-                                <button className="btn p-0 ps-2" onClick={() => remove(child.key)}>
-                                    <FontAwesomeIcon icon={faXmark}/>
-                                </button>
-                            </div>
+                        <div key={key}>{selectedItem.label}
+                            <button className="btn p-0 ps-2" onClick={() => remove(selectedItem.key)}>
+                                <FontAwesomeIcon icon={faXmark}/>
+                            </button>
+                        </div>
 
-                        ))}
                     </div>
                 );
             } else {
@@ -71,19 +69,19 @@ export const NodesBBKList = memo(({Component, ComponentClassName}: {
         <Comp {...props}>
             <h6 className="mb-3">ББК</h6>
             <div className="selected-items-modal">
-                {selectedBBK.length > 0 && (
-                    <div className="list-items-modal">
-                        {flatTreeNodes.map((item) => (
-                            bkkSelectedKeys[item.key]?.partialChecked ? null :
-                                <div key={item.key}>
-                                    {item.label}
-                                    <button className="btn p-0 ps-2" onClick={() => remove(item.key)}>
-                                        <FontAwesomeIcon icon={faXmark}/>
-                                    </button>
-                                </div>
-                        ))}
-                    </div>
-                )}
+                {/*{selectedBBK.length > 0 && (*/}
+                {/*    <div className="list-items-modal">*/}
+                {/*        {flatTreeNodes.map((item) => (*/}
+                {/*            bkkSelectedKeys[item.key]?.partialChecked ? null :*/}
+                {/*                <div key={item.key}>*/}
+                {/*                    {item.label}*/}
+                {/*                    <button className="btn p-0 ps-2" onClick={() => remove(item.key)}>*/}
+                {/*                        <FontAwesomeIcon icon={faXmark}/>*/}
+                {/*                    </button>*/}
+                {/*                </div>*/}
+                {/*        ))}*/}
+                {/*    </div>*/}
+                {/*)}*/}
                 {renderSelectedBBK()}
             </div>
         </Comp>
