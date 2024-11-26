@@ -28,7 +28,7 @@ export function SearchBooks() {
     const value = useQueryParam('query');
     const isbn = useQueryParam('isbn');
     const purposes = useArrayQueryParam('targets');
-    const pubtype = useArrayQueryParam('editions');
+    const pubtypes = useArrayQueryParam('editions');
     const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const by = useSearchAreaQueryParam();
     const field = useQueryParam('sort')?.trim() || "score";
@@ -45,7 +45,7 @@ export function SearchBooks() {
     } = useAllBook(
         {
             query: {value, by},
-            filter: {pubyear, pubhouses, ugnps, pubtype, profiles, disciplines, purposes, ...(isbn ? {isbn} : {})},
+            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, disciplines, purposes, ...(isbn ? {isbn} : {})},
             sorts: [{field, modifier}]
         },
         {start: page * count, rows: count},
