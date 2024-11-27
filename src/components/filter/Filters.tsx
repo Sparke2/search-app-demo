@@ -433,7 +433,7 @@ const Filters = forwardRef((_, ref) => {
                         options={optionsForEditions}
                         placeholder="Выберите из списка"
                         isMulti
-                        defaultValue={selectedOptions.editions}
+                        defaultValue={defaultSelectedOptions.editions}
                         onChange={options => setSelectedOptions(prev => ({...prev, editions: options}))}
                         applyFilters={applyFilters}
                     />

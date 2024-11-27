@@ -12,6 +12,7 @@ import {useArrayQueryParam} from "../../hooks/useArrayQueryParam";
 import {useUGSNSearch} from "../../hooks/useUGSNSearch";
 import {useDirectionSearch} from "../../hooks/useDirectionSearch";
 import {useDisciplinesSearch} from "../../hooks/useDisciplinesSearch";
+import {useAdditional} from "../../hooks/useAdditional";
 
 export function BookPreview ({cat, index}:{cat:string, index:string}) {
     const value = useQueryParam('query');
@@ -24,8 +25,11 @@ export function BookPreview ({cat, index}:{cat:string, index:string}) {
     const disciplines = useDisciplinesSearch();
     const isbn = useQueryParam('isbn');
     const purposes = useArrayQueryParam('targets');
+    const doi = useAdditional('doi');
+    const bookShtamp = useAdditional('bookShtamp');
 
-    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by}, filter: {pubyear, pubhouses, purposes, ugnps, pubtypes, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
+    const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by},
+        filter: {pubyear, pubhouses, purposes, ugnps, pubtypes, doi, bookShtamp, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>

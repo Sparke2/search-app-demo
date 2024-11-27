@@ -1,5 +1,5 @@
 const OptionsForAdditionals = [
-    { value: "publication_stamp", label: "Гриф" },
+    { value: "bookShtamp", label: "Гриф" },
     { value: "doi", label: "Только издания с DOI" },
   ];
   

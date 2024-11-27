@@ -13,7 +13,7 @@ import Pagination from "./ui/Pagination";
 import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 import {toast, ToastContainer} from "react-toastify";
 import {AudioRepository} from "../../data/audio/model/repository";
-import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
+import SearchResultTextAudio from "../../hooks/SearchResultTextAudio";
 import getExelAudio = AudioRepository.getExelAudio;
 
 export function SearchAudio() {
@@ -85,7 +85,7 @@ export function SearchAudio() {
     return (
         <div className="pe-4">
             <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
-                <SearchResultTextArchive resultCount={total || 0}/>
+                <SearchResultTextAudio resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
                                 closeOnClick

@@ -21,6 +21,8 @@ export namespace BookRepository {
             ugnps: string[],
             profiles: string[],
             disciplines: string[],
+            doi: boolean,
+            bookShtamp: boolean,
         }>
         sorts: {
             field: string,

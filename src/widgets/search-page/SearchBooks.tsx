@@ -16,7 +16,8 @@ import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 import {BookRepository} from "../../data/book/model/repository";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
+import SearchResultTextBook from "../../hooks/SearchResultTextBook";
+import {useAdditional} from "../../hooks/useAdditional";
 import getExelBook = BookRepository.getExelBook;
 
 export function SearchBooks() {
@@ -37,6 +38,8 @@ export function SearchBooks() {
     const ugnps = useUGSNSearch();
     const profiles = useDirectionSearch();
     const disciplines = useDisciplinesSearch();
+    const doi = useAdditional('doi');
+    const bookShtamp = useAdditional('bookShtamp');
 
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
@@ -45,7 +48,7 @@ export function SearchBooks() {
     } = useAllBook(
         {
             query: {value, by},
-            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, disciplines, purposes, ...(isbn ? {isbn} : {})},
+            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, doi, bookShtamp, disciplines, purposes, ...(isbn ? {isbn} : {})},
             sorts: [{field, modifier}]
         },
         {start: page * count, rows: count},
@@ -73,7 +76,7 @@ export function SearchBooks() {
     const handleDownloadExcel = () => {
         downloadExcel({
             query: { value, by },
-            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, ...(isbn ? { isbn } : {}) },
+            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, doi, bookShtamp, ...(isbn ? { isbn } : {}) },
             sorts: [{ field, modifier }],
         });
     };
@@ -92,7 +95,7 @@ export function SearchBooks() {
     return (
         <div className="pe-4">
             <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
-                <SearchResultTextArchive resultCount={total || 0}/>
+                <SearchResultTextBook resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
                                 closeOnClick

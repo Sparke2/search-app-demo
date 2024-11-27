@@ -12,7 +12,7 @@ import Pagination from "./ui/Pagination";
 import {BookSkeleton} from "../../data/book/ui/BookSkeleton";
 import {toast, ToastContainer} from "react-toastify";
 import {VideoRepository} from "../../data/video/model/repository";
-import SearchResultTextArchive from "../../hooks/SearchResultTextArchive";
+import SearchResultTextVideo from "../../hooks/SearchResultTextVideo";
 import getExelVideo = VideoRepository.getExelVideo;
 
 export function SearchVideo() {
@@ -75,7 +75,7 @@ export function SearchVideo() {
     return (
         <div className="pe-4">
             <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
-                <SearchResultTextArchive resultCount={total || 0}/>
+                <SearchResultTextVideo resultCount={total || 0}/>
                 <ToastContainer position="top-right"
                                 autoClose={5000}
                                 closeOnClick
