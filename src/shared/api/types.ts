@@ -6,3 +6,9 @@ export type PaginationResponse<T extends Record<string, unknown>> = {
         start: number;
     }
 }
+export type ResultsResponse<T extends Record<string, unknown>, M extends Record<string, unknown> = never> = {
+    data: T[]
+    message?: string;
+    success: boolean;
+    meta?: M
+}

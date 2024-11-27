@@ -17,6 +17,7 @@ export namespace BookRepository {
             pubhouses: string[],
             purposes: string[],
             pubyear: number[],
+            bbks: (`${number}`)[],
             isbn: string,
             ugnps: string[],
             profiles: string[],
@@ -38,7 +39,7 @@ export namespace BookRepository {
         return $api.post<Blob>(
             BookEndpoints.getExelBook(),
             body,
-            { responseType: 'blob' }
+            {responseType: 'blob'}
         ).then((v) => v.data);
     };
 }

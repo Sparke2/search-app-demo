@@ -18,6 +18,7 @@ import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SearchResultTextBook from "../../hooks/SearchResultTextBook";
 import {useAdditional} from "../../hooks/useAdditional";
+import {useBkkCurrent4Query} from "../../data/bbk/model/hooks";
 import getExelBook = BookRepository.getExelBook;
 
 export function SearchBooks() {
@@ -40,7 +41,8 @@ export function SearchBooks() {
     const disciplines = useDisciplinesSearch();
     const doi = useAdditional('doi');
     const bookShtamp = useAdditional('bookShtamp');
-
+    const {bbks, isLoading: isBBkLoading} = useBkkCurrent4Query()
+    console.log({bbks})
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
         isPending,
@@ -48,7 +50,7 @@ export function SearchBooks() {
     } = useAllBook(
         {
             query: {value, by},
-            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, doi, bookShtamp, disciplines, purposes, ...(isbn ? {isbn} : {})},
+            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, doi, bookShtamp, disciplines, bbks, purposes, ...(isbn ? {isbn} : {})},
             sorts: [{field, modifier}]
         },
         {start: page * count, rows: count},
@@ -76,7 +78,7 @@ export function SearchBooks() {
     const handleDownloadExcel = () => {
         downloadExcel({
             query: { value, by },
-            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, doi, bookShtamp, ...(isbn ? { isbn } : {}) },
+            filter: { pubyear, pubhouses, ugnps, profiles, disciplines, bbks, doi, bookShtamp, ...(isbn ? { isbn } : {}) },
             sorts: [{ field, modifier }],
         });
     };

@@ -12,7 +12,6 @@ export const useCurrentDirection = () => {
         navigate({search: searParams.toString()});
     }
     const remove = (newDirectionValue: string) => {
-        console.log({direction})
         const s = new Set(direction)
         s.delete(newDirectionValue)
         searParams.set('direction', Array.from(s).join(','));
