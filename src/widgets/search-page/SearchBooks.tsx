@@ -41,8 +41,7 @@ export function SearchBooks() {
     const disciplines = useDisciplinesSearch();
     const doi = useAdditional('doi');
     const bookShtamp = useAdditional('bookShtamp');
-    const {bbks, isLoading: isBBkLoading} = useBkkCurrent4Query()
-    console.log({bbks})
+    const {bbks, isLoading: isBBkLoading} = useBkkCurrent4Query();
     const {
         data: {pagination: {rows = 0, start = 0, total: fetchedTotal = 0} = {}, data: books = []} = {},
         isPending,

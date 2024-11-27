@@ -1,103 +1,103 @@
-import React, {useEffect, useRef, useState} from 'react';
-
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {TreeChecked} from "../../../global";
 import {useAllBbk} from "../model/queries";
-import {Tree, TreeCheckboxSelectionKeys} from "primereact/tree";
+import {Tree} from "primereact/tree";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useIsFirstRender} from "../../../shared/utils/isFirst";
 import {useBbk} from "../model/hooks";
 
 export const BBKModalRoot = () => {
-    const {bkkSelectedKeys: selectedKeys} = useBbk()
+    const { bkkSelectedKeys: selectedKeys } = useBbk();
     const [isModalBBKOpen, setModalBBKOpen] = useState(false);
-    const toggle = () => {
-        setModalBBKOpen(v => !v)
-    }
-    return <>
-        <button className="btn btn-outline-primary w-100" onClick={toggle}>
-            Выберите ББК
-        </button>
-        <BBKModal init={selectedKeys} isOpen={isModalBBKOpen} toggleModal={toggle}/>
-    </>
 
+    const toggleModal = useCallback(() => {
+        setModalBBKOpen((prev) => !prev);
+    }, []);
 
-}
-const BBKModal = ({isOpen, toggleModal, init}: {
-    isOpen: boolean,
+    return (
+        <>
+            <button className="btn btn-outline-primary w-100" onClick={toggleModal}>
+                Выберите ББК
+            </button>
+            <BBKModal init={selectedKeys} isOpen={isModalBBKOpen} toggleModal={toggleModal} />
+        </>
+    );
+};
+
+const BBKModal = ({
+                      isOpen,
+                      toggleModal,
+                      init,
+                  }: {
+    isOpen: boolean;
     toggleModal: () => void;
-    init: Record<string, TreeChecked>
+    init: Record<string, TreeChecked>;
 }) => {
-    const {data: {data: NodesBBK = []} = {}, isLoading} = useAllBbk()
-    const {apply: applyBBK} = useBbk()
-    const selectedKeys = init;
-    const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string, TreeChecked>>(selectedKeys);
-    const modalRef = useRef(null);
-    const isFirst = useIsFirstRender();
-    useEffect(() => {
-        if (!isFirst)
-            setLocalSelectedKeys(selectedKeys);
-    }, [selectedKeys, isFirst]);
+    const { data: { data: NodesBBK = [] } = {}} = useAllBbk();
+    const { apply: applyBBK } = useBbk();
+    const [localSelectedKeys, setLocalSelectedKeys] = useState<Record<string, TreeChecked>>(init);
+    const modalRef = useRef<HTMLDivElement | null>(null);
+    const isFirstRender = useIsFirstRender();
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (modalRef.current && !modalRef.current.contains(event.target)) {
+        if (!isFirstRender) {
+            setLocalSelectedKeys(init);
+        }
+    }, [init, isFirstRender]);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
                 toggleModal();
             }
         };
 
         if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener("mousedown", handleClickOutside);
         } else {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         }
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [isOpen, toggleModal]);
 
-    const handleApply = () => {
+    const handleApply = useCallback(() => {
         applyBBK(localSelectedKeys);
         toggleModal();
-    };
+    }, [applyBBK, localSelectedKeys, toggleModal]);
 
-    const handleClearSelection = () => {
+    const handleClearSelection = useCallback(() => {
         setLocalSelectedKeys({});
-        applyBBK({})
-    };
-
+        applyBBK({});
+    }, [applyBBK]);
 
     if (!isOpen) return null;
 
     return (
         <>
-
-            <div className="modal fade show" style={{display: 'block'}} tabIndex={-1} role="dialog">
+            <div className="modal fade show" style={{ display: "block" }} tabIndex={-1} role="dialog">
                 <div className="modal-dialog modal-xl" role="document" ref={modalRef}>
                     <div className="modal-content">
                         <div className="modal-header justify-content-between">
                             <h5 className="modal-title">Выберите ББК из списка</h5>
                             <button type="button" className="btn close" onClick={toggleModal}>
-                                <FontAwesomeIcon icon={faXmark}/>
+                                <FontAwesomeIcon icon={faXmark} />
                             </button>
                         </div>
                         <div className="modal-body">
-
-                            {<Tree
+                            <Tree
                                 value={NodesBBK}
                                 selectionMode="checkbox"
                                 selectionKeys={localSelectedKeys}
-                                // @ts-ignore
-                                onSelectionChange={(e: TreeCheckboxSelectionKeys) => {
-                                    // @ts-ignore
-                                    setLocalSelectedKeys(e.value)
-                                }}
+                                onSelectionChange={(e) => setLocalSelectedKeys(e.value)}
                                 filter
                                 filterPlaceholder="Поиск по списку"
                                 filterBy="label"
                                 className="w-full md:w-30rem"
-                            />}
+                            />
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-outline-primary" onClick={handleClearSelection}>
@@ -114,5 +114,3 @@ const BBKModal = ({isOpen, toggleModal, init}: {
         </>
     );
 };
-
-

@@ -12,4 +12,3 @@ export const getAllBkkOptions = () => queryOptions({
 export const useAllBbk = () => {
     return useQuery(getAllBkkOptions())
 }
-//staleTimeInfinty - всегда запрашивать из кеша, так как всегда NodesBbk одинаковые,+ переиспользуется
