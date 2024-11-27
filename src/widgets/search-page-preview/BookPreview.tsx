@@ -17,7 +17,7 @@ import {useBkkCurrent4Query} from "../../data/bbk/model/hooks";
 
 export function BookPreview({cat, index}: { cat: string, index: string }) {
     const value = useQueryParam('query');
-    const by = useSearchAreaQueryParam();
+    const by = useSearchAreaQueryParam('books');
     const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
     const pubhouses = useArrayQueryParam('pubhouses');
     const pubtypes = useArrayQueryParam('editions');

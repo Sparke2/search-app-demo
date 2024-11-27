@@ -32,7 +32,7 @@ export function SearchBooks() {
     const purposes = useArrayQueryParam('targets');
     const pubtypes = useArrayQueryParam('editions');
     const pubyear = [Number(useQueryParam('fromYear')), Number(useQueryParam('toYear'))];
-    const by = useSearchAreaQueryParam();
+    const by = useSearchAreaQueryParam('books');
     const field = useQueryParam('sort')?.trim() || "score";
     const modifier = useQueryParam('sort')?.trim() === "_title_" ? "asc" : "desc";
     const pubhouses = useArrayQueryParam('pubhouses');
