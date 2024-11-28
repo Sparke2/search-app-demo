@@ -5,6 +5,7 @@
   --color-white: #fff;
   --color-white-grey: #E9EBEB;
   --color-main-text: #263238D9;
+  --color-card-title: #212529;
   --color-label-text: #333;
   --color-border: #DFE2E6;
   --color-primary-all: #FF8906;
@@ -624,6 +625,14 @@
 .card-item a:hover {
   cursor: pointer;
   text-decoration: underline !important;
+}
+.card-item a.text {
+  font-weight: 600 !important;
+  color: var(--color-card-title);
+  text-decoration: none;
+}
+.card-item a.text:hover {
+  text-decoration: underline;
 }
 .card-item a.btn-primary, .card-item a.btn-outline-primary {
   font-weight: 600 !important;

@@ -42,7 +42,7 @@ const VideoItem = ({ index, video }: { index: number, video: Video }) => {
                     />
                 </div>
                 <div className="col-xxl-8 col-xl-7">
-                    <p className="text" dangerouslySetInnerHTML={{ __html: removeHtmlEntities(video.title)}}/>
+                    <a href={video.link} target="_blank" rel="noreferrer" className="text" dangerouslySetInnerHTML={{ __html: removeHtmlEntities(video.title)}}/>
                     <ReadMore content={formatText(video.description)} maxLines={3} />
                     <div className="d-flex flex-sm-row flex-column gap-3 justify-content-sm-between mt-4">
                         <a href={video.link} target="_blank" className="btn btn-primary btn-small" rel="noreferrer">Перейти к просмотру</a>

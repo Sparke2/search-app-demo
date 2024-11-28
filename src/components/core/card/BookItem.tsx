@@ -16,21 +16,24 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
         <div className="card-item position-relative">
             <div className="row g-3">
                 <div className="col-xxl-8 col-xl-7 col-12">
-                    <p className="text">
+                    <a className="text" href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
+                       rel="noreferrer">
                         <span className="pe-2">{index}.</span>
                         <span className="text"
                               dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
-                    </p>
+                    </a>
                     <ReadMoreAuthors authors={authors}/>
                     {book.pubtype && (
                         <p className="text-small"><span className="text-small-grey">Тип:</span> {book.pubtype}</p>
                     )}
-                    <ReadMore
-                        content={collections}
-                        maxItems={3}
-                        label="Коллекция"
-                    />
-                    <ReadMore content={book.description} maxLines={2} />
+                    {collections.length > 0 && (
+                        <ReadMore
+                            content={collections}
+                            maxItems={3}
+                            label="Коллекция"
+                        />
+                    )}
+                    <ReadMore content={book.description} maxLines={2}/>
                 </div>
                 <div className="col-xl-1 col-sm-4 col-3">
                     <p className="text-grey">Стр.</p>

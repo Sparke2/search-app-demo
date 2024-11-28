@@ -11,7 +11,7 @@ const PeriodicalItem = ({index, periodical}: { index: number, periodical: Period
 
     return (
         <div className="card-item position-relative">
-            <p className="text"
+            <a href={`https://www.iprbookshop.ru/${periodical.id}.html`} target="_blank" rel="noreferrer" className="text"
                dangerouslySetInnerHTML={{__html: `<span class="pe-2">${index}.</span> ${periodical.title}`}}/>
             <p className="text-grey fw-600">
                 {minYear} год — {maxYear} год, количество номеров: {totalIssues}
