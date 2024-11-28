@@ -108,6 +108,12 @@ function SearchForm() {
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleSearch(event);
+                    setIsFocused(false);
+                  }
+                }}
                 disabled={isCheckingSpelling}
             />
             {searchText && (

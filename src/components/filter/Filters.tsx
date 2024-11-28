@@ -61,7 +61,7 @@ const Filters = forwardRef((_, ref) => {
         isLoading: boolean
     };
     const optionsCheckboxForCollection = collections.map(({val}) => ({value: val, label: val}))
-    const collectionsValue = useCheckboxQueryParams('collections');
+    const collectionsValue = useCheckboxQueryParams('collection');
 
     const searchParams = new URLSearchParams(location.search);
     const getOption = (key, options) => {

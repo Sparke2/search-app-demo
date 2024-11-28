@@ -168,6 +168,82 @@ export const useBbk = () => {
     //     apply(updatedKeys);
     // };
 
+    // const selected = useQueryParam('bbk'); // Строка с выбранными ключами
+    //
+    // const remove = (key: string) => {
+    //     console.log(`Начинаем удаление для ключа: ${key}`);
+    //
+    //     // Функция для удаления узла и его детей
+    //     const removeNodeAndChildren = (nodes: TreeNode[], keyToRemove: string): TreeNode[] => {
+    //         return nodes.reduce((result: TreeNode[], node: TreeNode) => {
+    //             // Если узел или его дети соответствуют ключу для удаления, пропускаем его
+    //             if (node.key === keyToRemove || node.key.startsWith(`${keyToRemove}.`)) {
+    //                 console.log(`Удаляем узел с ключом: ${node.key}`);
+    //                 return result; // Узел не добавляется в итоговый массив
+    //             }
+    //
+    //             // Если у узла есть дети, рекурсивно обрабатываем их
+    //             if (node.children?.length) {
+    //                 console.log(`Обрабатываем дочерние узлы для: ${node.key}`);
+    //                 node.children = removeNodeAndChildren(node.children, keyToRemove);
+    //             }
+    //
+    //             // Добавляем узел в итоговый массив, если он не был удален
+    //             result.push(node);
+    //             return result;
+    //         }, []);
+    //     };
+    //
+    //     // Обработаем дерево, чтобы удалить узел
+    //     let updatedNodes = removeNodeAndChildren(NodesBBK, key);
+    //
+    //     console.log(`Обновлённое дерево после удаления ключа ${key}:`, updatedNodes);
+    //
+    //     // Функция для проверки, имеет ли родитель узел других выбранных детей
+    //     const doesParentHaveOtherSelectedChildren = (parentKey: string, selected: string): boolean => {
+    //         const selectedKeys = selected.split(','); // Преобразуем строку в массив
+    //         console.log({selectedKeys})
+    //         return selectedKeys.some(selectedKey => selectedKey.startsWith(parentKey) && selectedKey !== parentKey);
+    //     };
+    //
+    //     // Функция для удаления родителя, если у него нет других выбранных детей
+    //     const removeEmptyParents = (nodes: TreeNode[], selected: string): TreeNode[] => {
+    //         const removeParent = (parentKey: string, nodes: TreeNode[]): TreeNode[] => {
+    //             // Если родитель не имеет других выбранных детей, удаляем его
+    //             if (!doesParentHaveOtherSelectedChildren(parentKey, selected)) {
+    //                 console.log(`Родительский узел ${parentKey} не имеет других выбранных детей, удаляем его`);
+    //                 return removeNodeAndChildren(nodes, parentKey); // Удаляем родителя, если у него нет других выбранных детей
+    //             }
+    //             return nodes;
+    //         };
+    //
+    //         // Проверяем каждого родителя в дереве
+    //         return nodes.reduce((result: TreeNode[], node: TreeNode) => {
+    //             if (node.children) {
+    //                 // Рекурсивно проверяем детей
+    //                 node.children = removeEmptyParents(node.children, selected);
+    //             }
+    //
+    //             // Удаляем родительский узел, если это безопасно
+    //             if (node.children && node.children.length === 0) {
+    //                 result = removeParent(node.key, result);
+    //             } else {
+    //                 result.push(node);
+    //             }
+    //             return result;
+    //         }, []);
+    //     };
+    //
+    //     // Обрабатываем дерево, чтобы удалить пустые родительские узлы
+    //     updatedNodes = removeEmptyParents(updatedNodes, selected);
+    //
+    //     console.log(`Финальный список после удаления ${key}:`, updatedNodes);
+    //
+    //     // Применяем обновленные данные
+    //     apply(updatedNodes);
+    //     console.log(`Удаление завершено.`);
+    // };
+
     const remove = (key: string) => {
         apply([]);
     }

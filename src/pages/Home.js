@@ -5,11 +5,11 @@ import ResultsAccordion from '../components/core/ResultsAccordion';
 
 import CheckboxFilterShow from '../components/core/filter/CheckboxFilterShow';
 import {AppLayout} from '../layout/AppLayout';
-import {useSyncSortParam} from "../hooks/useSyncSortParam";
 import {ResponsiveFilters} from "../components/filter/ui/ResponsiveFilters";
+import {useSyncParam} from "../hooks/useSyncParam";
 
 function Home() {
-  useSyncSortParam()
+  useSyncParam()
   return (
     <AppLayout>
     <main>

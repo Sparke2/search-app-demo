@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCircleQuestion} from "@fortawesome/free-regular-svg-icons";
 import {Tooltip} from "primereact/tooltip";
 import ReadMore from "./ui/ReadMore";
+import {ReadMoreAuthors} from "./ui/ReadMoreAuthors";
 
 const BookItem = ({index, book}: { index: number, book: Book }) => {
     const authors = book.authors || [];
@@ -20,13 +21,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                         <span className="text"
                               dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
                     </p>
-                    <p className="text desc">
-                        {authors.map((author, index) => (
-                            <span key={index} className="text-grey">
-                                {author}{index < book.authors.length - 1 && ', '}
-                            </span>
-                        ))}
-                    </p>
+                    <ReadMoreAuthors authors={authors}/>
                     {book.pubtype && (
                         <p className="text-small"><span className="text-small-grey">Тип:</span> {book.pubtype}</p>
                     )}
