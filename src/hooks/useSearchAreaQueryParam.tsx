@@ -13,7 +13,11 @@ export const useSearchAreaQueryParam = (cat?: string) => {
         }
 
         if (fields.length === 0) {
-            fields.push('title', 'description');
+            if (cat === 'books') {
+                fields.push('authors','title', 'description');
+            } else {
+                fields.push('title', 'description');
+            }
         }
 
         return fields;
