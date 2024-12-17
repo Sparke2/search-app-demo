@@ -9,6 +9,7 @@ function ReactSelect({
                          placeholder = undefined,
                          isMulti = false,
                          defaultValue,
+                         value,
                          onChange,
                          styles = [],
                          applyFilters = () => {
@@ -51,6 +52,7 @@ function ReactSelect({
                 isMulti={isMulti}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
+                value={value}
                 classNamePrefix="react-select"
                 onMenuOpen={() => setMenuIsOpen(true)}
                 onMenuClose={() => setMenuIsOpen(false)}

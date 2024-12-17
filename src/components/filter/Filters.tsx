@@ -312,6 +312,21 @@ const Filters = forwardRef((_, ref) => {
                     </div>
                 </div>
             )}
+            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
+                <div className="col-12">
+                    <h6 className='mb-3'>Вид издания</h6>
+                    {(!edithionsLoad)&&(
+                        <ReactSelect
+                            options={optionsForEditions}
+                            placeholder="Выберите из списка"
+                            isMulti
+                            defaultValue={defaultSelectedOptions.editions}
+                            onChange={options => setSelectedOptions(prev => ({...prev, editions: options}))}
+                            applyFilters={applyFilters}
+                        />
+                    )}
+                </div>
+            )}
             {(['searchAudio'].some(category => currentCategories.includes(category))) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Жанры</h6>
@@ -425,21 +440,6 @@ const Filters = forwardRef((_, ref) => {
                 </div>
             )}
             <GroupModalsChain/>
-            {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
-                <div className="col-12">
-                    <h6 className='mb-3'>Вид издания</h6>
-                    {(!edithionsLoad)&&(
-                    <ReactSelect
-                        options={optionsForEditions}
-                        placeholder="Выберите из списка"
-                        isMulti
-                        defaultValue={defaultSelectedOptions.editions}
-                        onChange={options => setSelectedOptions(prev => ({...prev, editions: options}))}
-                        applyFilters={applyFilters}
-                    />
-                    )}
-                </div>
-            )}
             {(['searchBooks'].some(category => currentCategories.includes(category)) || currentCategories.length === 0) && (
                 <div className="col-12">
                     <h6 className='mb-3'>Целевое назначение</h6>
