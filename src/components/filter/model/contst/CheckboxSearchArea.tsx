@@ -28,7 +28,7 @@ export function CheckboxSearchArea({handleCheckboxChange, applyFilters, checkbox
 
                     <Checkbox
                         id="description"
-                        label="По тексту"
+                        label="По тексту аннотаций"
                         isChecked={checkboxes?.description}
                         handleCheckboxChange={handleCheckboxChange}
                         applyFilters={applyFilters}

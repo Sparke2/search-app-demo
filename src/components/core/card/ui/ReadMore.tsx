@@ -32,11 +32,11 @@ const ReadMore: React.FC<ReadMoreProps> = ({
                                 <p className="text-small">
                                     {isExpanded
                                         ? content.map((item, index) => (
-                                            <span key={index}> {item} {index < content.length - 1 && ", "}</span>
+                                            <span key={index}> {item}{index < content.length - 1 && ", "}</span>
                                         ))
                                         : content.slice(0, maxItems).map((item, index) => (
                                             <span
-                                                key={index}>{item} {index < Math.min(content.length, maxItems) - 1 && ", "}</span>
+                                                key={index}>{item}{index < Math.min(content.length, maxItems) - 1 && ", "}</span>
                                         ))}
                                     {content.length > maxItems && (
                                         <button
@@ -62,11 +62,11 @@ const ReadMore: React.FC<ReadMoreProps> = ({
                                     {isExpanded
                                         ? content.map((item, index) => (
                                             <span className="text-prim"
-                                                  key={index}> {item} {index < content.length - 1 && ", "}</span>
+                                                  key={index}> {item}{index < content.length - 1 && ", "}</span>
                                         ))
                                         : content.slice(0, maxItems).map((item, index) => (
                                             <span className="text-prim"
-                                                  key={index}>{item} {index < Math.min(content.length, maxItems) - 1 && ", "}</span>
+                                                  key={index}>{item}{index < Math.min(content.length, maxItems) - 1 && ", "}</span>
                                         ))}
                                     {content.length > maxItems && (
                                         <button
