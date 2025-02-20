@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/search-app-demo/static/css/main.ec4f9b35.css",
-    "main.js": "/search-app-demo/static/js/main.fdf9d5a4.js",
+    "main.css": "/search-app-demo/static/css/main.83bbd2e9.css",
+    "main.js": "/search-app-demo/static/js/main.f0fa3281.js",
     "reactPlayerYouTube.js": "/search-app-demo/static/js/reactPlayerYouTube.b73d4922.chunk.js",
     "reactPlayerSoundCloud.js": "/search-app-demo/static/js/reactPlayerSoundCloud.5e33d83f.chunk.js",
     "reactPlayerVimeo.js": "/search-app-demo/static/js/reactPlayerVimeo.c212d9d8.chunk.js",
@@ -48,12 +48,13 @@
     "static/media/vk.svg": "/search-app-demo/static/media/vk.35b774aba67c51103a5f35aaf1cbe85c.svg",
     "static/media/tg.svg": "/search-app-demo/static/media/tg.198660a58a4eba41748a05d2d95465e6.svg",
     "static/media/copy.svg": "/search-app-demo/static/media/copy.c17c2b001be0a6b1ee19cc7c1d2bc627.svg",
+    "static/media/vk-icon.svg": "/search-app-demo/static/media/vk-icon.02e78a0ac3f1c2b6dc379e63e150aa38.svg",
     "static/media/check.svg": "/search-app-demo/static/media/check.9f678ef7917b85e9d09d.svg",
     "static/media/youtube.svg": "/search-app-demo/static/media/youtube.ec587f26b39d10e18934e741d7b9e4e5.svg",
     "index.html": "/search-app-demo/index.html",
     "static/media/breadcrumb-icon.svg": "/search-app-demo/static/media/breadcrumb-icon.0e6d797035c535bb2e41.svg",
-    "main.ec4f9b35.css.map": "/search-app-demo/static/css/main.ec4f9b35.css.map",
-    "main.fdf9d5a4.js.map": "/search-app-demo/static/js/main.fdf9d5a4.js.map",
+    "main.83bbd2e9.css.map": "/search-app-demo/static/css/main.83bbd2e9.css.map",
+    "main.f0fa3281.js.map": "/search-app-demo/static/js/main.f0fa3281.js.map",
     "reactPlayerYouTube.b73d4922.chunk.js.map": "/search-app-demo/static/js/reactPlayerYouTube.b73d4922.chunk.js.map",
     "reactPlayerSoundCloud.5e33d83f.chunk.js.map": "/search-app-demo/static/js/reactPlayerSoundCloud.5e33d83f.chunk.js.map",
     "reactPlayerVimeo.c212d9d8.chunk.js.map": "/search-app-demo/static/js/reactPlayerVimeo.c212d9d8.chunk.js.map",
@@ -71,7 +72,7 @@
     "453.918e1538.chunk.js.map": "/search-app-demo/static/js/453.918e1538.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ec4f9b35.css",
-    "static/js/main.fdf9d5a4.js"
+    "static/css/main.83bbd2e9.css",
+    "static/js/main.f0fa3281.js"
   ]
 }
