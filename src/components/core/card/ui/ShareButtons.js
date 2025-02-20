@@ -1,5 +1,5 @@
 import React from 'react';
-import {toast, ToastContainer} from 'react-toastify';
+import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import copy from '../../../../img/shared/copy.svg';
 import vk from '../../../../img/shared/vk.svg';
@@ -33,7 +33,6 @@ const ShareButtons = ({ url, title }) => {
             <button onClick={handleCopy} className="btn p-0">
                 <img src={copy} alt="Copy" />
             </button>
-            <ToastContainer />
         </div>
     );
 };

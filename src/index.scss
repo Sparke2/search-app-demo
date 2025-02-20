@@ -10,6 +10,7 @@
   --color-label-text: #333;
   --color-border: #DFE2E6;
   --color-primary-all: #FF8906;
+  --color-red: #E81616;
   --color-primary-pale: #FF89060D;
   --color-primary-all-pale: rgb(255 220 181 / 34%);
   --color-grey: #70797d;
@@ -34,6 +35,9 @@
 }
 .text-main {
   color: var(--color-main-text);
+}
+.text-red {
+  color: var(--color-red);
 }
 .hover-primary:hover {
   color: var(--color-primary-all);
@@ -1332,6 +1336,11 @@ header {
       outline: none !important;
     }
   }
+}
+.book-image {
+  width: 149px;
+  height: 254px;
+  object-fit: cover;
 }
 
 @media (max-width: 500px) {

@@ -1,15 +1,19 @@
 import React, {useRef, useState} from "react";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {Book} from "../../../data/book/model/types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ReadMore from "./ui/ReadMore";
 import {ReadMoreAuthors} from "./ui/ReadMoreAuthors";
-import {faArrowUpFromBracket, faStar} from "@fortawesome/free-solid-svg-icons";
+import {faArrowUpFromBracket, faHeart as HeartIconSolid, faStar} from "@fortawesome/free-solid-svg-icons";
 import book_cover from '../../../img/book_cover.svg';
-import {faHeart} from "@fortawesome/free-regular-svg-icons";
+import {faHeart as HeartIcon} from "@fortawesome/free-regular-svg-icons";
 import ShareButtonsBook from "./ui/ShareButtonsBook";
 
 const BookItem = ({index, book}: { index: number, book: Book }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [toastId, setToastId] = useState(null);
     const authors = book.authors || [];
     const pubhouse = book.pubhouses || [];
     const modalRef = useRef<HTMLDivElement | null>(null);
@@ -18,14 +22,27 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
         setIsModalOpen(!isModalOpen);
     };
 
+    const toggleFavorite = () => {
+        setIsFavorite(prev => {
+            const newState = !prev;
+            if (toastId) {
+                toast.dismiss(toastId);
+            }
+            const newToastId = toast.success(newState ? "Добавлено в избранное!" : "Удалено из избранного!");
+            setToastId(newToastId);
+
+            return newState;
+        });
+    };
+
     return (
         <div className="card-item position-relative">
             <div className="d-flex flex-sm-row flex-column gap-3">
                 <div className="mx-auto">
-                    <img src={book.image || book_cover} alt={book.title}/>
+                    <img src={book.image || book_cover} alt={book.title} className="book-image"/>
                 </div>
                 <div className="d-flex flex-column">
-                <div className="d-flex gap-3 justify-content-between">
+                    <div className="d-flex gap-3 justify-content-between">
                         <a className="text-book" href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
                            rel="noreferrer">
                             <span className="text"
@@ -38,8 +55,11 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                                     icon={faArrowUpFromBracket}
                                 />
                             </button>
-                            <button className="btn p-0">
-                                <FontAwesomeIcon className="fs-20 text-grey-50" icon={faHeart}/>
+                            <button className="btn p-0" onClick={toggleFavorite}>
+                                <FontAwesomeIcon
+                                    className={`fs-20 ${isFavorite ? "text-red" : "text-grey-50"}`}
+                                    icon={isFavorite ? HeartIconSolid : HeartIcon}
+                                />
                             </button>
                         </div>
                     </div>
@@ -78,7 +98,9 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                                 <p className="fs-20 fw-600 text-main mb-4">Поделиться в...</p>
                                 <ShareButtonsBook title={book.title}
                                                   url={`https://www.iprbookshop.ru/${book.id}.html`}/>
-                                <button onClick={toggleModal} className="btn btn-outline-primary btn-small px-8 mt-4 mx-auto">Отмена</button>
+                                <button onClick={toggleModal}
+                                        className="btn btn-outline-primary btn-small px-8 mt-4 mx-auto">Отмена
+                                </button>
                             </div>
                         </div>
                     </div>
