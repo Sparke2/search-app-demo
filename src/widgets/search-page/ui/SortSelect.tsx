@@ -46,7 +46,7 @@ export function SearchPage({ name }: { name: string }) {
     };
 
     return (
-        <div className="d-flex gap-4 align-items-center filter-select">
+        <div className="d-flex justify-content-between gap-4 align-items-center filter-select">
             <span className="paginate-text">Сортировка по: </span>
             <ReactSelect
                 shouldApplyButtonRender={false}

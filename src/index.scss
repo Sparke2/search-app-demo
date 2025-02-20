@@ -6,6 +6,7 @@
   --color-white-grey: #E9EBEB;
   --color-main-text: #263238D9;
   --color-card-title: #212529;
+  --color-grey-50: #26323880;
   --color-label-text: #333;
   --color-border: #DFE2E6;
   --color-primary-all: #FF8906;
@@ -26,6 +27,23 @@
 
 * {
   font-family: var(--font-family-main), serif;
+}
+
+.text-primary-smart {
+  color: var(--color-primary-all);
+}
+.text-main {
+  color: var(--color-main-text);
+}
+.hover-primary:hover {
+  color: var(--color-primary-all);
+}
+.text-grey-50 {
+  color: var(--color-grey-50);
+}
+.px-8 {
+  padding-left: 6rem !important;
+  padding-right: 6rem !important;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
@@ -734,8 +752,17 @@
       &:hover {
         text-decoration: underline;
       }
-      span {
+    }
 
+    &.text-book {
+      color: var(--color-main-text);
+      font-weight: 600 !important;
+      font-size: 18px !important;
+      text-decoration: none;
+      line-height: 20px;
+
+      &:hover {
+        text-decoration: underline;
       }
     }
 
@@ -836,6 +863,8 @@
     padding: 0.4rem;
     font-size: 14px;
     box-shadow: 0 0 15px 0 var(--color-shadow);
+    max-width: 10rem;
+    margin-bottom: 0.5rem;
 
     p {
       margin: 0;
@@ -877,7 +906,15 @@ footer {
 }
 
 .fs-20 {
-  font-size: 20px;
+  font-size: 20px !important;
+}
+
+.fs-16 {
+  font-size: 16px !important;
+}
+
+.fs-15 {
+  font-size: 15px !important;
 }
 
 .fw-600 {
@@ -1267,7 +1304,50 @@ header {
   }
 }
 
+.share-icon {
+  img {
+    width: 48px;
+    height: 48px;
+  }
+  .btn {
+    border: none !important;
+    outline: none !important;
+    &:active {
+      border: none !important;
+      outline: none !important;
+    }
+  }
+}
+
+.modal-content {
+  border-radius: 1.5rem;
+  border: none;
+}
+.icons-book {
+  .btn {
+    border: none !important;
+    outline: none !important;
+    &:active {
+      border: none !important;
+      outline: none !important;
+    }
+  }
+}
+
 @media (max-width: 500px) {
+  .bg-main-screen {
+    padding: 2rem 1rem;
+  }
+  .card-item {
+    padding: 1rem;
+    a.text-book {
+      font-size: 16px !important;
+      line-height: normal;
+    }
+    .text-grey-50 {
+      font-size: 14px;
+    }
+  }
   .card-item .row > div {
     border-right: none;
   }
@@ -1278,8 +1358,18 @@ header {
     font-size: 16px;
   }
   .btn-small {
-    padding: 0.5314rem 1rem;
-    font-size: 14px;
+    padding: 0.3rem 1rem;
+    font-size: 13px;
+  }
+  .card-item .btn-small.equal {
+    max-width: 12rem;
+  }
+  .icons-book .fs-20 {
+    font-size: 18px !important;
+  }
+  .btn-outline-primary {
+    padding: 0.3rem 1rem;
+    font-size: 13px !important;
   }
   .input-group.search .search-main {
     padding-top: 0.5rem;

@@ -73,7 +73,7 @@ export function SearchVideo() {
 
 
     return (
-        <div className="pe-4">
+        <div>
             <div className="d-flex flex-sm-row gap-2 flex-column justify-content-between align-items-sm-center mb-4 search-header">
                 <SearchResultTextVideo resultCount={total || 0}/>
                 <ToastContainer position="top-right"

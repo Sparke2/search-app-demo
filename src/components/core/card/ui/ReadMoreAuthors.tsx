@@ -1,58 +1,46 @@
-import React, {useState} from "react";
+import React from "react";
+import {Tooltip} from "primereact/tooltip";
 
 interface ReadMoreProps {
-    authors: string[];
+    authors: string[]; // authors приходит как ["Автор1, Автор2, Автор3"]
     maxItems?: number;
-    label?: string;
 }
+
+const getAuthorsEnding = (count: number) => {
+    if (count % 10 === 1 && count % 100 !== 11) return "автор";
+    if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100)) return "автора";
+    return "авторов";
+};
 
 export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({
                                                              authors,
-                                                             maxItems = 3,
-                                                             label = "Авторы",
+                                                             maxItems = 2,
                                                          }) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+    // Разбиваем строку на массив
+    const authorList = authors.length > 0 ? authors[0].split(",").map(a => a.trim()) : [];
 
-    const toggleReadMore = () => {
-        setIsExpanded(!isExpanded);
-    };
+    if (authorList.length <= maxItems) {
+        return <p className="text m-0"><span className="text-grey-50">{authorList.join(", ")}</span></p>;
+    }
 
-    const authorsHTML = authors
-        .map((author, index) =>
-            `<span class="text-grey">${author}${index < authors.length - 1 ? ", " : ""}</span>`
-        )
-        .join("");
-
-    const limitedAuthorsHTML = authors
-        .slice(0, maxItems)
-        .map((author, index) =>
-            `<span class="text-grey">${author}${index < Math.min(authors.length, maxItems) - 1 ? ", " : ""}</span>`
-        )
-        .join("");
+    const remainingCount = authorList.length - maxItems;
+    const displayedAuthors = authorList.slice(0, maxItems).join(", ");
+    const hiddenAuthors = authorList.slice(maxItems).join(", ");
 
     return (
         <div className="d-flex flex-wrap">
-            <p
-                className="text m-0"
-                dangerouslySetInnerHTML={{
-                    __html: isExpanded ? authorsHTML : limitedAuthorsHTML,
-                }}
-            />
-            {authors.length > maxItems && (
-                <button
-                    onClick={toggleReadMore}
-                    style={{
-                        background: "none",
-                        color: "#70797d",
-                        fontSize: "14px",
-                        border: "none",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                    }}
+            <p className="text m-0">
+                <span className="text-grey-50">{displayedAuthors}</span>
+                <span
+                    data-pr-tooltip={hiddenAuthors}
+                    data-pr-position="top"
+                    className="text-grey-50 text-decoration-none"
+                    style={{ cursor: "pointer", textDecoration: "underline", marginLeft: "5px" }}
                 >
-                    {isExpanded ? "Скрыть" : `Ещё (${authors.length - maxItems})`}
-                </button>
-            )}
+                    + <span className="hover-primary">ещё {remainingCount} {getAuthorsEnding(remainingCount)}</span>
+                </span>
+                <Tooltip target="[data-pr-tooltip]" className="custom-tooltip" />
+            </p>
         </div>
     );
 };

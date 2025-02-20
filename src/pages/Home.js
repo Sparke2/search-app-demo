@@ -31,7 +31,7 @@ function Home() {
               {/*</div>*/}
             </div>
             <div className="row mt-sm-1 g-4">
-              <div className="col-lg-9 result-field order-lg-1 order-2">
+              <div className="col-lg-9 result-field order-lg-1 order-2 pe-sm-4">
                 <SearchForm/>
                 <CheckboxFilterShow/>
                 <ResultsAccordion/>

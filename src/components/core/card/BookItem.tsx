@@ -1,76 +1,92 @@
-import React from "react";
+import React, {useRef, useState} from "react";
 import {Book} from "../../../data/book/model/types";
-
-import {Button} from "primereact/button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleQuestion} from "@fortawesome/free-regular-svg-icons";
-import {Tooltip} from "primereact/tooltip";
 import ReadMore from "./ui/ReadMore";
 import {ReadMoreAuthors} from "./ui/ReadMoreAuthors";
+import {faArrowUpFromBracket, faStar} from "@fortawesome/free-solid-svg-icons";
+import book_cover from '../../../img/book_cover.svg';
+import {faHeart} from "@fortawesome/free-regular-svg-icons";
+import ShareButtonsBook from "./ui/ShareButtonsBook";
 
 const BookItem = ({index, book}: { index: number, book: Book }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const authors = book.authors || [];
-    const collections = book.collections || [];
     const pubhouse = book.pubhouses || [];
+    const modalRef = useRef<HTMLDivElement | null>(null);
+
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
+
     return (
         <div className="card-item position-relative">
-            <div className="row g-3">
-                <div className="col-xxl-8 col-xl-7 col-12">
-                    <a className="text" href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
-                       rel="noreferrer">
-                        <span className="pe-2">{index}.</span>
-                        <span className="text"
-                              dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
-                    </a>
-                    <ReadMoreAuthors authors={authors}/>
+            <div className="d-flex flex-sm-row flex-column gap-3">
+                <div className="mx-auto">
+                    <img src={book.image || book_cover} alt={book.title}/>
+                </div>
+                <div className="d-flex flex-column">
+                <div className="d-flex gap-3 justify-content-between">
+                        <a className="text-book" href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
+                           rel="noreferrer">
+                            <span className="text"
+                                  dangerouslySetInnerHTML={{__html: `${book.title}. ${book.additTitle}`}}/>
+                        </a>
+                        <div className="d-flex gap-3 icons-book">
+                            <button className="btn p-0" onClick={toggleModal}>
+                                <FontAwesomeIcon
+                                    className={`fs-20 ${isModalOpen ? 'text-primary-smart' : 'text-grey-50'}`}
+                                    icon={faArrowUpFromBracket}
+                                />
+                            </button>
+                            <button className="btn p-0">
+                                <FontAwesomeIcon className="fs-20 text-grey-50" icon={faHeart}/>
+                            </button>
+                        </div>
+                    </div>
                     {book.pubtype && (
-                        <p className="text-small"><span className="text-small-grey">Тип:</span> {book.pubtype}</p>
+                        <p className="text-small text-main mt-2"><span
+                            className="text-small-grey">Тип:</span> {book.pubtype}</p>
                     )}
-                    {collections.length > 0 && (
-                        <ReadMore
-                            content={collections}
-                            maxItems={3}
-                            label="Коллекция"
-                        />
-                    )}
-                    <ReadMore content={book.description} maxLines={2}/>
-                </div>
-                <div className="col-xl-1 col-sm-4 col-3">
-                    <p className="text-grey">Стр.</p>
-                    <p className="text-small">{book.pageCount}</p>
-                </div>
-                <div className="col-xxl-2 col-xl-3 col-sm-4 col-6">
-                    <ReadMore
-                        content={pubhouse}
-                        maxItems={3}
-                        label="Издательство"
-                    />
-                </div>
-                <div className="col-xl-1 col-sm-4 col-3">
-                    <p className="text-grey">Год</p>
-                    <p className="text-small">{book.pubyear}</p>
+                    <div className="d-flex flex-wrap justify-content-between">
+                        <ReadMoreAuthors authors={authors} maxItems={2}/>
+                        <div className="d-flex gap-3 align-items-center">
+                            <p className="text m-0"><span className="text-grey-50">•</span></p>
+                            <p className="text m-0"><span className="text-grey-50">{book.pubyear} г.</span></p>
+                            <p className="text m-0"><span className="text-grey-50">•</span></p>
+                            <p className="text m-0"><span className="text-grey-50">{book.pageCount} стр.</span></p>
+                        </div>
+                    </div>
+                    <p className="text-small text-main mt-1"><span
+                        className="text-small-grey">Издательство:</span> {pubhouse}</p>
+                    <p className="text mb-1 d-flex align-items-center fs-16">
+                        <FontAwesomeIcon icon={faStar}
+                                         className="text-primary-smart fs-15 me-1"/> {book.raiting ? book.raiting : "5.0"}
+                    </p>
+                    <ReadMore content={book.description} maxLines={3}/>
+                    <div className="d-flex flex-sm-row flex-column flex-wrap gap-3 mt-sm-auto mt-3">
+                        <a href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
+                           className="btn btn-outline-primary btn-small equal" rel="noreferrer">Читать</a>
+                    </div>
                 </div>
             </div>
-            <div className="d-flex flex-sm-row flex-column flex-wrap gap-3 mt-3">
-                {/*<button className="btn btn-primary btn-small">Добавить в заказ • 3000 ₽</button>*/}
-                <Tooltip target={`.btn-${book.id}`} className="custom-tooltip">
-                    <p>Недоступно для чтения.</p>
-                    <p>Для покупки нажмите кнопку <span>«Добавить в заказ»</span>.</p>
-                    <p>Для просмотра содержания нажмите на кнопку</p>
-                    <p><span>«Подробнее о книге»</span>.</p>
-                </Tooltip>
-                <Button className={`btn btn-disabled btn-${book.id} btn-small equal`}>
-                    Читать <FontAwesomeIcon icon={faCircleQuestion}/>
-                </Button>
-                {/*<a href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank" className="btn btn-primary btn-small equal">*/}
-                {/*    Читать*/}
-                {/*</a>*/}
-                <a href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
-                   className="btn btn-outline-primary btn-small equal" rel="noreferrer">Подробнее о книге</a>
-            </div>
+            {isModalOpen && (
+                <>
+                    <div className="modal fade show" style={{display: "block"}} tabIndex={-1} role="dialog"
+                         onClick={toggleModal}>
+                        <div className="modal-dialog modal-md modal-dialog-centered" role="document" ref={modalRef}>
+                            <div className="modal-content p-4" onClick={(e) => e.stopPropagation()}>
+                                <p className="fs-20 fw-600 text-main mb-4">Поделиться в...</p>
+                                <ShareButtonsBook title={book.title}
+                                                  url={`https://www.iprbookshop.ru/${book.id}.html`}/>
+                                <button onClick={toggleModal} className="btn btn-outline-primary btn-small px-8 mt-4 mx-auto">Отмена</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="modal-backdrop fade show"></div>
+                </>
+            )}
         </div>
-    )
-}
-
+    );
+};
 
 export default BookItem;

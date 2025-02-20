@@ -3,7 +3,7 @@ import ReactSelect from "../../../components/core/filter/ReactSelect";
 
 export default function ItemsPerPageSelect({ count, handleCountChange }) {
     return (
-        <div className="d-flex gap-4 align-items-center">
+        <div className="d-flex justify-content-between gap-4 align-items-center">
             <span className="paginate-text">Элементов на странице:</span>
             <ReactSelect
                 key={`count-${count}`}

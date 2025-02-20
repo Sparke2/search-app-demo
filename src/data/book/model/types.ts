@@ -4,6 +4,7 @@ export type Book =
     bbks: `${number}`[],
     ugnps: `${number}`[],
     title: string,
+    image: string,
     authors: string[],
     pubyear: number,
     additTitle: string,
@@ -14,6 +15,7 @@ export type Book =
     pubtype: string,
     pageCount: number,
     price: number,
+    raiting: number,
 }
 export type PagintionResponse<T extends Record<string, unknown>> = {
     data: T[],
