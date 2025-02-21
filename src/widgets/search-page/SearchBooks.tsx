@@ -49,7 +49,7 @@ export function SearchBooks() {
     } = useAllBook(
         {
             query: {value, by},
-            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, doi, bookShtamp, disciplines, bbks, purposes, ...(isbn ? {isbn} : {})},
+            filter: {pubyear, pubhouses, ugnps, pubtypes, profiles, ...(doi !== 'absent' && { doi }), ...(bookShtamp !== 'absent' && { bookShtamp }), disciplines, bbks, purposes, ...(isbn ? {isbn} : {})},
             sorts: [{field, modifier}]
         },
         {start: page * count, rows: count},

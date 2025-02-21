@@ -17,6 +17,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
     const authors = book.authors || [];
     const pubhouse = book.pubhouses || [];
     const modalRef = useRef<HTMLDivElement | null>(null);
+    const rating = book.rating ? (Number(book.rating).toFixed(1)) : "5.0";
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
@@ -68,7 +69,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                             className="text-small-grey">Тип:</span> {book.pubtype}</p>
                     )}
                     <div className="d-flex flex-wrap justify-content-between">
-                        <ReadMoreAuthors authors={authors} maxItems={2}/>
+                        <ReadMoreAuthors authors={authors} maxItems={2} id={book.id}/>
                         <div className="d-flex gap-3 align-items-center">
                             <p className="text m-0"><span className="text-grey-50">•</span></p>
                             <p className="text m-0"><span className="text-grey-50">{book.pubyear} г.</span></p>
@@ -80,7 +81,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                         className="text-small-grey">Издательство:</span> {pubhouse}</p>
                     <p className="text mb-1 d-flex align-items-center fs-16">
                         <FontAwesomeIcon icon={faStar}
-                                         className="text-primary-smart fs-15 me-1"/> {book.rating ? book.rating : "5.0"}
+                                         className="text-primary-smart fs-15 me-1"/> {rating}
                     </p>
                     <ReadMore content={book.description} maxLines={3}/>
                     <div className="d-flex flex-sm-row flex-column flex-wrap gap-3 mt-sm-auto mt-3">

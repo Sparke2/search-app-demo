@@ -1,5 +1,12 @@
-export const useAdditional = (name: string): boolean => {
+export const useAdditional = (name: string): string | 'absent' => {
     const urlParams = new URLSearchParams(window.location.search);
     const additionals = urlParams.get('additionals');
-    return additionals ? additionals.split(',').includes(name) : false;
+
+    if (!additionals) {
+        return 'absent';
+    }
+
+    const params = additionals.split(',');
+    const paramValue = params.find(param => param === name);
+    return paramValue ? paramValue : 'absent';
 };

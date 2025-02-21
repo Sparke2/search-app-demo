@@ -1134,9 +1134,10 @@ header a.btn-link:hover {
 }
 
 .book-image {
-  width: 149px;
-  height: 254px;
+  width: 178px;
+  height: 253px;
   object-fit: cover;
+  border-radius: 0.4rem;
 }
 
 @media (max-width: 500px) {

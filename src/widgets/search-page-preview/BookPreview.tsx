@@ -30,7 +30,7 @@ export function BookPreview({cat, index}: { cat: string, index: string }) {
     const bookShtamp = useAdditional('bookShtamp');
     const {bbks} = useBkkCurrent4Query();
     const {data:{data:books = [],pagination:{total = 0} = {}} = {}} = useAllBook({query:{value,by},
-        filter: {pubyear, pubhouses, purposes, ugnps, pubtypes, doi, bookShtamp, bbks, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
+        filter: {pubyear, pubhouses, purposes, ugnps, pubtypes,  ...(doi !== 'absent' && { doi }), ...(bookShtamp !== 'absent' && { bookShtamp }), bbks, profiles, disciplines, ...(isbn ? {isbn} : {})},},{start: 0, rows: 10})
     const removeCategoriesFromUrl = useRemoveCategoriesFromUrl();
     return (
         <Accordion.Item key={cat} eventKey={index}>
