@@ -34,8 +34,8 @@ const ReadMore: React.FC<ReadMoreProps> = ({ content, maxLines = 3 }) => {
                     textOverflow: "ellipsis",
                     lineHeight: "1.5em",
                 }}
+                dangerouslySetInnerHTML={{ __html: content }}
             >
-                {content}
             </div>
         </div>
     );

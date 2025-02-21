@@ -15,7 +15,7 @@ export type Book =
     pubtype: string,
     pageCount: number,
     price: number,
-    raiting: number,
+    rating: number,
 }
 export type PagintionResponse<T extends Record<string, unknown>> = {
     data: T[],

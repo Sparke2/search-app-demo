@@ -38,10 +38,10 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
     return (
         <div className="card-item position-relative">
             <div className="d-flex flex-sm-row flex-column gap-3">
-                <div className="mx-auto">
-                    <img src={book.image || book_cover} alt={book.title} className="book-image"/>
+                <div className="mx-auto mx-sm-0">
+                    <img src={book.image ?("https://www.iprbookshop.ru/"+book.image):(book_cover)} alt={book.title} className="book-image"/>
                 </div>
-                <div className="d-flex flex-column">
+                <div className="d-flex flex-column w-100">
                     <div className="d-flex gap-3 justify-content-between">
                         <a className="text-book" href={`https://www.iprbookshop.ru/${book.id}.html`} target="_blank"
                            rel="noreferrer">
@@ -80,7 +80,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                         className="text-small-grey">Издательство:</span> {pubhouse}</p>
                     <p className="text mb-1 d-flex align-items-center fs-16">
                         <FontAwesomeIcon icon={faStar}
-                                         className="text-primary-smart fs-15 me-1"/> {book.raiting ? book.raiting : "5.0"}
+                                         className="text-primary-smart fs-15 me-1"/> {book.rating ? book.rating : "5.0"}
                     </p>
                     <ReadMore content={book.description} maxLines={3}/>
                     <div className="d-flex flex-sm-row flex-column flex-wrap gap-3 mt-sm-auto mt-3">

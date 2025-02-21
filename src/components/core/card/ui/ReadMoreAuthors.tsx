@@ -2,7 +2,7 @@ import React from "react";
 import {Tooltip} from "primereact/tooltip";
 
 interface ReadMoreProps {
-    authors: string[]; // authors приходит как ["Автор1, Автор2, Автор3"]
+    authors: string[];
     maxItems?: number;
 }
 
@@ -12,15 +12,15 @@ const getAuthorsEnding = (count: number) => {
     return "авторов";
 };
 
-export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({
-                                                             authors,
-                                                             maxItems = 2,
-                                                         }) => {
-    // Разбиваем строку на массив
+export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({ authors, maxItems = 2 }) => {
     const authorList = authors.length > 0 ? authors[0].split(",").map(a => a.trim()) : [];
 
     if (authorList.length <= maxItems) {
-        return <p className="text m-0"><span className="text-grey-50">{authorList.join(", ")}</span></p>;
+        return (
+            <p className="text m-0">
+                <span className="text-grey-50" dangerouslySetInnerHTML={{ __html: authorList.join(", ") }} />
+            </p>
+        );
     }
 
     const remainingCount = authorList.length - maxItems;
@@ -30,14 +30,14 @@ export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({
     return (
         <div className="d-flex flex-wrap">
             <p className="text m-0">
-                <span className="text-grey-50">{displayedAuthors}</span>
+                <span className="text-grey-50" dangerouslySetInnerHTML={{ __html: displayedAuthors }} />
                 <span
                     data-pr-tooltip={hiddenAuthors}
                     data-pr-position="top"
                     className="text-grey-50 text-decoration-none"
                     style={{ cursor: "pointer", textDecoration: "underline", marginLeft: "5px" }}
                 >
-                    + <span className="hover-primary">ещё {remainingCount} {getAuthorsEnding(remainingCount)}</span>
+                    + <span className="hover-primary" dangerouslySetInnerHTML={{ __html: `ещё ${remainingCount} ${getAuthorsEnding(remainingCount)}` }} />
                 </span>
                 <Tooltip target="[data-pr-tooltip]" className="custom-tooltip" />
             </p>
