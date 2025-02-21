@@ -4,6 +4,7 @@ import {Tooltip} from "primereact/tooltip";
 interface ReadMoreProps {
     authors: string[];
     maxItems?: number;
+    id: number;
 }
 
 const getAuthorsEnding = (count: number) => {
@@ -12,7 +13,7 @@ const getAuthorsEnding = (count: number) => {
     return "авторов";
 };
 
-export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({ authors, maxItems = 2 }) => {
+export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({ authors, maxItems = 2, id }) => {
     const authorList = authors.length > 0 ? authors[0].split(",").map(a => a.trim()) : [];
 
     if (authorList.length <= maxItems) {
@@ -32,14 +33,15 @@ export const ReadMoreAuthors: React.FC<ReadMoreProps> = ({ authors, maxItems = 2
             <p className="text m-0">
                 <span className="text-grey-50" dangerouslySetInnerHTML={{ __html: displayedAuthors }} />
                 <span
+                    id={`tooltip-target-${id}`}
                     data-pr-tooltip={hiddenAuthors}
                     data-pr-position="top"
                     className="text-grey-50 text-decoration-none"
                     style={{ cursor: "pointer", textDecoration: "underline", marginLeft: "5px" }}
                 >
-                    + <span className="hover-primary" dangerouslySetInnerHTML={{ __html: `ещё ${remainingCount} ${getAuthorsEnding(remainingCount)}` }} />
+                    + ещё {remainingCount} {getAuthorsEnding(remainingCount)}
                 </span>
-                <Tooltip target="[data-pr-tooltip]" className="custom-tooltip" />
+                <Tooltip target={`#tooltip-target-${id}`} className="custom-tooltip" />
             </p>
         </div>
     );
