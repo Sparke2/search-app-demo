@@ -78,7 +78,7 @@ const BookItem = ({index, book}: { index: number, book: Book }) => {
                         </div>
                     </div>
                     <p className="text-small text-main mt-1"><span
-                        className="text-small-grey">Издательство:</span> {pubhouse}</p>
+                        className="text-small-grey">Издательство:</span> {pubhouse.join(", ")}</p>
                     <p className="text mb-1 d-flex align-items-center fs-16">
                         <FontAwesomeIcon icon={faStar}
                                          className="text-primary-smart fs-15 me-1"/> {rating}
